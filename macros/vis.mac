@@ -1,0 +1,81 @@
+######################################################
+# Macro file for the visualization setting for the initialization phase 
+# when running in interactive mode
+######################################################
+
+######################################################
+# Create an OpenGL view:
+######################################################
+/vis/open OGL 800x800-0+0
+
+######################################################
+# Disable auto refresh and quieten vis messages whilst scene and
+# trajectories are established:
+######################################################
+/vis/viewer/set/autoRefresh false
+/vis/verbose warnings
+
+######################################################
+# Draw geometry:
+######################################################
+/vis/drawVolume
+
+######################################################
+# Specify up :
+######################################################
+/vis/viewer/set/upVector 0. 1. 0.
+
+######################################################
+# Specify view angle:
+######################################################
+#/vis/viewer/set/viewpointThetaPhi 45. 0.
+#/vis/viewer/set/viewpointVector 1. 0.5 1.
+/vis/viewer/set/viewpointVector 1. 0. 0.
+#/vis/viewer/set/viewpointVector 0. 0. 1.
+
+######################################################
+# Specify zoom value:
+######################################################
+#/vis/viewer/zoom 2.
+
+######################################################
+# Specify background color 
+# White - 1 1 1
+######################################################
+#/vis/viewer/set/background 1 1 1
+
+######################################################
+# Specify line width 
+######################################################
+/vis/viewer/set/globalLineWidthScale 3
+
+######################################################
+# Draw coordinate axes:
+######################################################
+#/vis/scene/add/axes -2. -2. 0. 1. cm
+
+######################################################
+# Draw smooth trajectories at end of event, showing trajectory points
+# as markers 2 pixels wide:
+# (if too many tracks cause core dump => /tracking/storeTrajectory 0)
+######################################################
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 1
+
+######################################################
+# Draw hits at end of event:
+######################################################
+/vis/scene/add/hits
+
+######################################################
+# To superimpose all of the events from a given run:
+######################################################
+/vis/scene/endOfEventAction accumulate
+
+######################################################
+# Re-establish auto refreshing and verbosity:
+######################################################
+/vis/viewer/set/autoRefresh true
+/vis/verbose warnings
