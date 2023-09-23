@@ -31,7 +31,7 @@ namespace lmcp
   //****************************************************************************
   // constexpr auto kNumKeep = 8;
   // constexpr auto kThickness = 0.1524*mm;    // 6 mils
-  constexpr auto kThickness = 200*um;
+  constexpr auto kThickness = 5*um;
 
 
   //--------------------------------------------------------
@@ -53,7 +53,7 @@ namespace lmcp
   //--------------------------------------------------------
   constexpr auto kNumPores_X = 10;
   // constexpr auto kNumPores_Y = 124;
-  constexpr auto kNumPores_Y = 101;
+  constexpr auto kNumPores_Y = 455;
 
   constexpr auto kLMCP_Xsize = kNumPores_X * kLamina_Xsize;
   constexpr auto kLMCP_Ysize = kNumPores_Y * kLamina_Ysize;
