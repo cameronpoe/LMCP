@@ -63,217 +63,217 @@
 # Azimuth: 90 deg, Zenith: 0.0 deg
 /gps/pos/centre 0.0 0.0 22.0 mm
 /gps/direction -0.0 -0.0 -1.0
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta0.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta0.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 3.0 deg
 /gps/pos/centre 0.0 1.15139 21.96985 mm
 /gps/direction -0.0 -0.05234 -0.99863
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta1.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta1.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 6.0 deg
 /gps/pos/centre 0.0 2.29963 21.87948 mm
 /gps/direction -0.0 -0.10453 -0.99452
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta2.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta2.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 9.0 deg
 /gps/pos/centre 0.0 3.44156 21.72914 mm
 /gps/direction -0.0 -0.15643 -0.98769
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta3.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta3.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 12.0 deg
 /gps/pos/centre 0.0 4.57406 21.51925 mm
 /gps/direction -0.0 -0.20791 -0.97815
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta4.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta4.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 15.0 deg
 /gps/pos/centre 0.0 5.69402 21.25037 mm
 /gps/direction -0.0 -0.25882 -0.96593
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta5.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta5.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 18.0 deg
 /gps/pos/centre 0.0 6.79837 20.92324 mm
 /gps/direction -0.0 -0.30902 -0.95106
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta6.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta6.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 21.0 deg
 /gps/pos/centre 0.0 7.88409 20.53877 mm
 /gps/direction -0.0 -0.35837 -0.93358
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta7.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta7.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 24.0 deg
 /gps/pos/centre 0.0 8.94821 20.098 mm
 /gps/direction -0.0 -0.40674 -0.91355
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta8.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta8.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 27.0 deg
 /gps/pos/centre 0.0 9.98779 19.60214 mm
 /gps/direction -0.0 -0.45399 -0.89101
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta9.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta9.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 30.0 deg
 /gps/pos/centre 0.0 11.0 19.05256 mm
 /gps/direction -0.0 -0.5 -0.86603
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta10.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta10.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 33.0 deg
 /gps/pos/centre 0.0 11.98206 18.45075 mm
 /gps/direction -0.0 -0.54464 -0.83867
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta11.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta11.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 36.0 deg
 /gps/pos/centre 0.0 12.93128 17.79837 mm
 /gps/direction -0.0 -0.58779 -0.80902
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta12.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta12.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 39.0 deg
 /gps/pos/centre 0.0 13.84505 17.09721 mm
 /gps/direction -0.0 -0.62932 -0.77715
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta13.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta13.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 42.0 deg
 /gps/pos/centre 0.0 14.72087 16.34919 mm
 /gps/direction -0.0 -0.66913 -0.74314
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta14.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta14.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 45.0 deg
 /gps/pos/centre 0.0 15.55635 15.55635 mm
 /gps/direction -0.0 -0.70711 -0.70711
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta15.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta15.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 48.0 deg
 /gps/pos/centre 0.0 16.34919 14.72087 mm
 /gps/direction -0.0 -0.74314 -0.66913
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta16.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta16.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 51.0 deg
 /gps/pos/centre 0.0 17.09721 13.84505 mm
 /gps/direction -0.0 -0.77715 -0.62932
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta17.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta17.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 54.0 deg
 /gps/pos/centre 0.0 17.79837 12.93128 mm
 /gps/direction -0.0 -0.80902 -0.58779
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta18.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta18.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 57.0 deg
 /gps/pos/centre 0.0 18.45075 11.98206 mm
 /gps/direction -0.0 -0.83867 -0.54464
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta19.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta19.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 60.0 deg
 /gps/pos/centre 0.0 19.05256 11.0 mm
 /gps/direction -0.0 -0.86603 -0.5
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta20.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta20.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 63.0 deg
 /gps/pos/centre 0.0 19.60214 9.98779 mm
 /gps/direction -0.0 -0.89101 -0.45399
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta21.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta21.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 66.0 deg
 /gps/pos/centre 0.0 20.098 8.94821 mm
 /gps/direction -0.0 -0.91355 -0.40674
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta22.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta22.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 69.0 deg
 /gps/pos/centre 0.0 20.53877 7.88409 mm
 /gps/direction -0.0 -0.93358 -0.35837
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta23.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta23.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 72.0 deg
 /gps/pos/centre 0.0 20.92324 6.79837 mm
 /gps/direction -0.0 -0.95106 -0.30902
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta24.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta24.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 75.0 deg
 /gps/pos/centre 0.0 21.25037 5.69402 mm
 /gps/direction -0.0 -0.96593 -0.25882
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta25.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta25.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 78.0 deg
 /gps/pos/centre 0.0 21.51925 4.57406 mm
 /gps/direction -0.0 -0.97815 -0.20791
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta26.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta26.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 81.0 deg
 /gps/pos/centre 0.0 21.72914 3.44156 mm
 /gps/direction -0.0 -0.98769 -0.15643
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta27.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta27.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 84.0 deg
 /gps/pos/centre 0.0 21.87948 2.29963 mm
 /gps/direction -0.0 -0.99452 -0.10453
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta28.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta28.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 87.0 deg
 /gps/pos/centre 0.0 21.96985 1.15139 mm
 /gps/direction -0.0 -0.99863 -0.05234
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta29.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta29.root
 /run/printProgress 50000
 /run/beamOn 1000000
 
 # Azimuth: 90 deg, Zenith: 90.0 deg
 /gps/pos/centre 0.0 22.0 0.0 mm
 /gps/direction -0.0 -1.0 -0.0
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta30.root
+/analysis/setFileName ../raw_data/latest_run/Run_theta30.root
 /run/printProgress 50000
 /run/beamOn 1000000
 

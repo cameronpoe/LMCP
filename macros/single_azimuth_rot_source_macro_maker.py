@@ -9,6 +9,7 @@ phi = 90                # degrees
 num_threads = 64
 num_events = 1000000
 num_events_prog_report = 50000
+data_output_directory_path = r'../raw_data/latest_run/'
 
 
 with open(output_file_name, 'w') as f:
@@ -90,7 +91,7 @@ with open(output_file_name, 'w') as f:
         f.write(f'''# Azimuth: {phi} deg, Zenith: {theta} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta{i}.root
+/analysis/setFileName {data_output_directory_path}Run_theta{i}.root
 /run/printProgress {num_events_prog_report}
 /run/beamOn {num_events}
 
