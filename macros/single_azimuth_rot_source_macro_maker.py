@@ -5,11 +5,14 @@ output_file_name = r'macros/Run_single_azimuth_rot_source.mac'
 source_distance_from_lmcp_center = 22       # mm
 theta_increment = 3     # degrees (multiple of 90)
 phi = 90                # degrees
+
+num_threads = 64
 num_events = 1000000
+num_events_prog_report = 50000
 
 
 with open(output_file_name, 'w') as f:
-    f.write('''######################################################
+    f.write(f'''######################################################
 ## redirect output from each thread
 ######################################################
 /control/cout/setCoutFile lmcp.out
@@ -27,7 +30,7 @@ with open(output_file_name, 'w') as f:
 ######################################################
 ## Change the default number of threads (in multi-threaded mode)
 ######################################################
-/run/numberOfThreads 4
+/run/numberOfThreads {num_threads}
 
 ######################################################
 ## Overlap Checking
@@ -88,7 +91,7 @@ with open(output_file_name, 'w') as f:
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
 /analysis/setFileName ../data/single_azimuth_lamina_thickness_tests/pbglass_data/Run_theta{i}.root
-/run/printProgress 1000
+/run/printProgress {num_events_prog_report}
 /run/beamOn {num_events}
 
 ''')
