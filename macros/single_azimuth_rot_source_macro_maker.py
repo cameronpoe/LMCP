@@ -5,7 +5,7 @@ output_file_name = r'macros/Run_single_azimuth_rot_source.mac'
 source_distance_from_lmcp_center = 22       # mm
 theta_increment = 3     # degrees (multiple of 90)
 phi = 90                # degrees
-num_events = 10000
+num_events = 1000000
 
 
 with open(output_file_name, 'w') as f:
