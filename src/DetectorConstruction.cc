@@ -14,11 +14,11 @@
 
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
-#include "Constants.hh"
 #include "LaminaSD.hh"
 #include "PoreSD.hh"
 
 #include "G4RunManager.hh"
+#include "G4UImanager.hh"
 #include "G4GeometryManager.hh"
 #include "G4PhysicalVolumeStore.hh"
 #include "G4LogicalVolumeStore.hh"
@@ -238,30 +238,52 @@ namespace lmcp
     // Volumes
     //======================================================
     //------------------------------------------------------
+    // Calculating dimensions
+    //------------------------------------------------------
+    auto numPores_X = static_cast<int>(fSlabDimensions[0]/(fPoreDimensions[0]+fLaminaThickness));
+    auto numPores_Y = static_cast<int>(fSlabDimensions[1]/(fPoreDimensions[1]+fLaminaThickness));
+
+    auto pore_X = fPoreDimensions[0];
+    auto pore_Y = fPoreDimensions[1];
+    auto pore_Z = fPoreDimensions[2];
+
+    auto div_lamina_X = fPoreDimensions[0] + fLaminaThickness;
+    auto div_lamina_Y = fPoreDimensions[1] + fLaminaThickness;
+    auto div_lamina_Z = pore_Z;
+
+    auto lamina_X = div_lamina_X * numPores_X;
+    auto lamina_Y = div_lamina_Y;
+    auto lamina_Z = div_lamina_Z;
+
+    auto lmcp_X = lamina_X;
+    auto lmcp_Y = div_lamina_Y * numPores_Y;
+    auto lmcp_Z = lamina_Z;
+
+    auto world_X = 2*lmcp_X;
+    auto world_Y = 2*lmcp_Y;
+    auto world_Z = 2*lmcp_Z;
+
+    //------------------------------------------------------
     // World
     //------------------------------------------------------
     // SOLID VOLUME
-    auto world_X = kWorld_Xsize;
-    auto world_Y = kWorld_Ysize;
-    auto world_Z = kWorld_Zsize;
-
-    auto world_S = new G4Box(
+    fWorld_S = new G4Box(
                   "World_S",            // its name
                   world_X/2,            // its X dimension 
                   world_Y/2,            // its Y dimension 
                   world_Z/2);           // its Z dimension 
 
     // LOGICAL VOLUME
-    auto world_LV = new G4LogicalVolume(
-                  world_S,              // its solid
+    fWorld_LV = new G4LogicalVolume(
+                  fWorld_S,              // its solid
                   mVacuum,                 // its material
                   "World_LV");          // its name
 
     // PHYSICAL VOLUME
-    auto world_PV = new G4PVPlacement(
+    fWorld_PV = new G4PVPlacement(
                   0,                    // no rotation
                   G4ThreeVector(),      // at (0,0,0)
-                  world_LV,             // its logical volume
+                  fWorld_LV,             // its logical volume
                   "World_PV",           // its name
                   0,                    // its mother  volume
                   false,                // no boolean operation
@@ -272,19 +294,15 @@ namespace lmcp
     // LMCP
     //----------------------------------
     // SOLID VOLUME
-    auto lmcp_X = kLMCP_Xsize;
-    auto lmcp_Y = kLMCP_Ysize;
-    auto lmcp_Z = kLMCP_Zsize;
-
-    auto lmcp_S = new G4Box(
+    fLMCP_S = new G4Box(
                   "LMCP_S",             // its name
                   lmcp_X/2,             // its X dimension 
                   lmcp_Y/2,             // its Y dimension
                   lmcp_Z/2);            // its Z dimension
 
     // LOGICAL VOLUME
-    auto lmcp_LV = new G4LogicalVolume(
-                  lmcp_S,               // its solid
+    fLMCP_LV = new G4LogicalVolume(
+                  fLMCP_S,               // its solid
                   mLMCP,                // its material
                   "LMCP_LV");           // its name
 
@@ -294,12 +312,12 @@ namespace lmcp
     auto lmcp_Zpos = 0.0*mm;
     auto lmcp_Pos = G4ThreeVector( lmcp_Xpos, lmcp_Ypos, lmcp_Zpos );
 
-    new G4PVPlacement(
+    fLMCP_PV = new G4PVPlacement(
                   0,                    // its rotation
                   lmcp_Pos,             // its position
-                  lmcp_LV,              // its logical volume
+                  fLMCP_LV,              // its logical volume
                   "LMCP_PV",            // its name
-                  world_LV,             // its mother  volume
+                  fWorld_LV,             // its mother  volume
                   false,                // no boolean operation
                   0,                    // copy number
                   fCheckOverlaps);      // checking overlaps 
@@ -309,75 +327,63 @@ namespace lmcp
     // Lamina
     //----------------------------------
     // SOLID VOLUME
-    auto lamina_X = kLamina_Xsize * kNumPores_X;
-    auto lamina_Y = kLamina_Ysize;
-    auto lamina_Z = kLamina_Zsize;
-
-    auto lamina_S = new G4Box(
+    fLamina_S = new G4Box(
                   "Lamina_S",             // its name
                   lamina_X/2,             // its X dimension 
                   lamina_Y/2,             // its Y dimension
                   lamina_Z/2);            // its Z dimension
 
     // LOGICAL VOLUME
-    auto lamina_LV = new G4LogicalVolume(
-                  lamina_S,               // its solid
+    fLamina_LV = new G4LogicalVolume(
+                  fLamina_S,               // its solid
                   mLMCP,                  // its material
                   "Lamina_LV");           // its name
 
-    new G4PVReplica(
+    fLamina_PV = new G4PVReplica(
                   "Lamina_PV",            // its name
-                  lamina_LV,              // its logical volume
-                  lmcp_LV,                // its mother volume
+                  fLamina_LV,              // its logical volume
+                  fLMCP_LV,                // its mother volume
                   kYAxis,                 // its replica axis
-                  kNumPores_Y,            // number of replicas
+                  numPores_Y,            // number of replicas
                   lamina_Y);              // dimension of replica
 
     //----------------------------------
     // Lamina divided
     //----------------------------------
     // SOLID VOLUME
-    auto div_lamina_X = kLamina_Xsize;
-    auto div_lamina_Y = kLamina_Ysize;
-    auto div_lamina_Z = kLamina_Zsize;
-
-    auto div_lamina_S = new G4Box(
+    fDivLamina_S = new G4Box(
                   "Div_Lamina_S",             // its name
                   div_lamina_X/2,             // its X dimension 
                   div_lamina_Y/2,             // its Y dimension
                   div_lamina_Z/2);            // its Z dimension
 
     // LOGICAL VOLUME
-    auto div_lamina_LV = new G4LogicalVolume(
-                  div_lamina_S,               // its solid
+    fDivLamina_LV = new G4LogicalVolume(
+                  fDivLamina_S,               // its solid
                   mLMCP,                      // its material
                   "Div_Lamina_LV");           // its name
 
-    new G4PVReplica(
+    fDivLamina_PV = new G4PVReplica(
                   "Div_Lamina_PV",            // its name
-                  div_lamina_LV,              // its logical volume
-                  lamina_LV,                  // its mother volume
+                  fDivLamina_LV,              // its logical volume
+                  fLamina_LV,                  // its mother volume
                   kXAxis,                     // its replica axis
-                  kNumPores_X,                // number of replicas
+                  numPores_X,                // number of replicas
                   div_lamina_X);              // dimension of replica
 
     //----------------------------------
     // Pore
     //----------------------------------
     // SOLID VOLUME
-    auto pore_X = kPore_Xsize;
-    auto pore_Y = kPore_Ysize;
-    auto pore_Z = kPore_Zsize;
-
-    auto pore_S = new G4Box(
+    fPore_S = new G4Box(
                   "Pore_S",             // its name
                   pore_X/2,             // its X dimension 
                   pore_Y/2,             // its Y dimension
                   pore_Z/2);            // its Z dimension
 
     // LOGICAL VOLUME
-    auto pore_LV = new G4LogicalVolume(
-                  pore_S,               // its solid
+    fPore_LV = new G4LogicalVolume(
+                  fPore_S,               // its solid
                   mVacuum,              // its material
                   "Pore_LV");           // its name
 
@@ -387,12 +393,12 @@ namespace lmcp
     auto pore_Zpos = 0.0*mm;
     auto pore_Pos = G4ThreeVector( pore_Xpos, pore_Ypos, pore_Zpos );
 
-    new G4PVPlacement(
+    fPore_PV = new G4PVPlacement(
                   0,                    // its rotation
                   pore_Pos,             // its position
-                  pore_LV,              // its logical volume
+                  fPore_LV,              // its logical volume
                   "Pore_PV",            // its name
-                  div_lamina_LV,        // its mother  volume
+                  fDivLamina_LV,        // its mother  volume
                   false,                // no boolean operation
                   0,                    // copy number
                   fCheckOverlaps);      // checking overlaps 
@@ -437,13 +443,13 @@ namespace lmcp
     //======================================================
     // Visualization attributes
     //======================================================
-    world_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
-    lamina_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
-    div_lamina_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
+    fWorld_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
+    fLamina_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
+    fDivLamina_LV -> SetVisAttributes( G4VisAttributes::GetInvisible() );
 
     auto metal_VisAtt = new G4VisAttributes( G4Color::Gray() );
     metal_VisAtt -> SetVisibility( true );
-    pore_LV -> SetVisAttributes( metal_VisAtt );
+    fPore_LV -> SetVisAttributes( metal_VisAtt );
 
  
     //======================================================
@@ -453,22 +459,22 @@ namespace lmcp
     // auto maxStep = 0.0000005*mm;
     auto maxStep = 5*um;
     auto stepLimit = new G4UserLimits( maxStep );
-    lamina_LV->SetUserLimits( stepLimit );
-    pore_LV->SetUserLimits( stepLimit );
+    fLamina_LV->SetUserLimits( stepLimit );
+    fPore_LV->SetUserLimits( stepLimit );
 
     //======================================================
     // Print some information
     //======================================================
     G4cout << G4endl;
     G4cout << "------ LMCP Dimensions: " << G4endl;
-    G4cout << "           X: " << kLMCP_Xsize/mm << " mm" << G4endl;
-    G4cout << "           Y: " << kLMCP_Ysize/mm << " mm" << G4endl;
-    G4cout << "           Z: " << kLMCP_Zsize/mm << " mm" << G4endl;
+    G4cout << "           X: " << lmcp_X/mm << " mm" << G4endl;
+    G4cout << "           Y: " << lmcp_Y/mm << " mm" << G4endl;
+    G4cout << "           Z: " << lmcp_Z/mm << " mm" << G4endl;
 
     G4cout << "------ WORLD Dimensions: " << G4endl;
-    G4cout << "           X: " << kWorld_Xsize/mm << " mm" << G4endl;
-    G4cout << "           Y: " << kWorld_Ysize/mm << " mm" << G4endl;
-    G4cout << "           Z: " << kWorld_Zsize/mm << " mm" << G4endl;
+    G4cout << "           X: " << world_X/mm << " mm" << G4endl;
+    G4cout << "           Y: " << world_Y/mm << " mm" << G4endl;
+    G4cout << "           Z: " << world_Z/mm << " mm" << G4endl;
 
     G4cout << G4endl;
     G4cout << G4endl;
@@ -476,7 +482,7 @@ namespace lmcp
     //======================================================
     // Always return the physical World
     //======================================================
-    return world_PV;
+    return fWorld_PV;
   }
 
   //****************************************************************************
@@ -568,15 +574,207 @@ namespace lmcp
     //----------------------------------
     // Sensitive detectors
     //----------------------------------
-    auto lmcp_SD = new LaminaSD( "LMCP_Det" );
-    SDManager->AddNewDetector( lmcp_SD );
-    LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( lmcp_SD );
-    LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( lmcp_SD );
+    fLMCP_SD = new LaminaSD( "LMCP_Det" );
+    SDManager->AddNewDetector( fLMCP_SD );
+    LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
+    LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
 
-    auto pore_SD = new PoreSD( "PORE_Det" );
-    SDManager->AddNewDetector( pore_SD );
-    LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( pore_SD );
+    fPore_SD = new PoreSD( "PORE_Det" );
+    SDManager->AddNewDetector( fPore_SD );
+    LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( fPore_SD );
 
+  }
+
+  void DetectorConstruction::UpdateGeometry() {
+    //------------------------------------------------------
+    // Calculating dimensions
+    //------------------------------------------------------
+    auto numPores_X = static_cast<int>(fSlabDimensions[0]/(fPoreDimensions[0]+fLaminaThickness));
+    auto numPores_Y = static_cast<int>(fSlabDimensions[1]/(fPoreDimensions[1]+fLaminaThickness));
+
+    auto pore_X = fPoreDimensions[0];
+    auto pore_Y = fPoreDimensions[1];
+    auto pore_Z = fPoreDimensions[2];
+
+    auto div_lamina_X = fPoreDimensions[0] + fLaminaThickness;
+    auto div_lamina_Y = fPoreDimensions[1] + fLaminaThickness;
+    auto div_lamina_Z = pore_Z;
+
+    auto lamina_X = div_lamina_X * numPores_X;
+    auto lamina_Y = div_lamina_Y;
+    auto lamina_Z = div_lamina_Z;
+
+    auto lmcp_X = lamina_X;
+    auto lmcp_Y = div_lamina_Y * numPores_Y;
+    auto lmcp_Z = lamina_Z;
+
+    auto world_X = 2*lmcp_X;
+    auto world_Y = 2*lmcp_Y;
+    auto world_Z = 2*lmcp_Z;
+
+    //------------------------------------------------------
+    // Removing prior geometries if applicable
+    //------------------------------------------------------
+    if (fWorld_PV) {
+
+      G4SolidStore::GetInstance()->DeRegister(fPore_S);
+      delete fPore_S;
+      fDivLamina_LV->RemoveDaughter(fPore_PV);
+      delete fPore_PV;
+
+      G4SolidStore::GetInstance()->DeRegister(fDivLamina_S);
+      delete fDivLamina_S;
+      fLamina_LV->RemoveDaughter(fDivLamina_PV);
+      delete fDivLamina_PV;
+
+      G4SolidStore::GetInstance()->DeRegister(fLamina_S);
+      delete fLamina_S;
+      fLMCP_LV->RemoveDaughter(fLamina_PV);
+      delete fLamina_PV;
+
+      G4SolidStore::GetInstance()->DeRegister(fLMCP_S);
+      delete fLMCP_S;
+      fWorld_LV->RemoveDaughter(fLMCP_PV);
+      delete fLMCP_PV;
+
+      G4SolidStore::GetInstance()->DeRegister(fWorld_S);
+      delete fWorld_S;
+      delete fWorld_PV;
+
+    //------------------------------------------------------
+    // World
+    //------------------------------------------------------
+    // SOLID VOLUME
+    fWorld_S = new G4Box(
+                  "World_S",            // its name
+                  world_X/2,            // its X dimension 
+                  world_Y/2,            // its Y dimension 
+                  world_Z/2);           // its Z dimension 
+    fWorld_LV->SetSolid(fWorld_S);
+
+    // PHYSICAL VOLUME
+    fWorld_PV = new G4PVPlacement(
+                  0,                    // no rotation
+                  G4ThreeVector(),      // at (0,0,0)
+                  fWorld_LV,             // its logical volume
+                  "World_PV",           // its name
+                  0,                    // its mother  volume
+                  false,                // no boolean operation
+                  0,                    // copy number
+                  fCheckOverlaps);      // checking overlaps 
+    
+    //----------------------------------
+    // LMCP
+    //----------------------------------
+    // SOLID VOLUME
+    fLMCP_S = new G4Box(
+                  "LMCP_S",             // its name
+                  lmcp_X/2,             // its X dimension 
+                  lmcp_Y/2,             // its Y dimension
+                  lmcp_Z/2);            // its Z dimension
+    fLMCP_LV->SetSolid(fLMCP_S);
+
+    // PHYSICAL VOLUME
+    auto lmcp_Xpos = 0.0*mm;
+    auto lmcp_Ypos = 0.0*mm;
+    auto lmcp_Zpos = 0.0*mm;
+    auto lmcp_Pos = G4ThreeVector( lmcp_Xpos, lmcp_Ypos, lmcp_Zpos );
+
+    fLMCP_PV = new G4PVPlacement(
+                  0,                    // its rotation
+                  lmcp_Pos,             // its position
+                  fLMCP_LV,              // its logical volume
+                  "LMCP_PV",            // its name
+                  fWorld_LV,             // its mother  volume
+                  false,                // no boolean operation
+                  0,                    // copy number
+                  fCheckOverlaps);      // checking overlaps 
+
+
+    //----------------------------------
+    // Lamina
+    //----------------------------------
+    // SOLID VOLUME
+    fLamina_S = new G4Box(
+                  "Lamina_S",             // its name
+                  lamina_X/2,             // its X dimension 
+                  lamina_Y/2,             // its Y dimension
+                  lamina_Z/2);            // its Z dimension
+    fLamina_LV->SetSolid(fLamina_S);
+
+    fLamina_PV = new G4PVReplica(
+                  "Lamina_PV",            // its name
+                  fLamina_LV,              // its logical volume
+                  fLMCP_LV,                // its mother volume
+                  kYAxis,                 // its replica axis
+                  numPores_Y,            // number of replicas
+                  lamina_Y);              // dimension of replica
+
+    //----------------------------------
+    // Lamina divided
+    //----------------------------------
+    // SOLID VOLUME
+    fDivLamina_S = new G4Box(
+                  "Div_Lamina_S",             // its name
+                  div_lamina_X/2,             // its X dimension 
+                  div_lamina_Y/2,             // its Y dimension
+                  div_lamina_Z/2);            // its Z dimension
+    fDivLamina_LV->SetSolid(fDivLamina_S);
+
+    fDivLamina_PV = new G4PVReplica(
+                  "Div_Lamina_PV",            // its name
+                  fDivLamina_LV,              // its logical volume
+                  fLamina_LV,                  // its mother volume
+                  kXAxis,                     // its replica axis
+                  numPores_X,                // number of replicas
+                  div_lamina_X);              // dimension of replica
+
+    //----------------------------------
+    // Pore
+    //----------------------------------
+    // SOLID VOLUME
+    fPore_S = new G4Box(
+                  "Pore_S",             // its name
+                  pore_X/2,             // its X dimension 
+                  pore_Y/2,             // its Y dimension
+                  pore_Z/2);            // its Z dimension
+    fPore_LV->SetSolid(fPore_S);
+
+    // PHYSICAL VOLUME
+    auto pore_Xpos = 0.0*mm;
+    auto pore_Ypos = 0.0*mm;
+    auto pore_Zpos = 0.0*mm;
+    auto pore_Pos = G4ThreeVector( pore_Xpos, pore_Ypos, pore_Zpos );
+
+    fPore_PV = new G4PVPlacement(
+                  0,                    // its rotation
+                  pore_Pos,             // its position
+                  fPore_LV,              // its logical volume
+                  "Pore_PV",            // its name
+                  fDivLamina_LV,        // its mother  volume
+                  false,                // no boolean operation
+                  0,                    // copy number
+                  fCheckOverlaps);      // checking overlaps 
+
+    }
+  }
+
+  void DetectorConstruction::SetSlabDimensions( G4ThreeVector dimensions ) {
+    fSlabDimensions = dimensions;
+    UpdateGeometry();
+    G4RunManager::GetRunManager()->GeometryHasBeenModified();
+  }
+  
+  void DetectorConstruction::SetPoreDimensions( G4ThreeVector dimensions) {
+    fPoreDimensions = dimensions;
+    UpdateGeometry();
+    G4RunManager::GetRunManager()->GeometryHasBeenModified();
+  }
+
+  void DetectorConstruction::SetLaminaThickness( G4double thickness ) {
+    fLaminaThickness = thickness;
+    UpdateGeometry();
+    G4RunManager::GetRunManager()->GeometryHasBeenModified();
   }
 
 }

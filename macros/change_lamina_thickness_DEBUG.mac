@@ -30,8 +30,8 @@
 # Option1 - Electromagnetic & Hadronic
 # Option2 - Electromagnetic & Hadronic with high precision option
 ######################################################
-/user/phy/setPhysics Option0
-#/user/phy/setPhysics Option1
+#/user/phy/setPhysics Option0
+/user/phy/setPhysics Option1
 #/user/phy/setPhysics Option2
 
 ######################################################
@@ -40,14 +40,34 @@
 /run/initialize
 
 ######################################################
-## Visualization setting
+# Source Particle
 ######################################################
-/control/execute ../macros/vis.mac
+/gps/particle gamma
+/gps/ene/mono 511. keV
 
 ######################################################
-## test run
+# Source Geometry
 ######################################################
-/control/execute ../macros/test.mac
-#/control/execute ../macros/Run_single_azimuth_rot_source_VIS_TEST.mac
-#/control/execute ../macros/Run_diff_thicknesses_VIS_TEST.mac
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/centre 0. 0. 20 mm
+/gps/pos/halfx 2.5 mm
+/gps/pos/halfy 2.5 mm
+/gps/direction 0. 0. -1.
 
+######################################################
+# RANDOM NUMBER
+######################################################
+/random/setSeeds 165127 668831
+
+######################################################
+# Changes geometry...
+######################################################
+/user/det/setLaminaThickness 5 mm
+
+######################################################
+# Start Run
+######################################################
+/analysis/setFileName ../raw_data/change_lamina_thickness_DEBUG.root
+/run/printProgress 10
+/run/beamOn 1

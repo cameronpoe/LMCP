@@ -19,6 +19,7 @@
 #include "G4UIcmdWithABool.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIcmdWithoutParameter.hh"
+#include "G4UIcmdWith3VectorAndUnit.hh"
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 namespace lmcp
@@ -42,6 +43,17 @@ namespace lmcp
     fOverlapCmd->SetDefaultValue(true);
     fOverlapCmd->AvailableForStates(G4State_PreInit);
 
+    fSlabDimensionsCmd = new G4UIcmdWith3VectorAndUnit("/user/det/setSlabDimensions",this);
+    fSlabDimensionsCmd->SetGuidance("Sets length of LMCP slab in x, y, and z.");
+    fSlabDimensionsCmd->SetParameterName("dimX", "dimY", "dimZ", false);
+
+    fPoreDimensionsCmd = new G4UIcmdWith3VectorAndUnit("/user/det/setPoreDimensions",this);
+    fPoreDimensionsCmd->SetGuidance("Sets length of pore in x, y, and z.");
+    fPoreDimensionsCmd->SetParameterName("dimX", "dimY", "dimZ", false);
+
+    fLaminaThicknessCmd = new G4UIcmdWithADoubleAndUnit("/user/det/setLaminaThickness",this);
+    fLaminaThicknessCmd->SetGuidance("Sets the thickness of lamina (substrate between pores).");
+    fLaminaThicknessCmd->SetParameterName("thickness", false);
   }
 
   //****************************************************************************
@@ -49,6 +61,9 @@ namespace lmcp
   //****************************************************************************
   DetectorMessenger::~DetectorMessenger() {
 
+    delete fLaminaThicknessCmd;
+    delete fPoreDimensionsCmd;
+    delete fSlabDimensionsCmd;
     delete fOverlapCmd;
     delete fDetDir;
     delete fUSERDir;
@@ -61,7 +76,14 @@ namespace lmcp
   {
     if ( command == fOverlapCmd )
         { fDetectorConstruction->SetOverlapFlag( fOverlapCmd->GetNewBoolValue(newValue)); }
-    }
+    else if ( command == fSlabDimensionsCmd )
+        { fDetectorConstruction->SetSlabDimensions( fSlabDimensionsCmd->GetNew3VectorValue(newValue));}
+    else if ( command == fPoreDimensionsCmd )
+        { fDetectorConstruction->SetPoreDimensions( fPoreDimensionsCmd->GetNew3VectorRawValue(newValue));}
+    else if ( command == fLaminaThicknessCmd )
+        { fDetectorConstruction->SetLaminaThickness( fLaminaThicknessCmd->GetNewDoubleValue(newValue));}
+  }
+    
 
 }
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

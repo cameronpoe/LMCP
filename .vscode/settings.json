@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.topas": "topas",
+        "*.icc": "cpp",
+        "new": "cpp"
+    }
+}

@@ -22,6 +22,7 @@ class G4UIdirectory;
 class G4UIcmdWithABool;
 class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithoutParameter;
+class G4UIcmdWith3VectorAndUnit;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 namespace lmcp
@@ -50,6 +51,9 @@ namespace lmcp
       G4UIdirectory* fDetDir = nullptr;
       
       G4UIcmdWithABool* fOverlapCmd = nullptr;
+      G4UIcmdWith3VectorAndUnit* fSlabDimensionsCmd = nullptr;
+      G4UIcmdWith3VectorAndUnit* fPoreDimensionsCmd = nullptr;
+      G4UIcmdWithADoubleAndUnit* fLaminaThicknessCmd = nullptr;
   };
 
 }
