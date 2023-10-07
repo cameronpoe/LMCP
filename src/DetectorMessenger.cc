@@ -46,14 +46,27 @@ namespace lmcp
     fSlabDimensionsCmd = new G4UIcmdWith3VectorAndUnit("/user/det/setSlabDimensions",this);
     fSlabDimensionsCmd->SetGuidance("Sets length of LMCP slab in x, y, and z.");
     fSlabDimensionsCmd->SetParameterName("dimX", "dimY", "dimZ", false);
+    fSlabDimensionsCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
     fPoreDimensionsCmd = new G4UIcmdWith3VectorAndUnit("/user/det/setPoreDimensions",this);
     fPoreDimensionsCmd->SetGuidance("Sets length of pore in x, y, and z.");
     fPoreDimensionsCmd->SetParameterName("dimX", "dimY", "dimZ", false);
+    fPoreDimensionsCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-    fLaminaThicknessCmd = new G4UIcmdWithADoubleAndUnit("/user/det/setLaminaThickness",this);
-    fLaminaThicknessCmd->SetGuidance("Sets the thickness of lamina (substrate between pores).");
-    fLaminaThicknessCmd->SetParameterName("thickness", false);
+    fWallThicknessCmd = new G4UIcmdWithADoubleAndUnit("/user/det/setLaminaThickness",this);
+    fWallThicknessCmd->SetGuidance("Sets the thickness of pore wall (substrate between pores).");
+    fWallThicknessCmd->SetParameterName("thickness", false);
+    fWallThicknessCmd->SetUnitCategory("Length");
+    fWallThicknessCmd->SetRange("thickness>0.0");
+    fWallThicknessCmd->SetDefaultValue(0.1524);
+    fWallThicknessCmd->SetDefaultUnit("mm");
+    fWallThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+    fUpdateCmd = new G4UIcmdWithoutParameter("/user/det/update",this);
+    fUpdateCmd->SetGuidance("Update geometry.");
+    fUpdateCmd->SetGuidance("This command MUST be applied before \"beamOn\" ");
+    fUpdateCmd->SetGuidance("if you changed geometrical value(s).");
+    fUpdateCmd->AvailableForStates(G4State_Idle);
   }
 
   //****************************************************************************
@@ -61,7 +74,8 @@ namespace lmcp
   //****************************************************************************
   DetectorMessenger::~DetectorMessenger() {
 
-    delete fLaminaThicknessCmd;
+    delete fUpdateCmd;
+    delete fWallThicknessCmd;
     delete fPoreDimensionsCmd;
     delete fSlabDimensionsCmd;
     delete fOverlapCmd;
@@ -80,8 +94,10 @@ namespace lmcp
         { fDetectorConstruction->SetSlabDimensions( fSlabDimensionsCmd->GetNew3VectorValue(newValue));}
     else if ( command == fPoreDimensionsCmd )
         { fDetectorConstruction->SetPoreDimensions( fPoreDimensionsCmd->GetNew3VectorRawValue(newValue));}
-    else if ( command == fLaminaThicknessCmd )
-        { fDetectorConstruction->SetLaminaThickness( fLaminaThicknessCmd->GetNewDoubleValue(newValue));}
+    else if ( command == fWallThicknessCmd )
+        { fDetectorConstruction->SetWallThickness( fWallThicknessCmd->GetNewDoubleValue(newValue));}
+    else if ( command == fUpdateCmd ) 
+        { fDetectorConstruction->UpdateGeometry();}
   }
     
 

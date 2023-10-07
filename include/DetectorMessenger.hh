@@ -53,7 +53,8 @@ namespace lmcp
       G4UIcmdWithABool* fOverlapCmd = nullptr;
       G4UIcmdWith3VectorAndUnit* fSlabDimensionsCmd = nullptr;
       G4UIcmdWith3VectorAndUnit* fPoreDimensionsCmd = nullptr;
-      G4UIcmdWithADoubleAndUnit* fLaminaThicknessCmd = nullptr;
+      G4UIcmdWithADoubleAndUnit* fWallThicknessCmd = nullptr;
+      G4UIcmdWithoutParameter*   fUpdateCmd = nullptr;
   };
 
 }

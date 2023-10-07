@@ -63,7 +63,7 @@ namespace lmcp
       void SetOverlapFlag( G4bool flag ) {fCheckOverlaps = flag;};  
       void SetSlabDimensions( G4ThreeVector dimensions );
       void SetPoreDimensions( G4ThreeVector dimensions );
-      void SetLaminaThickness( G4double thickness );       
+      void SetWallThickness( G4double thickness );       
 
       //Setup the required objects of the FIRST local field
       G4ElectricField*        fEMfield_1;
@@ -99,28 +99,7 @@ namespace lmcp
       G4bool        fCheckOverlaps    = false; 
       G4ThreeVector fSlabDimensions   = G4ThreeVector(2.54*cm, 2.54*cm, 2.54*cm);
       G4ThreeVector fPoreDimensions   = G4ThreeVector(2.54*mm, 0.0508*mm, 2.54*cm);
-      G4double      fLaminaThickness  = 0.1524*mm;
-
-      G4VSolid*             fWorld_S      = nullptr;
-      G4VSolid*             fLMCP_S       = nullptr;
-      G4VSolid*             fLamina_S     = nullptr;
-      G4VSolid*             fDivLamina_S  = nullptr;
-      G4VSolid*             fPore_S       = nullptr;
-
-      G4LogicalVolume*      fWorld_LV     = nullptr;
-      G4LogicalVolume*      fLMCP_LV      = nullptr;
-      G4LogicalVolume*      fLamina_LV    = nullptr;
-      G4LogicalVolume*      fDivLamina_LV = nullptr;
-      G4LogicalVolume*      fPore_LV      = nullptr;
-
-      G4VPhysicalVolume*    fWorld_PV     = nullptr;
-      G4VPhysicalVolume*    fLMCP_PV      = nullptr;
-      G4PVReplica*          fLamina_PV    = nullptr;
-      G4PVReplica*          fDivLamina_PV = nullptr;
-      G4VPhysicalVolume*    fPore_PV      = nullptr;
-
-      G4VSensitiveDetector* fLMCP_SD      = nullptr;
-      G4VSensitiveDetector* fPore_SD      = nullptr;
+      G4double      fWallThickness  = 0.1524*mm;
 
       // G4LogicalVolume* fScoringVolume = nullptr;
   };
