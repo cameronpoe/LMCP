@@ -98,7 +98,7 @@ namespace lmcp
 
       G4bool        fCheckOverlaps    = false; 
       G4ThreeVector fSlabDimensions   = G4ThreeVector(2.54*cm, 2.54*cm, 2.54*cm);
-      G4ThreeVector fPoreDimensions   = G4ThreeVector(2.54*mm, 0.0508*mm, 2.54*cm);
+      G4ThreeVector fPoreDimensions   = G4ThreeVector(2.54*mm, 0.0508*mm, 0.0508*cm);
       G4double      fWallThickness  = 0.1524*mm;
 
       // G4LogicalVolume* fScoringVolume = nullptr;
