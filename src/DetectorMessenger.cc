@@ -53,7 +53,7 @@ namespace lmcp
     fPoreDimensionsCmd->SetParameterName("dimX", "dimY", "dimZ", false);
     fPoreDimensionsCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-    fWallThicknessCmd = new G4UIcmdWithADoubleAndUnit("/user/det/setLaminaThickness",this);
+    fWallThicknessCmd = new G4UIcmdWithADoubleAndUnit("/user/det/setWallThickness",this);
     fWallThicknessCmd->SetGuidance("Sets the thickness of pore wall (substrate between pores).");
     fWallThicknessCmd->SetParameterName("thickness", false);
     fWallThicknessCmd->SetUnitCategory("Length");
