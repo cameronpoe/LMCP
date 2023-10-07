@@ -4,7 +4,7 @@ import numpy as np
 output_file_name = r'macros/Run_var_dims_rot_source.mac'
 num_events = 100000
 threads = 60
-wall_thicknesses = np.linspace(5, 200, 40, dtype=int)
+wall_thicknesses = np.linspace(10, 200, 39, dtype=int)
 source_distance_from_lmcp_center = 22       # mm
 theta_increment = 3     # degrees (multiple of 90)
 SINGLE_AZIMUTH = True
