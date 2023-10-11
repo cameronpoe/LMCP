@@ -35,6 +35,11 @@
 #/user/phy/setPhysics Option2
 
 ######################################################
+## Changing geometry tests
+######################################################
+#/user/det/setWallThickness 5 mm
+
+######################################################
 ## Initialize kernel
 ######################################################
 /run/initialize
@@ -47,7 +52,7 @@
 ######################################################
 ## test run
 ######################################################
-/control/execute ../macros/test.mac
+#/control/execute ../macros/test.mac
 #/control/execute ../macros/Run_single_azimuth_rot_source_VIS_TEST.mac
 #/control/execute ../macros/Run_diff_thicknesses_VIS_TEST.mac
 

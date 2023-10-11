@@ -41,6 +41,8 @@ namespace lmcp
 {
 
   class DetectorMessenger;
+  class LaminaSD;
+  class PoreSD;
 
   //****************************************************************************
   /// Detector construction class to define materials and geometry.
@@ -96,9 +98,12 @@ namespace lmcp
 
       DetectorMessenger* fDetMessenger = nullptr;   // messenger
 
+      static G4ThreadLocal LaminaSD* fLMCP_SD;
+      static G4ThreadLocal PoreSD* fPORE_SD;
+
       G4bool        fCheckOverlaps    = false; 
       G4ThreeVector fSlabDimensions   = G4ThreeVector(2.54*cm, 2.54*cm, 2.54*cm);
-      G4ThreeVector fPoreDimensions   = G4ThreeVector(2.54*mm, 0.0508*mm, 0.0508*cm);
+      G4ThreeVector fPoreDimensions   = G4ThreeVector(0.0508*mm, 0.0508*mm, 2.54*cm);
       G4double      fWallThickness  = 0.1524*mm;
 
       // G4LogicalVolume* fScoringVolume = nullptr;

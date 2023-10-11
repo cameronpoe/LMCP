@@ -17,7 +17,11 @@
 #include "LaminaSD.hh"
 #include "PoreSD.hh"
 
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+#else
 #include "G4RunManager.hh"
+#endif
 #include "G4UImanager.hh"
 #include "G4GeometryManager.hh"
 #include "G4PhysicalVolumeStore.hh"
@@ -59,6 +63,7 @@
 #include "G4SimpleRunge.hh"
 #include "G4SimpleHeum.hh"
 #include "G4ClassicalRK4.hh"
+#include "G4DormandPrince745.hh"
 #include "G4HelixExplicitEuler.hh"
 #include "G4HelixImplicitEuler.hh"
 #include "G4HelixSimpleRunge.hh"
@@ -74,6 +79,10 @@
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 namespace lmcp
 {
+  // G4ThreadLocal SensitiveDetector* DetectorConstruction::SD = nullptr;
+  G4ThreadLocal LaminaSD* DetectorConstruction::fLMCP_SD = nullptr;
+  G4ThreadLocal PoreSD* DetectorConstruction::fPORE_SD = nullptr;
+
 
   //****************************************************************************
   // Constructor
@@ -86,12 +95,12 @@ namespace lmcp
   fFieldMgr_1(0),
   fMinStep_1(0),
   fChordFinder_1(0),
-  // fEMfield_2(0),
-  // fEquation_2(0),
-  // fStepper_2(0),
-  // fFieldMgr_2(0),
-  // fMinStep_2(0),
-  // fChordFinder_2(0),
+  fEMfield_2(0),
+  fEquation_2(0),
+  fStepper_2(0),
+  fFieldMgr_2(0),
+  fMinStep_2(0),
+  fChordFinder_2(0),
   fEMfield_WORLD(0),
   fEquation_WORLD(0),
   fStepper_WORLD(0),
@@ -99,6 +108,12 @@ namespace lmcp
   fMinStep_WORLD(0),
   fChordFinder_WORLD(0)
   {
+    // Define materials 
+    DefineMaterials();
+
+    // G4GeometryManager::GetInstance()->SetWorldMaximumExtent(WorldExtent);
+    
+    // create commands for interactive definition of the geometry
     fDetMessenger = new DetectorMessenger(this);
   }
 
@@ -115,13 +130,8 @@ namespace lmcp
   //****************************************************************************
   G4VPhysicalVolume* DetectorConstruction::Construct()
   {
-
-    // Define materials 
-    DefineMaterials();
-    
     // Define volumes
     return DefineVolumes();
-
   }
 
   //****************************************************************************
@@ -498,10 +508,7 @@ namespace lmcp
   //****************************************************************************
   void DetectorConstruction::ConstructSDandField()
   {
-    auto SDManager = G4SDManager::GetSDMpointer();
     auto LVS = G4LogicalVolumeStore::GetInstance();
-
-    SDManager->SetVerboseLevel(2);
 
     //---------------------------------------------------------
     //This is the first local electric field(Box_1)
@@ -510,12 +517,13 @@ namespace lmcp
     fEquation_1 = new G4EqMagElectricField(fEMfield_1);
 
     G4int nvar1 = 8;
-    fStepper_1 = new G4ClassicalRK4(fEquation_1,nvar1);
+    // fStepper_1 = new G4ClassicalRK4(fEquation_1,nvar1);
+    fStepper_1 = new G4DormandPrince745(fEquation_1,nvar1);
 
     auto localFieldMgr_1 = new G4FieldManager(fEMfield_1);
     LVS->GetVolume( "Pore_LV" )->SetFieldManager(localFieldMgr_1,true);
 
-    fMinStep_1 = 0.0001*mm ; // minimal step of 0.1 microns
+    fMinStep_1 = 0.00001*mm ; // minimal step of 0.01 microns
 
     auto fIntgrDriver_1 = new G4MagInt_Driver(fMinStep_1,fStepper_1,fStepper_1->GetNumberOfVariables());
 
@@ -533,14 +541,15 @@ namespace lmcp
     fEquation_2 = new G4EqMagElectricField(fEMfield_2);
 
     G4int nvar2 = 8;
-    fStepper_2 = new G4ClassicalRK4(fEquation_2,nvar2);
+    // fStepper_2 = new G4ClassicalRK4(fEquation_2,nvar2);
+    fStepper_2 = new G4DormandPrince745(fEquation_2,nvar2);
 
     auto localFieldMgr_2 = new G4FieldManager(fEMfield_2);
     LVS->GetVolume( "LMCP_LV" )->SetFieldManager(localFieldMgr_2,true);
     LVS->GetVolume( "Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
     LVS->GetVolume( "Div_Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
 
-    fMinStep_2 = 0.0001*mm ; // minimal step of 0.1 microns
+    fMinStep_2 = 0.00001*mm ; // minimal step of 0.01 microns
 
     auto fIntgrDriver_2 = new G4MagInt_Driver(fMinStep_2,fStepper_2,fStepper_2->GetNumberOfVariables());
 
@@ -559,7 +568,8 @@ namespace lmcp
     fEquation_WORLD = new G4EqMagElectricField(fEMfield_WORLD);
 
     G4int nvar3 = 8;
-    fStepper_WORLD = new G4ClassicalRK4(fEquation_WORLD,nvar3);
+    // fStepper_WORLD = new G4ClassicalRK4(fEquation_WORLD,nvar3);
+    fStepper_WORLD = new G4DormandPrince745(fEquation_WORLD,nvar3);
 
     // Get the global field manager
     auto fFieldManager= G4TransportationManager::GetTransportationManager()->GetFieldManager();
@@ -579,23 +589,39 @@ namespace lmcp
     //----------------------------------------------------------
     //----------------------------------------------------------
 
+    auto SDManager = G4SDManager::GetSDMpointer();
+
+    SDManager->SetVerboseLevel(2);
+
     //----------------------------------
     // Sensitive detectors
     //----------------------------------
-    auto LMCP_SD = new LaminaSD( "LMCP_Det" );
-    SDManager->AddNewDetector( LMCP_SD );
-    LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( LMCP_SD );
-    LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( LMCP_SD );
+    if (fLMCP_SD == nullptr) {
+      fLMCP_SD = new LaminaSD( "LMCP_Det" );
+      SDManager->AddNewDetector( fLMCP_SD );
+      // LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
+      // LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
+      SetSensitiveDetector( "Lamina_LV", fLMCP_SD, true );
+      SetSensitiveDetector( "Div_Lamina_LV", fLMCP_SD, true );
+    }
 
-    auto pore_SD = new PoreSD( "PORE_Det" );
-    SDManager->AddNewDetector( pore_SD );
-    LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( pore_SD );
+    if (fPORE_SD == nullptr) {
+      fPORE_SD = new PoreSD( "PORE_Det" );
+      SDManager->AddNewDetector( fPORE_SD );
+      // LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( fPORE_SD );
+      SetSensitiveDetector( "Pore_LV", fPORE_SD, true );
+    }
 
   }
 
   void DetectorConstruction::UpdateGeometry() {
-    G4RunManager::GetRunManager()->GeometryHasBeenModified();
+    #ifdef G4MULTITHREADED
+    G4MTRunManager::GetRunManager()->ReinitializeGeometry();
+    G4MTRunManager::GetRunManager()->PhysicsHasBeenModified();
+    #else
     G4RunManager::GetRunManager()->ReinitializeGeometry();
+    G4RunManager::GetRunManager()->PhysicsHasBeenModified();
+    #endif
   }
 
   void DetectorConstruction::SetSlabDimensions( G4ThreeVector dimensions ) {

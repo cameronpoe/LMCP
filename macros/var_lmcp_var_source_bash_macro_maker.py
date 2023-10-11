@@ -1,17 +1,71 @@
 # Helper script to generate a Geant4 macro file with a rotating source.
 import numpy as np
+import os
+import shutil
 
-output_file_name = r'macros/Run_var_dims_rot_source.mac'
-num_events = 50000
-threads = 7
-wall_thicknesses = np.linspace(150, 150, 1, dtype=int)
+####################################
+###          PARAMETERS          ###
+####################################
+
+root_output_dir = r'raw_data/latest_run'
+num_events = 500000
+threads = 62
+wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
 source_distance_from_lmcp_center = 22       # mm
 theta_increment = 3     # degrees (multiple of 90)
 SINGLE_AZIMUTH = True
 phi_increment = 3       # degrees (multiple of 90)
 
-with open(output_file_name, 'w') as f:
-    f.write(f'''######################################################
+
+
+
+
+####################################
+###             CODE             ###
+####################################
+
+cur_directory = os.path.dirname(os.path.realpath(__file__))
+new_folder_name = 'multi_macros'
+new_folder_path = os.path.join(cur_directory, new_folder_name)
+try:
+    os.mkdir(new_folder_path)
+except:
+    shutil.rmtree(new_folder_path)
+    os.mkdir(new_folder_path)
+
+root_output_dir = os.path.realpath(root_output_dir)
+shutil.rmtree(root_output_dir)
+os.mkdir(root_output_dir)
+
+new_sh_name = 'run_multi_macros.sh'
+new_sh_path = os.path.join(cur_directory, new_sh_name)
+with open(new_sh_path, 'w') as f:
+    f.write(f'''#!/bin/bash
+
+cd {new_folder_name}
+
+shopt -s nullglob
+for file in ./*
+do
+    ../../build/startSIM -m "$file"
+done
+shopt -u nullglob #revert nullglob back to it's normal default state
+
+''')
+
+for wall_num, wall_thickness in enumerate(wall_thicknesses):
+
+    output_file_name = f'Run_wall{wall_num}.mac'
+    output_file_path = os.path.join(new_folder_path, output_file_name)
+    
+    with open(output_file_path, 'w') as f:
+        f.write(f'''######################################################
+## Wall thickness: {round(wall_thickness, 3)} um
+## Pore dimensions: xxx
+## Slab dimensions: xxx
+######################################################
+
+######################################################
 ## redirect output from each thread
 ######################################################
 /control/cout/setCoutFile lmcp.out
@@ -32,9 +86,10 @@ with open(output_file_name, 'w') as f:
 /run/numberOfThreads {threads}
 
 ######################################################
-## Overlap Checking
+## Detector parameters
 ######################################################
 /user/det/setOverlapChecking false
+/user/det/setWallThickness {round(wall_thickness, 3)} um
 
 ######################################################
 ## Physics
@@ -71,18 +126,9 @@ with open(output_file_name, 'w') as f:
 /random/setSeeds 165127 668831
 
 ######################################################
-# START WALL THICKNESS LOOPS
-######################################################            
-''')
-    
-    for wall_thickness in wall_thicknesses:
-        f.write(f'''/user/det/setWallThickness {wall_thickness} um
-/user/det/update
-                
-######################################################
 # START ANGULAR LOOPS
-######################################################            
-# ''')
+######################################################             
+''')
 
         if SINGLE_AZIMUTH:
             phis = np.array([0])
@@ -103,8 +149,9 @@ with open(output_file_name, 'w') as f:
                 f.write(f'''# Azimuth: {phi} deg, Zenith: {theta} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName ../data/eff_v_angle_data/Run_wall{wall_thickness}_theta{i}_phi{j}.root
+/analysis/setFileName {root_output_dir}/Run_w{wall_thickness}_theta{i}_phi{j}.root
 /run/printProgress 10000
 /run/beamOn {num_events}
 
 ''')
+                
