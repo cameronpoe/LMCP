@@ -13,7 +13,7 @@ num_events = 500000
 wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
 #wall_thicknesses = np.array([150])
 source_distance_from_lmcp_center = 22       # mm
-theta_increment = 5     # degrees (factor of 90)
+theta_increment = 3     # degrees (factor of 90)
 phi_increment = 3       # degrees (factor of 90)
 SINGLE_AZIMUTH = True
 

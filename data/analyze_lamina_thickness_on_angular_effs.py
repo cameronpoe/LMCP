@@ -7,7 +7,7 @@ from scipy.interpolate import splrep, BSpline, CubicSpline
 
 ########### PARAMETERS ###########
 num_events = 10000
-parent_directory = r'data/single_azimuth_lamina_thickness_tests/pbglass_data/'
+parent_directory = r'raw_data/single_azimuth_lamina_thickness_tests/pbglass_data/'
 num_diff_thetas = 31
 ##################################
 
@@ -36,7 +36,7 @@ for data_directory in os.listdir(parent_directory):
 
             num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
                   
-            eff = num_events_reached_pore/num_events*100
+            eff = num_events_reached_pore/num_events
 
             eff_v_angle[theta_ind] = eff
     
@@ -44,7 +44,7 @@ for data_directory in os.listdir(parent_directory):
         lamina_thickness = float(data_directory[:-8])
         thicknesses.append(lamina_thickness)
         eff_v_angle_tables.append(eff_v_angle)
-        single_integral = trapezoid(eff_v_angle, x=angle_domain)
+        single_integral = (1/90)*trapezoid(eff_v_angle, x=angle_domain)
         integrals.append(single_integral)
 
 thicknesses = np.array(thicknesses)
@@ -84,7 +84,7 @@ ax.xaxis.set_ticks_position('both')
 ax.yaxis.set_ticks_position('both')
 plt.minorticks_on()
 
-spline_tuple = splrep(thicknesses, integrals, k=3, s=10000)
+spline_tuple = splrep(thicknesses, integrals, k=3)
 data_bspline = BSpline(*spline_tuple)
 ddata_bspline = data_bspline.derivative()
 spline_domain = np.linspace(thicknesses[0], thicknesses[-1], 1000)
