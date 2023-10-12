@@ -1,12 +1,12 @@
 # Helper script to generate a Geant4 macro file with a rotating source.
 import numpy as np
 
-output_file_name = r'macros/Run_var_dims_rot_source.mac'
+output_file_name = r'Run_var_dims_rot_source_new.mac'
 num_events = 50000
-threads = 7
+threads = 60
 wall_thicknesses = np.linspace(150, 150, 1, dtype=int)
 source_distance_from_lmcp_center = 22       # mm
-theta_increment = 3     # degrees (multiple of 90)
+theta_increment = 5     # degrees (multiple of 90)
 SINGLE_AZIMUTH = True
 phi_increment = 3       # degrees (multiple of 90)
 
@@ -76,8 +76,8 @@ with open(output_file_name, 'w') as f:
 ''')
     
     for wall_thickness in wall_thicknesses:
-        f.write(f'''/user/det/setWallThickness {wall_thickness} um
-/user/det/update
+        f.write(f'''#/user/det/setWallThickness {wall_thickness} um
+#/user/det/update
                 
 ######################################################
 # START ANGULAR LOOPS
@@ -103,7 +103,7 @@ with open(output_file_name, 'w') as f:
                 f.write(f'''# Azimuth: {phi} deg, Zenith: {theta} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName ../data/eff_v_angle_data/Run_wall{wall_thickness}_theta{i}_phi{j}.root
+/analysis/setFileName ../raw_data/latest_run/Run_wall{wall_thickness}_theta{i}_phi{j}.root
 /run/printProgress 10000
 /run/beamOn {num_events}
 

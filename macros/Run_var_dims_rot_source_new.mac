@@ -1,0 +1,201 @@
+######################################################
+## redirect output from each thread
+######################################################
+/control/cout/setCoutFile lmcp.out
+/control/cout/setCerrFile lmcp.err
+
+######################################################
+## Verbosity
+######################################################
+/control/verbose 0
+/process/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+######################################################
+## Change the default number of threads (in multi-threaded mode)
+######################################################
+/run/numberOfThreads 60
+
+######################################################
+## Overlap Checking
+######################################################
+/user/det/setOverlapChecking false
+
+######################################################
+## Physics
+# Option0 - Electromagnetic
+# Option1 - Electromagnetic & Hadronic
+# Option2 - Electromagnetic & Hadronic with high precision option
+######################################################
+#/user/phy/setPhysics Option0
+/user/phy/setPhysics Option1
+#/user/phy/setPhysics Option2
+
+######################################################
+## Initialize kernel
+######################################################
+/run/initialize
+
+######################################################
+# Source Particle
+######################################################
+/gps/particle gamma
+/gps/ene/mono 511. keV
+
+######################################################
+# Source Geometry
+######################################################
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/halfx 2. mm
+/gps/pos/halfy 2. mm
+
+######################################################
+# RANDOM NUMBER
+######################################################
+/random/setSeeds 165127 668831
+
+######################################################
+# START WALL THICKNESS LOOPS
+######################################################            
+#/user/det/setWallThickness 150 um
+#/user/det/update
+                
+######################################################
+# START ANGULAR LOOPS
+######################################################            
+# # Azimuth: 0 deg, Zenith: 0.0 deg
+/gps/pos/centre 0.0 0.0 22.0 mm
+/gps/direction -0.0 -0.0 -1.0
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta0_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 5.0 deg
+/gps/pos/centre 1.91743 0.0 21.91628 mm
+/gps/direction -0.08716 -0.0 -0.99619
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta1_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 10.0 deg
+/gps/pos/centre 3.82026 0.0 21.66577 mm
+/gps/direction -0.17365 -0.0 -0.98481
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta2_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 15.0 deg
+/gps/pos/centre 5.69402 0.0 21.25037 mm
+/gps/direction -0.25882 -0.0 -0.96593
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta3_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 20.0 deg
+/gps/pos/centre 7.52444 0.0 20.67324 mm
+/gps/direction -0.34202 -0.0 -0.93969
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta4_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 25.0 deg
+/gps/pos/centre 9.2976 0.0 19.93877 mm
+/gps/direction -0.42262 -0.0 -0.90631
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta5_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 30.0 deg
+/gps/pos/centre 11.0 0.0 19.05256 mm
+/gps/direction -0.5 -0.0 -0.86603
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta6_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 35.0 deg
+/gps/pos/centre 12.61868 0.0 18.02134 mm
+/gps/direction -0.57358 -0.0 -0.81915
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta7_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 40.0 deg
+/gps/pos/centre 14.14133 0.0 16.85298 mm
+/gps/direction -0.64279 -0.0 -0.76604
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta8_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 45.0 deg
+/gps/pos/centre 15.55635 0.0 15.55635 mm
+/gps/direction -0.70711 -0.0 -0.70711
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta9_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 50.0 deg
+/gps/pos/centre 16.85298 0.0 14.14133 mm
+/gps/direction -0.76604 -0.0 -0.64279
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta10_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 55.0 deg
+/gps/pos/centre 18.02134 0.0 12.61868 mm
+/gps/direction -0.81915 -0.0 -0.57358
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta11_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 60.0 deg
+/gps/pos/centre 19.05256 0.0 11.0 mm
+/gps/direction -0.86603 -0.0 -0.5
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta12_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 65.0 deg
+/gps/pos/centre 19.93877 0.0 9.2976 mm
+/gps/direction -0.90631 -0.0 -0.42262
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta13_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 70.0 deg
+/gps/pos/centre 20.67324 0.0 7.52444 mm
+/gps/direction -0.93969 -0.0 -0.34202
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta14_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 75.0 deg
+/gps/pos/centre 21.25037 0.0 5.69402 mm
+/gps/direction -0.96593 -0.0 -0.25882
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta15_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 80.0 deg
+/gps/pos/centre 21.66577 0.0 3.82026 mm
+/gps/direction -0.98481 -0.0 -0.17365
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta16_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 85.0 deg
+/gps/pos/centre 21.91628 0.0 1.91743 mm
+/gps/direction -0.99619 -0.0 -0.08716
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta17_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
+# Azimuth: 0 deg, Zenith: 90.0 deg
+/gps/pos/centre 22.0 0.0 0.0 mm
+/gps/direction -1.0 -0.0 -0.0
+/analysis/setFileName ../raw_data/latest_run/Run_wall150_theta18_phi0.root
+/run/printProgress 10000
+/run/beamOn 50000
+
