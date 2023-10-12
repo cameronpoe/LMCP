@@ -1,11 +1,29 @@
 #!/bin/bash
 
-cd multi_macros
+a=(/home/cameronpoe/Desktop/hybrid_gamma_multiplier/hgmt_sim_geant/LMCP_Full/macros/multi_macros/*)
+N=${#a[@]}
 
-shopt -s nullglob
-for file in ./*
+threads=7
+iter=$((N/threads))
+max_full=$((threads*iter))
+
+num_files=0
+counter=0
+while [ $counter -le $iter ]
 do
-    ../../build/startSIM -m "$file"
-done
-shopt -u nullglob #revert nullglob back to it's normal default state
+    if [ $counter -eq $iter ] 
+    then
+        subset=(${a[@]:$max_full})
+    else
+        start=$((counter*threads))
+        subset=(${a[@]:start:$threads})
+    fi
+    
+    for var in "${subset[@]}"
+    do 
+        ../build/startSIM -m "$var" &
+    done
+    wait
 
+    ((counter++))
+done

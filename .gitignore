@@ -1,3 +1,4 @@
 *.root
 build/*
 raw_data/*
+macros/multi_macros/*
