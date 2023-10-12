@@ -2,10 +2,10 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/ecomass/'
+data_directory = r'../raw_data/g4_glass_lead_old/'
 num_histories_per_run = 500000
 wall_array = np.linspace(10, 200, 20)
-theta_increment = 5
+theta_increment = 3
 phi_increment = 3
 SINGLE_AZIMUTH = True
 
@@ -36,4 +36,4 @@ for file_name in os.listdir(data_directory):
 
             eff_v_angle[wall_ind][theta_ind][phi_ind] = eff
 
-np.save('eff_v_angle_per_wall_ecomass', eff_v_angle)
+np.save('eff_v_angle_per_wall_g4glasslead-old', eff_v_angle)
