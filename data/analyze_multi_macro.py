@@ -2,7 +2,7 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r''
+data_directory = r'../raw_data/g4_glass_lead_var/'
 num_histories_per_run = 500000
 wall_array = np.linspace(10, 200, 20)
 theta_increment = 5
@@ -11,12 +11,12 @@ SINGLE_AZIMUTH = True
 
 
 
-theta_array = np.linspace(0, 90, 90/theta_increment + 1)
-phi_array = np.linspace(0, 90, 90/phi_increment + 1)
+theta_array = np.linspace(0, 90, int(90/theta_increment + 1))
+phi_array = np.linspace(0, 90, int(90/phi_increment + 1))
 if SINGLE_AZIMUTH:
       phi_array = np.array([0])
 
-eff_v_angle = np.empty(len(wall_array), len(theta_array), len(phi_array))
+eff_v_angle = np.empty((len(wall_array), len(theta_array), len(phi_array)))
 
 for file_name in os.listdir(data_directory):
 
@@ -26,7 +26,7 @@ for file_name in os.listdir(data_directory):
             
             fname_components = file_name.split('_')
 
-            wall_ind = int(fname_components[1][1:])
+            wall_ind = int(int(fname_components[1][1:])/10 - 1)
             theta_ind = int(fname_components[2][5:])
             phi_ind = int(fname_components[3][3:-5])
 
