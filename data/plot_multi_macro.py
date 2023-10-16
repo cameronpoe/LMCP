@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from scipy.integrate import trapezoid
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r'data/eff_v_angle_per_wall_ecomass.npy'
+table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead-old.npy'
 phi_ind = 0
 wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
 
@@ -13,7 +13,7 @@ wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
 table = np.load(table_path)
 
 integrated_effs = []
-zenith_angles = np.linspace(0,90,19, dtype=int)
+zenith_angles = np.linspace(0,90,31, dtype=int)
 for effs in table[:,:,0]:
     avg_eff = (1/90)*trapezoid(effs, zenith_angles)
     integrated_effs.append(avg_eff)

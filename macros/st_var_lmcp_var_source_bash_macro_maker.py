@@ -7,13 +7,16 @@ import shutil
 ###          PARAMETERS          ###
 ####################################
 
-root_output_dir = r'../raw_data/latest_run'
+root_output_dir = r'raw_data/latest_run'
 max_threads = 60
 num_events = 500000
-wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
-#wall_thicknesses = np.array([150])
+lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
+pore_widths = np.linspace(5, 70, 14, dtype=int)             # um
+# wall_thicknesses = np.linspace(10, 200, 20, dtype=int)      # um
+wall_thicknesses = np.array([50])                             # um
+
 source_distance_from_lmcp_center = 22       # mm
-theta_increment = 3     # degrees (factor of 90)
+theta_increment = 5     # degrees (factor of 90)
 phi_increment = 3       # degrees (factor of 90)
 SINGLE_AZIMUTH = True
 
@@ -78,23 +81,25 @@ else:
 
 for wall_num, wall_thickness in enumerate(wall_thicknesses):
 
-    for i, theta in enumerate(thetas):
-        z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
-        for j, phi in enumerate(phis):
-            x = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.cos(np.pi*phi/180)
-            y = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.sin(np.pi*phi/180)
+    for pore_num, pore_width in enumerate(pore_widths):
 
-            rhat = np.array([
-                x/source_distance_from_lmcp_center,
-                y/source_distance_from_lmcp_center,
-                z/source_distance_from_lmcp_center
-            ])
+        for i, theta in enumerate(thetas):
+            z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
+            for j, phi in enumerate(phis):
+                x = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.cos(np.pi*phi/180)
+                y = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.sin(np.pi*phi/180)
 
-            output_file_name = f'Run_wall{wall_num}_theta{i}_phi{j}.mac'
-            output_file_path = os.path.join(new_folder_path, output_file_name)
-            
-            with open(output_file_path, 'w') as f:
-                f.write(f'''######################################################
+                rhat = np.array([
+                    x/source_distance_from_lmcp_center,
+                    y/source_distance_from_lmcp_center,
+                    z/source_distance_from_lmcp_center
+                ])
+
+                output_file_name = f'Run_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac'
+                output_file_path = os.path.join(new_folder_path, output_file_name)
+                
+                with open(output_file_path, 'w') as f:
+                    f.write(f'''######################################################
 ## Wall thickness: {round(wall_thickness, 3)} um
 ## Pore dimensions: xxx
 ## Slab dimensions: xxx
@@ -124,6 +129,8 @@ for wall_num, wall_thickness in enumerate(wall_thicknesses):
 ## Detector parameters
 ######################################################
 /user/det/setOverlapChecking false
+/user/det/setSlabDimensions {lmcp_dimensions[0]} {lmcp_dimensions[1]} {lmcp_dimensions[2]} cm
+/user/det/setPoreDimensions {pore_width*1e-4} {pore_width*1e-4} {lmcp_dimensions[2]} cm
 /user/det/setWallThickness {round(wall_thickness, 3)} um
 
 ######################################################
@@ -166,7 +173,7 @@ for wall_num, wall_thickness in enumerate(wall_thicknesses):
 # Azimuth: {phi} deg, Zenith: {theta} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName {root_output_dir}/Run_w{wall_thickness}_theta{i}_phi{j}.root
+/analysis/setFileName {root_output_dir}/Run_w{wall_thickness}_p{pore_width}_theta{i}_phi{j}.root
 /run/printProgress 10000
 /run/beamOn {num_events}
 
