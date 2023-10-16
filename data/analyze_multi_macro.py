@@ -4,8 +4,9 @@ import uproot
 
 data_directory = r'../raw_data/g4_glass_lead_old/'
 num_histories_per_run = 500000
-wall_array = np.linspace(10, 200, 20)
-theta_increment = 3
+wall_array = np.array([50])
+pore_array = np.linspace(5, 70, 14, dtype=int)
+theta_increment = 5
 phi_increment = 3
 SINGLE_AZIMUTH = True
 
@@ -16,7 +17,7 @@ phi_array = np.linspace(0, 90, int(90/phi_increment + 1))
 if SINGLE_AZIMUTH:
       phi_array = np.array([0])
 
-eff_v_angle = np.empty((len(wall_array), len(theta_array), len(phi_array)))
+eff_v_angle = np.empty((len(wall_array), len(pore_array), len(theta_array), len(phi_array)))
 
 for file_name in os.listdir(data_directory):
 
@@ -27,13 +28,14 @@ for file_name in os.listdir(data_directory):
             fname_components = file_name.split('_')
 
             wall_ind = int(int(fname_components[1][1:])/10 - 1)
-            theta_ind = int(fname_components[2][5:])
-            phi_ind = int(fname_components[3][3:-5])
+            pore_ind = int(int(fname_components[2][1:])/5 - 1)
+            theta_ind = int(fname_components[3][5:])
+            phi_ind = int(fname_components[4][3:-5])
 
             num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
                   
             eff = num_events_reached_pore/num_histories_per_run
 
-            eff_v_angle[wall_ind][theta_ind][phi_ind] = eff
+            eff_v_angle[wall_ind][pore_ind][theta_ind][phi_ind] = eff
 
-np.save('eff_v_angle_per_wall_g4glasslead-old', eff_v_angle)
+np.save(data_directory.split('/'), eff_v_angle)
