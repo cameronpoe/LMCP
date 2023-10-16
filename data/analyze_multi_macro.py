@@ -2,7 +2,7 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/g4_glass_lead_old/'
+data_directory = r'../raw_data/g4_glass_lead_varpore/'
 num_histories_per_run = 500000
 wall_array = np.array([50])
 pore_array = np.linspace(5, 70, 14, dtype=int)
@@ -27,7 +27,7 @@ for file_name in os.listdir(data_directory):
             
             fname_components = file_name.split('_')
 
-            wall_ind = int(int(fname_components[1][1:])/10 - 1)
+            wall_ind = 0 #int(int(fname_components[1][1:])/10 - 1)
             pore_ind = int(int(fname_components[2][1:])/5 - 1)
             theta_ind = int(fname_components[3][5:])
             phi_ind = int(fname_components[4][3:-5])
@@ -38,4 +38,4 @@ for file_name in os.listdir(data_directory):
 
             eff_v_angle[wall_ind][pore_ind][theta_ind][phi_ind] = eff
 
-np.save(data_directory.split('/'), eff_v_angle)
+np.save(data_directory.split('/')[-2], eff_v_angle)
