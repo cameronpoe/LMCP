@@ -2,7 +2,7 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/g4_glass_lead_varpore/'
+data_directory = r'../raw_data/g4_glass_lead_varpore_wide/'
 num_histories_per_run = 500000
 wall_array = np.array([50])
 pore_array = np.linspace(5, 80, 16, dtype=int)
