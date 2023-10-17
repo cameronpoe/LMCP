@@ -263,7 +263,7 @@ namespace lmcp
 
     auto pore_X = fPoreDimensions[0];
     auto pore_Y = fPoreDimensions[1];
-    auto pore_Z = fPoreDimensions[2];
+    auto pore_Z = fSlabDimensions[2];
 
     auto div_lamina_X = fPoreDimensions[0] + fWallThickness;
     auto div_lamina_Y = fPoreDimensions[1] + fWallThickness;
@@ -483,6 +483,16 @@ namespace lmcp
     //======================================================
     // Print some information
     //======================================================
+    G4cout << G4endl;
+    G4cout << "------ Wall Thickness: " << G4endl;
+    G4cout << "           T: " << fWallThickness/mm << " mm" << G4endl;
+
+    G4cout << G4endl;
+    G4cout << "------ Pore Dimensions: " << G4endl;
+    G4cout << "           X: " << pore_X/mm << " mm" << G4endl;
+    G4cout << "           Y: " << pore_Y/mm << " mm" << G4endl;
+    G4cout << "           (Z: " << pore_Z/mm << " mm)" << G4endl;
+
     G4cout << G4endl;
     G4cout << "------ LMCP Dimensions: " << G4endl;
     G4cout << "           X: " << lmcp_X/mm << " mm" << G4endl;
