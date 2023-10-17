@@ -5,7 +5,7 @@ import uproot
 data_directory = r'../raw_data/g4_glass_lead_varpore/'
 num_histories_per_run = 500000
 wall_array = np.array([50])
-pore_array = np.linspace(5, 70, 14, dtype=int)
+pore_array = np.linspace(5, 80, 16, dtype=int)
 theta_increment = 5
 phi_increment = 3
 SINGLE_AZIMUTH = True

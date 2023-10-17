@@ -11,7 +11,7 @@ root_output_dir = r'../raw_data/latest_run'
 max_threads = 60
 num_events = 500000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
-pore_widths = np.linspace(5, 70, 14, dtype=int)             # um
+pore_widths = np.linspace(5, 80, 16, dtype=int)             # um
 # wall_thicknesses = np.linspace(10, 200, 20, dtype=int)      # um
 wall_thicknesses = np.array([50])                             # um
 
