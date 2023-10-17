@@ -7,7 +7,7 @@ table_path = r'data/pore_width_optimization/g4_glass_lead_varpore.npy'
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 phi_ind = 0
 theta_spacing = 5   # deg
-pore_widths = np.linspace(5, 70, 14, dtype=int)
+pore_widths = np.linspace(5, 80, 16, dtype=int)
 wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
 dependent_var = 'pore'      # can be 'pore' or 'wall'
 
@@ -39,9 +39,6 @@ zenith_angles = np.linspace(0,90,int(90/theta_spacing+1), dtype=int)
 i = 0
 while i < table.shape[0]:
     effs = table[i,:]
-    fig, ax = plt.subplots()
-    ax.scatter(zenith_angles, effs)
-    plt.show()
     avg_eff = (1/90)*trapezoid(effs, zenith_angles)
     integrated_effs.append(avg_eff)
     i += 1
@@ -52,12 +49,12 @@ data_bspline = BSpline(*spline_tuple)
 ddata_bspline = data_bspline.derivative()
 spline_domain = np.linspace(worked_data[0,0], worked_data[-1,0], 1000)
 dcubic_spline = CubicSpline(spline_domain, ddata_bspline(spline_domain))
-# extrema = dcubic_spline.solve(0, extrapolate=False)[0]
+extrema = dcubic_spline.solve(0, extrapolate=False)[0]
 
 fig, ax = plt.subplots()
 ax.scatter(worked_data[:,0], worked_data[:,1], color='black', label='Raw data')
 ax.plot(spline_domain, data_bspline(spline_domain), color='red', label='Spline fit')
-# ax.axvline(extrema, label='Maximum: {:.2f} um'.format(extrema))
+ax.axvline(extrema, label='Maximum: {:.2f} um'.format(extrema))
 ax.set_xlabel(label, fontdict=dict(size=12))
 ax.set_ylabel('Average efficiency (zenith)', fontdict=dict(size=12))
 ax.legend()
