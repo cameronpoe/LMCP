@@ -93,7 +93,7 @@ namespace lmcp
     else if ( command == fSlabDimensionsCmd )
         { fDetectorConstruction->SetSlabDimensions( fSlabDimensionsCmd->GetNew3VectorValue(newValue));}
     else if ( command == fPoreDimensionsCmd )
-        { fDetectorConstruction->SetPoreDimensions( fPoreDimensionsCmd->GetNew3VectorRawValue(newValue));}
+        { fDetectorConstruction->SetPoreDimensions( fPoreDimensionsCmd->GetNew3VectorValue(newValue));}
     else if ( command == fWallThicknessCmd )
         { fDetectorConstruction->SetWallThickness( fWallThicknessCmd->GetNewDoubleValue(newValue));}
     else if ( command == fUpdateCmd ) 
