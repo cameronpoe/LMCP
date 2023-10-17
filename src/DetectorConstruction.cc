@@ -485,12 +485,12 @@ namespace lmcp
     //======================================================
     G4cout << G4endl;
     G4cout << "------ Wall Thickness: " << G4endl;
-    G4cout << "           T: " << fWallThickness/mm << " mm" << G4endl;
+    G4cout << "           T: " << fWallThickness/um << " um" << G4endl;
 
     G4cout << G4endl;
     G4cout << "------ Pore Dimensions: " << G4endl;
-    G4cout << "           X: " << pore_X/mm << " mm" << G4endl;
-    G4cout << "           Y: " << pore_Y/mm << " mm" << G4endl;
+    G4cout << "           X: " << pore_X/um << " um" << G4endl;
+    G4cout << "           Y: " << pore_Y/um << " um" << G4endl;
     G4cout << "           (Z: " << pore_Z/mm << " mm)" << G4endl;
 
     G4cout << G4endl;
@@ -499,7 +499,8 @@ namespace lmcp
     G4cout << "           Y: " << lmcp_Y/mm << " mm" << G4endl;
     G4cout << "           Z: " << lmcp_Z/mm << " mm" << G4endl;
 
-    G4cout << "------ WORLD Dimensions: " << G4endl;
+    G4cout << G4endl;
+    G4cout << "------ World Dimensions: " << G4endl;
     G4cout << "           X: " << world_X/mm << " mm" << G4endl;
     G4cout << "           Y: " << world_Y/mm << " mm" << G4endl;
     G4cout << "           Z: " << world_Z/mm << " mm" << G4endl;
