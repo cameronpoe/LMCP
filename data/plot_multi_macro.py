@@ -3,13 +3,14 @@ from matplotlib import pyplot as plt
 from scipy.integrate import trapezoid
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r'data/optimization_pore_width/g4_glass_lead_varpore.npy'
+table_path = r'data/optimization_wall_thickness/eff_v_angle_per_wall_b33.npy'
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 phi_ind = 0
 theta_spacing = 5   # deg
-pore_widths = np.linspace(5, 80, 16, dtype=int)
-wall_thicknesses = np.linspace(10, 200, 20, dtype=int)
-dependent_var = 'pore'      # can be 'pore' or 'wall'
+# pore_widths = np.linspace(5, 80, 16, dtype=int)
+pore_widths = np.array([150])
+wall_thicknesses = np.linspace(10, 300, 30, dtype=int)
+dependent_var = 'wall'      # can be 'pore' or 'wall'
 
 
 
@@ -25,8 +26,8 @@ if dependent_var == 'pore':
     worked_data[:,0] = pore_widths
     label = 'Pore widths (um)'
 elif dependent_var == 'wall':
-    # table = table[:,0,:,phi_ind]
-    table = table[:,:,phi_ind]
+    table = table[:,0,:,phi_ind]
+    # table = table[:,:,phi_ind]
     worked_data = np.empty((len(wall_thicknesses),2))
     worked_data[:,0] = wall_thicknesses
     label = 'Wall thicknesses (um)'
