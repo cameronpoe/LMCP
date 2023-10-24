@@ -10,10 +10,11 @@ import shutil
 root_output_dir = r'../raw_data/latest_run'
 max_threads = 62
 num_events = 500000
-lmcp_dimensions = np.array([8, 8, 2.54])              # cm
-pore_widths = np.linspace(5, 80, 16, dtype=int)             # um
-# wall_thicknesses = np.linspace(10, 200, 20, dtype=int)      # um
-wall_thicknesses = np.array([50])                             # um
+lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
+# pore_widths = np.linspace(5, 80, 16, dtype=int)             # um
+pore_widths = np.array([150])
+wall_thicknesses = np.linspace(10, 300, 30, dtype=int)      # um
+# wall_thicknesses = np.array([50])                             # um
 
 source_distance_from_lmcp_center = 22       # mm
 theta_increment = 5     # degrees (factor of 90)

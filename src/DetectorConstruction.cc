@@ -149,9 +149,11 @@ namespace lmcp
     auto isotopes = true;
     G4Element* eH  = nistManager -> FindOrBuildElement( "H" , isotopes ); // 1
     // G4Element* eBe = nistManager -> FindOrBuildElement( "Be", isotopes ); // 4
+    G4Element* eB  = nistManager -> FindOrBuildElement( "B" , isotopes );  // 5
     G4Element* eC  = nistManager -> FindOrBuildElement( "C" , isotopes ); // 6
     G4Element* eO  = nistManager -> FindOrBuildElement( "O" , isotopes ); // 8
     // G4Element* eF  = nistManager -> FindOrBuildElement( "F" , isotopes ); // 9
+    G4Element* eNa = nistManager -> FindOrBuildElement( "Na", isotopes ); // 11
     G4Element* eMg = nistManager -> FindOrBuildElement( "Mg", isotopes ); // 12
     G4Element* eAl = nistManager -> FindOrBuildElement( "Al", isotopes ); // 13
     G4Element* eSi = nistManager -> FindOrBuildElement( "Si", isotopes ); // 14
@@ -180,6 +182,17 @@ namespace lmcp
 
     // Pb-Glass
     nistManager -> FindOrBuildMaterial("G4_GLASS_LEAD");
+
+    // Schott B33 glass
+    G4Material* eSiO2  = nistManager -> FindOrBuildMaterial( "G4_SILICON_DIOXIDE" , isotopes );
+    G4Material* eB2O3  = nistManager -> FindOrBuildMaterial( "G4_BORON_OXIDE" , isotopes );
+    G4Material* eNa2O  = nistManager -> FindOrBuildMaterial( "G4_SODIUM_MONOXIDE" , isotopes );
+    G4Material* eAl2O3 = nistManager -> FindOrBuildMaterial( "G4_ALUMINUM_OXIDE" , isotopes );
+    auto mB33 = new G4Material( "B33", 2.23*g/cm3, 4 );
+      mB33->AddMaterial( eSiO2, 81*perCent);
+      mB33->AddMaterial( eB2O3, 13*perCent);
+      mB33->AddMaterial( eNa2O,  4*perCent);
+      mB33->AddMaterial( eAl2O3, 2*perCent);
 
     // Peek chemical formula (C19H12O3)
     //  C 114/150 = 76
@@ -249,7 +262,8 @@ namespace lmcp
     // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
     // auto mPCB = G4Material::GetMaterial( "PCB" );
 
-    auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
+    // auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
+    auto mLMCP = G4Material::GetMaterial( "B33" );
     //  auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
 
     //======================================================
