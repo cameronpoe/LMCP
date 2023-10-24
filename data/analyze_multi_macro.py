@@ -2,10 +2,12 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/g4_glass_lead_varpore_wide/'
+data_directory = r'../raw_data/b33_varwall/'
 num_histories_per_run = 500000
-wall_array = np.array([50])
-pore_array = np.linspace(5, 80, 16, dtype=int)
+wall_array = np.linspace(10, 300, 30, dtype=int)
+#wall_array = np.array([50])
+#pore_array = np.linspace(5, 80, 16, dtype=int)
+pore_array = np.array([150])
 theta_increment = 5
 phi_increment = 3
 SINGLE_AZIMUTH = True
@@ -27,8 +29,8 @@ for file_name in os.listdir(data_directory):
             
             fname_components = file_name.split('_')
 
-            wall_ind = 0 #int(int(fname_components[1][1:])/10 - 1)
-            pore_ind = int(int(fname_components[2][1:])/5 - 1)
+            wall_ind = int(int(fname_components[1][1:])/10 - 1)
+            pore_ind = 0 #int(int(fname_components[2][1:])/5 - 1)
             theta_ind = int(fname_components[3][5:])
             phi_ind = int(fname_components[4][3:-5])
 
