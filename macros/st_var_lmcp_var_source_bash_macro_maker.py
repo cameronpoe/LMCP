@@ -9,10 +9,10 @@ import shutil
 
 root_output_dir = r'../raw_data/latest_run'
 max_threads = 62
-num_events = 500000
+num_events = 250000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
-# pore_widths = np.linspace(5, 200, 40, dtype=int)             # um
-pore_widths = np.array([50])				   # um
+pore_widths = np.linspace(5, 295, 30, dtype=int)             # um
+# pore_widths = np.array([50])				   # um
 wall_thicknesses = np.linspace(10, 300, 30, dtype=int)      # um
 # wall_thicknesses = np.array([75])                             # um
 
@@ -102,8 +102,8 @@ for wall_num, wall_thickness in enumerate(wall_thicknesses):
                 with open(output_file_path, 'w') as f:
                     f.write(f'''######################################################
 ## Wall thickness: {round(wall_thickness, 3)} um
-## Pore dimensions: xxx
-## Slab dimensions: xxx
+## Pore dimensions: {round(pore_width, 3)} um x {round(pore_width, 3)} um
+## Slab dimensions: {round(lmcp_dimensions[0], 3)} cm x {round(lmcp_dimensions[1], 3)} cm x {round(lmcp_dimensions[2], 3)} cm
 ######################################################
 
 ######################################################
