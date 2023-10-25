@@ -2,12 +2,12 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/b33_varwall_p50/'
-num_histories_per_run = 500000
-wall_array = np.linspace(10, 300, 30, dtype=int)
+data_directory = r'../raw_data/b33/b33_varporewall/'
+num_histories_per_run = 250000
+wall_array = np.linspace(10, 150, 15, dtype=int)
 #wall_array = np.array([75])
-#pore_array = np.linspace(5, 200, 40, dtype=int)
-pore_array = np.array([50])
+pore_array = np.linspace(5, 145, 15, dtype=int)
+#pore_array = np.array([50])
 theta_increment = 5
 phi_increment = 3
 SINGLE_AZIMUTH = True
@@ -28,16 +28,16 @@ for file_name in os.listdir(data_directory):
     with uproot.open(file_path) as f:
             
             fname_components = file_name.split('_')
-
+            #print(fname_components)
             wall_ind = int(int(fname_components[1][1:])/10 - 1)
-            pore_ind = 0 #int(int(fname_components[2][1:])/5 - 1)
+            pore_ind = int(int(fname_components[2][1:])/10 - 1)
             theta_ind = int(fname_components[3][5:])
             phi_ind = int(fname_components[4][3:-5])
 
             num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
                   
             eff = num_events_reached_pore/num_histories_per_run
-
+            #print(f'{wall_ind} {pore_ind} {theta_ind} {phi_ind}')
             eff_v_angle[wall_ind][pore_ind][theta_ind][phi_ind] = eff
 
 np.save(data_directory.split('/')[-2], eff_v_angle)
