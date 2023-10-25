@@ -30,7 +30,7 @@ for file_name in os.listdir(data_directory):
             fname_components = file_name.split('_')
             #print(fname_components)
             wall_ind = int(int(fname_components[1][1:])/10 - 1)
-            pore_ind = int(int(fname_components[2][1:])/10 - 1)
+            pore_ind = int((int(fname_components[2][1:])-pore_array[0])/10)
             theta_ind = int(fname_components[3][5:])
             phi_ind = int(fname_components[4][3:-5])
 
