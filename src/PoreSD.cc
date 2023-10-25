@@ -127,6 +127,10 @@ namespace lmcp
         auto copyNo = preTouch->GetCopyNumber(0);
         hit->SetCopyNo( copyNo );
 
+        // get track's creator process
+        auto trackCreatorProcess = track->GetCreatorProcess()->GetProcessName();
+        hit->SetCreatorProc( trackCreatorProcess );
+
         // get global time of hit
         auto hitTime = postStepPoint->GetGlobalTime();
         hit->SetTime(hitTime);

@@ -48,6 +48,7 @@ namespace lmcp
       std::vector<G4double>& GetLaminaEdep() { return fLaminaEdep; }
       std::vector<G4double>& GetLaminaTime() { return fLaminaTime; }
       std::vector<G4int>& GetPoreID() { return fPoreID; }
+      std::vector<std::string>& GetPoreCreatorProc() { return fPoreCreatorProc; }
       std::vector<G4double>& GetPoreEdep() { return fPoreEdep; }
       std::vector<G4double>& GetPoreEKin() {return fPoreEKin; }
       std::vector<G4double>& GetPoreTime() { return fPoreTime; }
@@ -64,6 +65,7 @@ namespace lmcp
       std::vector<G4double> fLaminaEdep;
       std::vector<G4double> fLaminaTime;  
       std::vector<G4int> fPoreID;
+      std::vector<std::string> fPoreCreatorProc;
       std::vector<G4double> fPoreEdep;
       std::vector<G4double> fPoreEKin;
       std::vector<G4double> fPoreTime;  
