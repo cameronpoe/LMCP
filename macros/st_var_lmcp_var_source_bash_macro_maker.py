@@ -105,7 +105,7 @@ for energy_num, energy in enumerate(gamma_energies):
                         z/source_distance_from_lmcp_center
                     ])
 
-                    output_file_name = f'Run_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac'
+                    output_file_name = f'Run_eng{energy_num}_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac'
                     output_file_path = os.path.join(new_folder_path, output_file_name)
                     
                     with open(output_file_path, 'w') as f:
