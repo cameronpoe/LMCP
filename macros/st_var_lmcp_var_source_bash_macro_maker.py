@@ -183,7 +183,7 @@ for energy_num, energy in enumerate(gamma_energies):
 # Azimuth: {phi} deg, Zenith: {theta} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName {root_output_dir}/Run_e{energy_num}_w{wall_thickness}_p{pore_width}_theta{i}_phi{j}.root
+/analysis/setFileName {root_output_dir}/Run_e{energy}_w{wall_thickness}_p{pore_width}_theta{i}_phi{j}.root
 /run/printProgress 10000
 /run/beamOn {num_events}
 
