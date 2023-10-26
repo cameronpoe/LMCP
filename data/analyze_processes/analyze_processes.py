@@ -52,6 +52,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
             print('New label: ' + str(label))
             intermediate_dict[label] = len(ak.any(pore_branches['CreatorProc'] == label, axis=1))
 
+        print(intermediate_dict)
+
         overall_events_converted = len(pore_branches['EventNumber'])
         intermediate_dict['overall'] = overall_events_converted
 
