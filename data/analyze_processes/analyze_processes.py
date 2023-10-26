@@ -45,9 +45,6 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         pore_tree = f['pore']
         pore_branches = pore_tree.arrays(library='ak')
         pore_branches['CreatorProc'] = ak.str.split_pattern(pore_branches['CreatorProc'], '\n')
-
-        for i, item in enumerate(pore_branches['CreatorProc']):
-            pore_branches['CreatorProc'][i] = np.unique(item)
         
         intermediate_dict = {}
         labels = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])))
