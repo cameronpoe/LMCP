@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import pickle
 
-pickle_object_path = r'data/analyze_processes/g4_glass_lead_procs.pkl'
+pickle_object_path = r'data/analyze_processes/peek_procs.pkl'
 gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 
 

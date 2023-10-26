@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 import awkward as ak
 import uproot
 
-root_file = r'raw_data/latest_run/Run_wall50_pore_50_theta0_phi0.root'
+root_file = r'raw_data/latest_run/Run_e510_wall50_pore_50_theta0_phi0.root'
 
 with uproot.open(root_file) as f:
 
@@ -16,6 +16,15 @@ with uproot.open(root_file) as f:
     print(pore_branches['EventNumber'])
     print(pore_branches['ID'])
     print(pore_branches['CreatorProc'])
-    fig, ax = plt.subplots()
-    ax.hist(ak.flatten(pore_branches['CreatorProc']))
-    plt.show()
+    # for i, item in enumerate(pore_branches['CreatorProc']):
+    #     if len(item) > 1:
+    #         print(i)
+    
+    a = pore_branches['CreatorProc']
+    b = a == 'phot'
+    print(b[160500])
+    print(a == 'phot')
+    print(a[160500])
+    # fig, ax = plt.subplots()
+    # ax.hist(ak.flatten(pore_branches['CreatorProc']))
+    # plt.show()

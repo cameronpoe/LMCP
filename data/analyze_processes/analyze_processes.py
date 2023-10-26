@@ -43,19 +43,19 @@ for file_name in os.listdir(data_directory):
         pore_tree = f['pore']
         pore_branches = pore_tree.arrays(library='ak')
         pore_branches['CreatorProc'] = ak.str.split_pattern(pore_branches['CreatorProc'], '\n')
-        
-        labels, counts = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])), return_counts=True)
 
-        overall_events_converted = len(pore_branches['EventNumber'])
-        labels = np.append(labels, 'overall')
-        counts = np.append(counts, overall_events_converted)
+        intermediate_dict = {}
+        for item in pore_branches['CreatorProc']:
+            new_item = np.unique(item)
+            for label in new_item:
+                if label not in intermediate_dict:
+                    intermediate_dict[label] = 0
+                intermediate_dict[label] += 1
 
-        proc_fracs = counts/num_histories_per_run
-
-        for label, proc_frac in zip(labels, proc_fracs):
+        for label in intermediate_dict:
             if label not in proc_plot_dict:
                 proc_plot_dict[label] = np.zeros_like(gamma_ray_energies, dtype=np.float64)
-            proc_plot_dict[label][energy_ind] = proc_frac
+            proc_plot_dict[label][energy_ind] = intermediate_dict[label]/num_histories_per_run
 
 save_file_path = data_directory.split('/')[-2]
 with open(save_file_path + '.pkl', 'wb') as f:
