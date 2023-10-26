@@ -6,13 +6,16 @@ import pickle
 
 data_directory = r'../../raw_data/ecomass_procs/'
 num_histories_per_run = 500000
-wall_array = np.array([50])
+wall_array = np.linspace(5,200,40,dtype=int)
+# wall_array = np.array([50])
 pore_array = np.array([50])
 gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 SINGLE_ZENITH = True
 theta_increment = 5
 SINGLE_AZIMUTH = True
 phi_increment = 3
+
+DEF_VAR = 'wall'
 
 
 
@@ -37,10 +40,19 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
     file_path = data_directory + file_name
 
     with uproot.open(file_path) as f:
-            
+        
         fname_components = file_name.split('_')
-        energy = int(fname_components[1][1:])
-        energy_ind = int((energy - gamma_ray_energies[0])/(gamma_ray_energies[1]-gamma_ray_energies[0]))
+        
+        if DEF_VAR == 'energy':
+            curvar = int(fname_components[1][1:])
+            parameter_array = gamma_ray_energies
+        elif DEF_VAR == 'wall':
+            curvar = int(fname_components[2][1:])
+            parameter_array = wall_array
+
+        
+        
+        curvar_ind = int((curvar - parameter_array[0])/(parameter_array[1]-parameter_array[0]))
         
         pore_tree = f['pore']
         pore_branches = pore_tree.arrays(library='ak')
@@ -56,8 +68,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         for label in intermediate_dict:
             if label not in proc_plot_dict:
-                proc_plot_dict[label] = np.zeros_like(gamma_ray_energies, dtype=np.float64)
-            proc_plot_dict[label][energy_ind] = intermediate_dict[label]/num_histories_per_run
+                proc_plot_dict[label] = np.zeros_like(parameter_array, dtype=np.float64)
+            proc_plot_dict[label][curvar_ind] = intermediate_dict[label]/num_histories_per_run
 
 save_file_path = data_directory.split('/')[-2]
 with open(save_file_path + '.pkl', 'wb') as f:
