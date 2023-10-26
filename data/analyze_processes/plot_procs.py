@@ -18,7 +18,7 @@ with open(pickle_object_path, 'rb') as f:
         ax.scatter(gamma_ray_energies, 100*proc_plot_dict[proc], marker='.')
     ax.legend()
     ax.set_xlabel('Gamma ray energies (keV)', fontdict=dict(size=12.5))
-    ax.set_ylabel('Fraction of interactions (%)', fontdict=dict(size=12.5))
+    ax.set_ylabel('Conversion efficiency (%)', fontdict=dict(size=12.5))
     ax.xaxis.set_ticks_position('both')
     ax.yaxis.set_ticks_position('both')
     plt.minorticks_on()
