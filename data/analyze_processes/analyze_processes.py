@@ -30,8 +30,9 @@ else:
 
 proc_plot_dict = {}
 
-for file_name in os.listdir(data_directory):
+for file_num, file_name in enumerate(os.listdir(data_directory)):
 
+    print(f'Working on file number {file_num}')
     file_path = data_directory + file_name
 
     with uproot.open(file_path) as f:
