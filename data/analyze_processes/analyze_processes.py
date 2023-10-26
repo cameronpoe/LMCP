@@ -49,18 +49,18 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         for i, item in enumerate(pore_branches['CreatorProc']):
             pore_branches['CreatorProc'][i] = np.unique(item)
         
-        labels, counts = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])), return_counts=True)
+        intermediate_dict = {}
+        labels = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])))
+        for label in labels:
+            intermediate_dict[label] = len(ak.any(pore_branches['CreatorProc'] == label, axis=1))
 
         overall_events_converted = len(pore_branches['EventNumber'])
-        labels = np.append(labels, 'overall')
-        counts = np.append(counts, overall_events_converted)
+        intermediate_dict['overall'] = overall_events_converted
 
-        proc_fracs = counts/num_histories_per_run
-
-        for label, proc_frac in zip(labels, proc_fracs):
+        for label in intermediate_dict:
             if label not in proc_plot_dict:
                 proc_plot_dict[label] = np.zeros_like(gamma_ray_energies, dtype=np.float64)
-            proc_plot_dict[label][energy_ind] = proc_frac
+            proc_plot_dict[label][energy_ind] = intermediate_dict[label]/num_histories_per_run
 
 save_file_path = data_directory.split('/')[-2]
 with open(save_file_path + '.pkl', 'wb') as f:
