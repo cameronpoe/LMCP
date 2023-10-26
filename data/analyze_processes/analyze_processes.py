@@ -55,6 +55,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         print(intermediate_dict)
 
         overall_events_converted = len(pore_branches['EventNumber'])
+
+        print('Total converted' + str(overall_events_converted))
         intermediate_dict['overall'] = overall_events_converted
 
         for label in intermediate_dict:
