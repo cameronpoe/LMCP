@@ -28,3 +28,13 @@ with uproot.open(root_file) as f:
     # fig, ax = plt.subplots()
     # ax.hist(ak.flatten(pore_branches['CreatorProc']))
     # plt.show()
+
+
+
+# intermediate_dict = {}
+        # for item in pore_branches['CreatorProc']:
+        #     new_item = np.unique(item)
+        #     for label in new_item:
+        #         if label not in intermediate_dict:
+        #             intermediate_dict[label] = 0
+        #         intermediate_dict[label] += 1
