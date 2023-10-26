@@ -45,6 +45,11 @@ for file_name in os.listdir(data_directory):
         pore_branches['CreatorProc'] = ak.str.split_pattern(pore_branches['CreatorProc'], '\n')
         
         labels, counts = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])), return_counts=True)
+
+        overall_events_converted = len(ak.flatten(pore_branches['EventNumber']))
+        labels = np.append(labels, 'overall')
+        counts = np.append(counts, overall_events_converted)
+
         proc_fracs = counts/num_histories_per_run
 
         for label, proc_frac in zip(labels, proc_fracs):
