@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../../raw_data/b33_procs/'
+data_directory = r'../../raw_data/peek_procs/'
 num_histories_per_run = 500000
 wall_array = np.array([50])
 pore_array = np.array([50])
