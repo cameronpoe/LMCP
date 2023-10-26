@@ -7,18 +7,22 @@ import shutil
 ###          PARAMETERS          ###
 ####################################
 
-root_output_dir = r'../raw_data/latest_run'
+root_output_dir = r'raw_data/latest_run'
 max_threads = 62
 num_events = 500000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
+
+LINK_WALL_AND_PORE = True
+wall_thicknesses = np.linspace(5, 200, 40, dtype=int)      # um
+# wall_thicknesses = np.array([50])                             # um
 # pore_widths = np.linspace(5, 145, 15, dtype=int)             # um
 pore_widths = np.array([50])				   # um
-# wall_thicknesses = np.linspace(10, 150, 15, dtype=int)      # um
-wall_thicknesses = np.array([50])                             # um
-gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-# gamma_energies = np.array([511])
 
+
+# gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
+gamma_energies = np.array([511])                              # keV
 source_distance_from_lmcp_center = 22       # mm
+
 SINGLE_ZENITH = True
 theta_increment = 5     # degrees (factor of 90)
 SINGLE_AZIMUTH = True
@@ -78,6 +82,8 @@ do
 done
 '''.format(bash_folder_path=new_folder_path, thread_count=max_threads))
 
+if LINK_WALL_AND_PORE:
+    pore_widths = np.array([0])
 if SINGLE_ZENITH:
     thetas = np.array([45])
 else:
@@ -87,11 +93,16 @@ if SINGLE_AZIMUTH:
 else:
     phis = np.linspace(0, 90, int(90/phi_increment)+1)
 
+
 for energy_num, energy in enumerate(gamma_energies):
 
     for wall_num, wall_thickness in enumerate(wall_thicknesses):
 
         for pore_num, pore_width in enumerate(pore_widths):
+
+            if LINK_WALL_AND_PORE:
+                pore_width = wall_thickness
+                pore_num = wall_num
 
             for i, theta in enumerate(thetas):
                 z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
