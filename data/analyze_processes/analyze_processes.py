@@ -50,7 +50,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         labels = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])))
         for label in labels:
             print('New label: ' + str(label))
-            intermediate_dict[label] = len(ak.any(pore_branches['CreatorProc'] == label, axis=1))
+            intermediate_dict[label] = len(pore_branches['CreatorPorc'][ak.any(pore_branches['CreatorProc'] == label, axis=1)])
 
         print(intermediate_dict)
 
