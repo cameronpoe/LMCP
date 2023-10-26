@@ -46,7 +46,7 @@ for file_name in os.listdir(data_directory):
         
         labels, counts = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])), return_counts=True)
 
-        overall_events_converted = len(ak.flatten(pore_branches['EventNumber']))
+        overall_events_converted = len(pore_branches['EventNumber'])
         labels = np.append(labels, 'overall')
         counts = np.append(counts, overall_events_converted)
 
