@@ -53,6 +53,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
                     intermediate_dict[label] = 0
                 intermediate_dict[label] += 1
 
+        intermediate_dict['overall'] = len(pore_branches['EventNumber'])
+
         for label in intermediate_dict:
             if label not in proc_plot_dict:
                 proc_plot_dict[label] = np.zeros_like(gamma_ray_energies, dtype=np.float64)
