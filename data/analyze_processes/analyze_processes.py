@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../../raw_data/ecomass_procs/'
+data_directory = r'../../raw_data/ecomass_procs_bywallsize/'
 num_histories_per_run = 500000
 wall_array = np.linspace(5,200,40,dtype=int)
 # wall_array = np.array([50])
