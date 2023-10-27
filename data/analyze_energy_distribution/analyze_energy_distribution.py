@@ -28,8 +28,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         intermediate_dict = {}
         labels = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])))
         for label in labels:
-            intermediate_dict[label] = pore_branches['EKin', pore_branches['CreatorProc'] == label]
-        intermediate_dict['overall'] = pore_branches['EKin']
+            intermediate_dict[label] = ak.flatten(pore_branches['EKin', pore_branches['CreatorProc'] == label])
 
         hist_dict[f'w{wall_thickness}-e{energy}'] = intermediate_dict
 
