@@ -84,6 +84,7 @@ namespace lmcp
     //
     analysisManager->CreateNtuple("pore", "Pore Data");
     analysisManager->CreateNtupleIColumn("EventNumber");
+    analysisManager->CreateNtupleIColumn("TrackID", fEventAction->GetTrackID());
     analysisManager->CreateNtupleIColumn("ID", fEventAction->GetPoreID());
     analysisManager->CreateNtupleSColumn("CreatorProc", fEventAction->GetPoreCreatorProc());
     analysisManager->CreateNtupleDColumn("Edep", fEventAction->GetPoreEdep());

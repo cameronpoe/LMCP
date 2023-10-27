@@ -168,6 +168,7 @@ namespace lmcp
 
         // Data for each hit element
         fPoreID = std::vector<G4int>(nPoreHits, NAN);
+        fTrackID = std::vector<G4int>(nPoreHits, NAN);
         fPoreCreatorProc = std::vector<std::string>(nPoreHits, "");
         fPoreEdep = std::vector<G4double>(nPoreHits, NAN);
         fPoreEKin = std::vector<G4double>(nPoreHits, NAN);
@@ -179,6 +180,7 @@ namespace lmcp
             auto hit = static_cast<PoreHit*>(poreHC->GetHit(i));
 
             fPoreID[i] = hit->GetCopyNo();
+            fTrackID[i] = hit->GetTrackID();
             fPoreCreatorProc[i] = hit->GetCreatorProc();
             fPoreEdep[i] = hit->GetEdep()/keV;
             fPoreEKin[i] = hit->GetEKin()/keV;

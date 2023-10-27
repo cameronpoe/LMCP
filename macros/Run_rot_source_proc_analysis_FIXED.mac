@@ -67,5 +67,5 @@
 /gps/direction -0.70711 -0.0 -0.70711
 /analysis/setFileName ../raw_data/latest_run/Run_wall50_pore_50_theta0_phi0.root
 /run/printProgress 10000
-/run/beamOn 250000
+/run/beamOn 1000
 
