@@ -4,8 +4,8 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'raw_data/latest_run/'
-num_histories_per_run = 1000
+data_directory = r'../../raw_data/g4_glass_lead_energy_spec/'
+num_histories_per_run = 500000
 
 hist_dict = {}
 
@@ -28,7 +28,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         intermediate_dict = {}
         labels = np.unique(np.array(ak.flatten(pore_branches['CreatorProc'])))
         for label in labels:
-            intermediate_dict[label] = pore_branches['EKin', pore_branches['CreatorPorc'] == label]
+            intermediate_dict[label] = pore_branches['EKin', pore_branches['CreatorProc'] == label]
         intermediate_dict['overall'] = pore_branches['EKin']
 
         hist_dict[f'w{wall_thickness}-e{energy}'] = intermediate_dict
