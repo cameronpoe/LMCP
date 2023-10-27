@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../../raw_data/g4_glass_lead_energy_spec/'
+data_directory = r'../../raw_data/b33_energy_spec/'
 num_histories_per_run = 500000
 
 hist_dict = {}
