@@ -13,14 +13,14 @@ num_events = 500000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 LINK_WALL_AND_PORE = True
-#wall_thicknesses = np.linspace(5, 200, 40, dtype=int)      # um
-wall_thicknesses = np.array([50])                             # um
+wall_thicknesses = np.linspace(25, 100, 4, dtype=int)      # um
+# wall_thicknesses = np.array([50])                             # um
 # pore_widths = np.linspace(5, 145, 15, dtype=int)             # um
 pore_widths = np.array([50])				   # um
 
 
-gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-#gamma_energies = np.array([511])                              # keV
+# gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
+gamma_energies = np.array([511])                              # keV
 source_distance_from_lmcp_center = 22       # mm
 
 SINGLE_ZENITH = True

@@ -30,10 +30,15 @@ with uproot.open(root_file) as f:
     # ax.hist(ak.flatten(pore_branches['CreatorProc', pore_branches['CreatorProc'] != 'eIoni']))
 
     fig, ax = plt.subplots()
-    ax.hist(ak.flatten(pore_branches['EKin', pore_branches['CreatorProc'] == 'phot']), bins=np.linspace(0,600,121,dtype=int))
+    vals1, __, __ = ax.hist(ak.flatten(pore_branches['EKin', pore_branches['CreatorProc'] == 'phot']), bins=np.linspace(0,600,121,dtype=int), alpha=0.7, label='Photoelectric', histtype='bar')
+
+    # fig, ax = plt.subplots()
+    vals2, __, __ = ax.hist(ak.flatten(pore_branches['EKin', (pore_branches['CreatorProc'] == 'compt')]), bins=np.linspace(0,600,121,dtype=int), alpha=0.7, label='Compton', histtype='bar')
+    ax.legend()
 
     fig, ax = plt.subplots()
-    ax.hist(ak.flatten(pore_branches['EKin', (pore_branches['CreatorProc'] == 'compt') & (pore_branches['TrackID'] == 2)]), bins=np.linspace(0,600,121,dtype=int))
+    double_array = [ak.flatten(pore_branches['EKin', pore_branches['CreatorProc'] == 'phot']), ak.flatten(pore_branches['EKin', (pore_branches['CreatorProc'] == 'compt')])]
+    ax.hist(double_array, histtype='bar', bins=np.linspace(0,600,61))
     plt.show()
 
 
