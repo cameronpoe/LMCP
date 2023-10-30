@@ -25,7 +25,7 @@ if SINGLE_AZIMUTH:
 
 eff_v_angle = np.empty((len(wall_array), len(pore_array), len(theta_array), len(phi_array)))
 if SAVE_FOR_PET:
-     eff_v_angle = np.empty(len(theta_array), len(phi_array))
+     eff_v_angle = np.empty((len(theta_array), len(phi_array)))
 print(eff_v_angle.shape)
 
 for file_name in os.listdir(data_directory):
@@ -35,8 +35,9 @@ for file_name in os.listdir(data_directory):
     with uproot.open(file_path) as f:
 
         fname_components = file_name.split('_')
-        wall_ind = int((int(fname_components[2][1:])-wall_array[0])/np.diff(wall_array)[0])
-        pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])
+        if not SAVE_FOR_PET:
+            wall_ind = int((int(fname_components[2][1:])-wall_array[0])/np.diff(wall_array)[0])
+            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])
         theta_ind = int(fname_components[4][5:])
         phi_ind = int(fname_components[5][3:-5])
 
