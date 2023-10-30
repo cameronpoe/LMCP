@@ -25,13 +25,19 @@ zenith_angles = np.linspace(0,90,int(90/theta_spacing+1), dtype=int)
 for i, subtable in enumerate(table):
     for j, effs in enumerate(subtable):
         avg_eff = (1/90)*trapezoid(effs, zenith_angles)
-        integrated_effs[i,j] = avg_eff
+        integrated_effs[i,j] = avg_eff*100
 
 print(integrated_effs)
 
 fig, ax = plt.subplots()
-# ax.set_aspect('equal')
-ax.imshow(integrated_effs, interpolation=None)
+colors = ax.imshow(integrated_effs, interpolation=None, origin='lower', extent=(0,145,0,145))
+cbar = fig.colorbar(colors, ax=ax)
+cbar.set_label('Conversion efficiency (%)', fontdict=dict(size=12.5))
+ax.set_xlabel('Wall thicknesses (um)', fontdict=dict(size=12.5))
+ax.set_ylabel('Pore width (um)', fontdict=dict(size=12.5))
+ax.xaxis.set_ticks_position('both')
+ax.yaxis.set_ticks_position('both')
+plt.minorticks_on()
 
 fig2, ax2 = plt.subplots()
 
@@ -47,8 +53,8 @@ while i < 15:
         j += 1
     i += 1
 
-ax2.imshow(test_array, interpolation=None)
-
+colors = ax2.imshow(test_array, interpolation=None, origin='lower')
+cbar = fig2.colorbar(colors, ax=ax2)
 plt.show()
 
 exit()
