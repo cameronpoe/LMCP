@@ -3,10 +3,10 @@ from matplotlib import pyplot as plt
 from scipy.integrate import trapezoid
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r'data/b33_varporewall.npy'
+table_path = r'data/g4_glass_lead_varporewall.npy'
 phi_ind = 0
 theta_spacing = 5   # deg
-wall_thicknesses = np.linspace(10, 150, 15, dtype=int)
+wall_thicknesses = np.linspace(5, 145, 15, dtype=int)
 pore_widths = np.linspace(5, 145, 15, dtype=int)
 
 
@@ -27,7 +27,6 @@ for i, subtable in enumerate(table):
         avg_eff = (1/90)*trapezoid(effs, zenith_angles)
         integrated_effs[i,j] = avg_eff*100
 
-print(integrated_effs)
 
 fig, ax = plt.subplots()
 colors = ax.imshow(integrated_effs, interpolation=None, origin='lower', extent=(0,145,0,145))
@@ -38,6 +37,7 @@ ax.set_ylabel('Pore width (um)', fontdict=dict(size=12.5))
 ax.xaxis.set_ticks_position('both')
 ax.yaxis.set_ticks_position('both')
 plt.minorticks_on()
+plt.show()
 
 fig2, ax2 = plt.subplots()
 
@@ -55,7 +55,6 @@ while i < 15:
 
 colors = ax2.imshow(test_array, interpolation=None, origin='lower')
 cbar = fig2.colorbar(colors, ax=ax2)
-plt.show()
 
 exit()
 
