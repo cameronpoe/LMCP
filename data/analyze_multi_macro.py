@@ -2,9 +2,9 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/b33/b33_varporewall/'
+data_directory = r'../raw_data/g4_glass_lead_varporewall/'
 num_histories_per_run = 250000
-wall_array = np.linspace(10, 150, 15, dtype=int)
+wall_array = np.linspace(5, 145, 15, dtype=int)
 #wall_array = np.array([75])
 pore_array = np.linspace(5, 145, 15, dtype=int)
 #pore_array = np.array([50])
@@ -29,10 +29,10 @@ for file_name in os.listdir(data_directory):
             
             fname_components = file_name.split('_')
             #print(fname_components)
-            wall_ind = int(int(fname_components[1][1:])/10 - 1)
-            pore_ind = int((int(fname_components[2][1:])-pore_array[0])/10)
-            theta_ind = int(fname_components[3][5:])
-            phi_ind = int(fname_components[4][3:-5])
+            wall_ind = int(int(fname_components[2][1:])/10 - 1)
+            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/10)
+            theta_ind = int(fname_components[4][5:])
+            phi_ind = int(fname_components[5][3:-5])
 
             num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
                   

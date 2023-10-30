@@ -3,7 +3,7 @@
 a=(/local/d3/geantsims/LMCP/macros/multi_macros/*)
 N=${#a[@]}
 
-threads=62
+threads=63
 iter=$((N/threads))
 max_full=$((threads*iter))
 
