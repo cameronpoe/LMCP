@@ -38,12 +38,5 @@ for file_name in os.listdir(data_directory):
 
         eff = num_events_reached_pore/num_histories_per_run
         eff_v_angle[wall_ind][pore_ind][theta_ind][phi_ind] = eff
-        if wall_ind == 14 and pore_ind == 14:
-            #print(num_events_reached_pore)
-            print(eff_v_angle[wall_ind,pore_ind,:,phi_ind])
-        #if wall_ind == 14:
-            #print(f'{num_events_reached_pore} hmm')
-
-print(eff_v_angle[14,14,:,:])
 
 np.save(data_directory.split('/')[-2], eff_v_angle)
