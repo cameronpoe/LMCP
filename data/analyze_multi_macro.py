@@ -29,8 +29,8 @@ for file_name in os.listdir(data_directory):
             
             fname_components = file_name.split('_')
             #print(fname_components)
-            wall_ind = int(int(fname_components[2][1:])/10 - 1)
-            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/10)
+            wall_ind = int((int(fname_components[2][1:])-wall_array[0])/np.diff(wall_array)[0])
+            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])
             theta_ind = int(fname_components[4][5:])
             phi_ind = int(fname_components[5][3:-5])
 
