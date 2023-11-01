@@ -2,16 +2,16 @@ import numpy as np
 import os
 import uproot
 
-data_directory = r'../raw_data/g4_glass_lead_varporewall/'
-num_histories_per_run = 500000
+data_directory = r'../raw_data/ecomass_varporewall/'
+num_histories_per_run = 250000
 wall_array = np.linspace(5, 145, 15, dtype=int)
-wall_array = np.array([75])
-# pore_array = np.linspace(5, 145, 15, dtype=int)
-pore_array = np.array([50])
-theta_increment = 3
+#wall_array = np.array([50])
+pore_array = np.linspace(5, 145, 15, dtype=int)
+#pore_array = np.array([50])
+theta_increment = 5
 phi_increment = 3
-SINGLE_AZIMUTH = False
-SAVE_FOR_PET = True
+SINGLE_AZIMUTH = True
+SAVE_FOR_PET = False
 
 
 
