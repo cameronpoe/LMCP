@@ -3,10 +3,10 @@ from matplotlib import pyplot as plt
 import pickle
 import awkward as ak
 
-pickle_object_path = r'data/analyze_energy_distribution/b33_energy_spec.pkl'
+pickle_object_path = r'data/analyze_energy_distribution/g4_glass_lead/g4_glass_lead_energy_spec.pkl'
 gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 wall_thicknesses = np.linspace(5,200,40,dtype=int)
-substrate = 'B33'
+substrate = 'G4_GLASS_LEAD'
 
 
 
@@ -38,21 +38,22 @@ with open(pickle_object_path, 'rb') as f:
         all_electrons = ak.flatten(hist_array)
 
         fig, ax = plt.subplots()
-        ax.hist(hist_array, label=hist_labels, bins=np.linspace(0,520,53,dtype=int), density=False)
-        ax.legend()
-        ax.set_xlabel('Gamma ray energy (keV)', fontdict=dict(size=12.5))
-        ax.set_ylabel('Number of e-', fontdict=dict(size=12.5))
-        ax.set_title(f'{substrate}, {wall} um, {len(all_electrons)} e-', fontdict=dict(size=14))
-        ax.xaxis.set_ticks_position('both')
-        ax.yaxis.set_ticks_position('both')
-        plt.minorticks_on()
+        bins = np.linspace(0,520,53,dtype=int)
+        width = 0.25*(bins[1]-bins[0])
+        for i, single_hist_array in enumerate(hist_array):
+            # vals, __ = np.histogram(single_hist_array, bins=bins)
+            # vals = vals/len(all_electrons)*100
+            # cur_bins = bins + i*width
+            # ax.bar(cur_bins[:-1], vals, width, align='edge', label=hist_labels[i])
 
-        fig, ax = plt.subplots()
-        ax.hist(all_electrons, label='Overall', bins=np.linspace(0,520,53,dtype=int), density=False)
+            vals, __ = np.histogram(single_hist_array, bins=bins)
+            vals = vals/len(all_electrons)*100
+            ax.plot(bins[:-1], vals, label=hist_labels[i])
+            ax.scatter(bins[:-1], vals, marker='.')
         ax.legend()
-        ax.set_xlabel('Gamma ray energy (keV)', fontdict=dict(size=12.5))
-        ax.set_ylabel('Number of e-', fontdict=dict(size=12.5))
-        ax.set_title(f'{substrate}, {wall} um, {len(all_electrons)} e-', fontdict=dict(size=14))
+        ax.set_xlabel('Electron energy (keV)', fontdict=dict(size=12.5))
+        ax.set_ylabel('Fraction of electrons (% per 10 keV bin)', fontdict=dict(size=12.5))
+        ax.set_title(f'{substrate}, {wall} um', fontdict=dict(size=14))
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
         plt.minorticks_on()
