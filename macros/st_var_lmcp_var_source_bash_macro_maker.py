@@ -7,15 +7,15 @@ import shutil
 ###          PARAMETERS          ###
 ####################################
 
-root_output_dir = r'../raw_data/latest_run'
+root_output_dir = r'./raw_data/latest_run'
 max_threads = 63
 num_events = 500000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(25,100,4,dtype=int)
-#wall_thicknesses = np.linspace(5, 145, 15, dtype=int)      # um
-wall_thicknesses = np.array([50])                             # um
+wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um
+# wall_thicknesses = np.array([50])                             # um
 #pore_widths = np.linspace(5, 145, 15, dtype=int)             # um
 pore_widths = np.array([50])				   # um
 
@@ -25,9 +25,11 @@ gamma_energies = np.array([511])                              # keV
 source_distance_from_lmcp_center = 22       # mm
 
 SINGLE_ZENITH = False
-theta_increment = 3    # degrees (factor of 90)
-SINGLE_AZIMUTH = False
+theta_increment = 5    # degrees (factor of 90)
+SINGLE_AZIMUTH = True
 phi_increment = 3       # degrees (factor of 90)
+SINGLE_LAMINA_THICKNESS = True
+lamina_thickness = 200 # um
 
 
 
@@ -83,6 +85,9 @@ do
 done
 '''.format(bash_folder_path=new_folder_path, thread_count=max_threads))
 
+
+if SINGLE_LAMINA_THICKNESS:
+    pass
 if LINK_WALL_AND_PORE:
     pore_widths = np.array([0])
 if SINGLE_ZENITH:
@@ -103,6 +108,9 @@ for energy_num, energy in enumerate(gamma_energies):
 
             if LINK_WALL_AND_PORE:
                 pore_width = wall_thickness
+                pore_num = wall_num
+            if SINGLE_LAMINA_THICKNESS:
+                pore_width = lamina_thickness - wall_thickness
                 pore_num = wall_num
 
             for i, theta in enumerate(thetas):
@@ -152,7 +160,7 @@ for energy_num, energy in enumerate(gamma_energies):
 ######################################################
 /user/det/setOverlapChecking false
 /user/det/setSlabDimensions {lmcp_dimensions[0]} {lmcp_dimensions[1]} {lmcp_dimensions[2]} cm
-/user/det/setPoreDimensions {pore_width*1e-4} {pore_width*1e-4} {lmcp_dimensions[2]} cm
+/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_width*1e-4, 7)} {lmcp_dimensions[2]} cm
 /user/det/setWallThickness {round(wall_thickness, 3)} um
 
 ######################################################

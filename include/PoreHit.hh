@@ -57,6 +57,9 @@ namespace lmcp
       void SetCopyNo ( G4int val ) { fCopyNo = val; }
       G4int GetCopyNo() const { return fCopyNo; }
 
+      void SetPDGID ( G4int val ) { fPDGID = val; }
+      G4int GetPDGID() const { return fPDGID; }
+
       void SetCreatorProc ( std::string& creatorProc ) { fCreatorProc = creatorProc; }
       const std::string& GetCreatorProc() const { return fCreatorProc; }
 
@@ -86,6 +89,7 @@ namespace lmcp
       // data members
       G4int    fTrackID = 0;
       G4int    fCopyNo = 0;
+      G4int    fPDGID = 0;
 
       std::string fCreatorProc = "";
 

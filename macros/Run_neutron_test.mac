@@ -1,0 +1,67 @@
+######################################################
+## redirect output from each thread
+######################################################
+/control/cout/setCoutFile lmcp.out
+/control/cout/setCerrFile lmcp.err
+
+######################################################
+## Verbosity
+######################################################
+/control/verbose 0
+/process/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+
+######################################################
+## Change the default number of threads (in multi-threaded mode)
+######################################################
+/run/numberOfThreads 8
+
+######################################################
+## Overlap Checking
+######################################################
+/user/det/setOverlapChecking false
+
+######################################################
+## Physics
+# Option0 - Electromagnetic
+# Option1 - Electromagnetic & Hadronic
+# Option2 - Electromagnetic & Hadronic with high precision option
+######################################################
+#/user/phy/setPhysics Option0
+/user/phy/setPhysics Option1
+#/user/phy/setPhysics Option2
+
+######################################################
+## Initialize kernel
+######################################################
+/run/initialize
+
+######################################################
+# Source Particle
+######################################################
+/gps/particle neutron
+/gps/ene/mono 1 MeV
+
+######################################################
+# Source Geometry
+######################################################
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/centre 0. 0. 3 cm
+/gps/pos/halfx 2.5 mm
+/gps/pos/halfy 2.5 mm
+/gps/direction 0. 0. -1.
+
+######################################################
+# RANDOM NUMBER
+######################################################
+/random/setSeeds 165127 668832
+
+######################################################
+# Start Run
+######################################################
+/analysis/setFileName ../data/Run_neutron_test.root
+/run/printProgress 1000
+/run/beamOn 100000

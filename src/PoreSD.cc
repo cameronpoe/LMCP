@@ -114,8 +114,8 @@ namespace lmcp
       // }
 
     // check if electrons hitting the wall
-    if ( track->GetParticleDefinition() == G4Electron::Definition() ) {
-
+    // if ( track->GetParticleDefinition() == G4Electron::Definition() ) {
+    if ( track->GetTrackID() > 1 ) {
         auto hit = new PoreHit();
 
         // get track ID
@@ -126,6 +126,10 @@ namespace lmcp
         // This is currently wrong, need mother and grandmother
         auto copyNo = preTouch->GetCopyNumber(0);
         hit->SetCopyNo( copyNo );
+
+        // get particle PDG encoding (particle ID)
+        auto pdgID = track->GetParticleDefinition()->GetPDGEncoding();
+        hit->SetPDGID( pdgID );
 
         // get track's creator process
         auto trackCreatorProcess = track->GetCreatorProcess()->GetProcessName();

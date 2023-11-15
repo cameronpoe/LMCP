@@ -151,6 +151,7 @@ namespace lmcp
     // G4Element* eBe = nistManager -> FindOrBuildElement( "Be", isotopes ); // 4
     G4Element* eB  = nistManager -> FindOrBuildElement( "B" , isotopes );  // 5
     G4Element* eC  = nistManager -> FindOrBuildElement( "C" , isotopes ); // 6
+    G4Element* eN  = nistManager -> FindOrBuildElement( "N" , isotopes ); // 7
     G4Element* eO  = nistManager -> FindOrBuildElement( "O" , isotopes ); // 8
     // G4Element* eF  = nistManager -> FindOrBuildElement( "F" , isotopes ); // 9
     G4Element* eNa = nistManager -> FindOrBuildElement( "Na", isotopes ); // 11
@@ -202,6 +203,12 @@ namespace lmcp
       mPeek->AddElement( eC, 76*perCent);
       mPeek->AddElement( eH,  8*perCent);
       mPeek->AddElement( eO, 16*perCent);
+
+    auto mPA12 = new G4Material( "PA12", 1.03*g/cm3, 3 );
+      mPeek->AddElement( eC, 73.04*perCent);
+      mPeek->AddElement( eH, 11.75*perCent);
+      mPeek->AddElement( eO,  8.13*perCent);
+      mPeek->AddElement( eN,  7.10*perCent);
      
     // Ecomass
     // PEEK with W nano particles
@@ -209,6 +216,13 @@ namespace lmcp
     auto mECOMASS = new G4Material("ECOMASS", 11.*g/cm3, 2 );
       mECOMASS->AddMaterial( mPeek,  10*perCent);
       mECOMASS->AddElement( eW, 90*perCent);
+    
+    // Ecomass2
+    // PA12 with W nano particles (actually a mix if PA12 and PBA, but for simplicity only doing PA12)
+    // 81.72% W by weight
+    auto mECOMASS2 = new G4Material("ECOMASS2", 4.50*g/cm3, 2 );
+      mECOMASS2->AddMaterial( mPA12, 18.28*perCent);
+      mECOMASS2->AddElement( eW, 81.72*perCent);
      
      // ALUMINUM 6061
     auto mAl6061 = new G4Material( "Aluminum6061", 2.6989*g/cm3, 9 );
@@ -222,7 +236,7 @@ namespace lmcp
       mAl6061 -> AddElement( eTi,  0.15*perCent );
       mAl6061 -> AddElement( eAl, 96.65*perCent );
 
-    // PC Baord 80% G10 circuit board, 20% generic electronics
+    // PC Board 80% G10 circuit board, 20% generic electronics
     auto mPCB = new G4Material( "PCB", 1.8*g/cm3, 9 );
       mPCB -> AddElement( eH ,  3.0*perCent );
       mPCB -> AddElement( eC , 17.4*perCent );
@@ -262,10 +276,13 @@ namespace lmcp
     // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
     // auto mPCB = G4Material::GetMaterial( "PCB" );
 
-    auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
+    // auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
     // auto mLMCP = G4Material::GetMaterial( "B33" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
+    auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
+
+    // auto mAnode = G4Material::GetMaterial( "PEEK" );
 
     //======================================================
     // Volumes
@@ -436,13 +453,13 @@ namespace lmcp
                   0,                    // copy number
                   fCheckOverlaps);      // checking overlaps 
 
-    // //----------------------------------
-    // // Anode
-    // //----------------------------------
-    // // SOLID VOLUME
-    // auto anode_X = kAnode_Xsize;
-    // auto anode_Y = kAnode_Ysize;
-    // auto anode_Z = kAnode_Zsize;
+    // ----------------------------------
+    // Anode (or generic rectangular prism/slab)
+    // ----------------------------------
+    // SOLID VOLUME
+    // auto anode_X = 20.0*cm;
+    // auto anode_Y = 20.0*cm;
+    // auto anode_Z = 2.54*cm;
 
     // auto anode_S = new G4Box(
     //               "Anode_S",             // its name
@@ -453,13 +470,13 @@ namespace lmcp
     // // LOGICAL VOLUME
     // auto anode_LV = new G4LogicalVolume(
     //               anode_S,               // its solid
-    //               mPCB,             // its material
+    //               mAnode,             // its material
     //               "Anode_LV");           // its name
 
     // // PHYSICAL VOLUME
     // auto anode_Xpos = 0.0*mm;
     // auto anode_Ypos = 0.0*mm;
-    // auto anode_Zpos = lmcp_Zpos - lmcp_Z/2 - kAnode_gap - anode_Z/2;
+    // auto anode_Zpos = 0.0*mm;
     // auto anode_Pos = G4ThreeVector( anode_Xpos, anode_Ypos, anode_Zpos );
 
     // new G4PVPlacement(
@@ -483,6 +500,7 @@ namespace lmcp
     auto metal_VisAtt = new G4VisAttributes( G4Color::Gray() );
     metal_VisAtt -> SetVisibility( true );
     pore_LV -> SetVisAttributes( metal_VisAtt );
+    // anode_LV -> SetVisAttributes( metal_VisAtt );
 
  
     //======================================================
@@ -494,6 +512,7 @@ namespace lmcp
     auto stepLimit = new G4UserLimits( maxStep );
     lamina_LV->SetUserLimits( stepLimit );
     pore_LV->SetUserLimits( stepLimit );
+    // anode_LV->SetUserLimits( stepLimit );
 
     //======================================================
     // Print some information
@@ -625,8 +644,8 @@ namespace lmcp
     if (fLMCP_SD == nullptr) {
       fLMCP_SD = new LaminaSD( "LMCP_Det" );
       SDManager->AddNewDetector( fLMCP_SD );
-      // LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
-      // LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
+      LVS->GetVolume( "Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
+      LVS->GetVolume( "Div_Lamina_LV" )->SetSensitiveDetector( fLMCP_SD );
       SetSensitiveDetector( "Lamina_LV", fLMCP_SD, true );
       SetSensitiveDetector( "Div_Lamina_LV", fLMCP_SD, true );
     }
@@ -634,8 +653,9 @@ namespace lmcp
     if (fPORE_SD == nullptr) {
       fPORE_SD = new PoreSD( "PORE_Det" );
       SDManager->AddNewDetector( fPORE_SD );
-      // LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( fPORE_SD );
+      LVS->GetVolume( "Pore_LV" )->SetSensitiveDetector( fPORE_SD );
       SetSensitiveDetector( "Pore_LV", fPORE_SD, true );
+      // SetSensitiveDetector( "Anode_LV", fPORE_SD, true );
     }
 
   }
