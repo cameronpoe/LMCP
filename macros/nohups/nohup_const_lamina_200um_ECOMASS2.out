@@ -1,0 +1,6 @@
+1:13:00 runtime
+
+500k 511 keV gammas per run
+walls = np.linspace(5,195,39)
+lamina thickness 200um
+1 in3 lmcp

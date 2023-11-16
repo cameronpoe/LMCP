@@ -204,11 +204,11 @@ namespace lmcp
       mPeek->AddElement( eH,  8*perCent);
       mPeek->AddElement( eO, 16*perCent);
 
-    auto mPA12 = new G4Material( "PA12", 1.03*g/cm3, 3 );
-      mPeek->AddElement( eC, 73.04*perCent);
-      mPeek->AddElement( eH, 11.75*perCent);
-      mPeek->AddElement( eO,  8.13*perCent);
-      mPeek->AddElement( eN,  7.10*perCent);
+    auto mPA12 = new G4Material( "PA12", 1.03*g/cm3, 4 );
+      mPA12->AddElement( eC, 73.04*perCent);
+      mPA12->AddElement( eH, 11.75*perCent);
+      mPA12->AddElement( eO,  8.13*perCent);
+      mPA12->AddElement( eN,  7.10*perCent);
      
     // Ecomass
     // PEEK with W nano particles
@@ -223,6 +223,10 @@ namespace lmcp
     auto mECOMASS2 = new G4Material("ECOMASS2", 4.50*g/cm3, 2 );
       mECOMASS2->AddMaterial( mPA12, 18.28*perCent);
       mECOMASS2->AddElement( eW, 81.72*perCent);
+
+    auto mECOMASS3 = new G4Material("ECOMASS3", 3.50*g/cm3, 2 );
+      mECOMASS3->AddMaterial( mPA12, 20.0*perCent);
+      mECOMASS3->AddElement( eCu, 80.0*perCent);
      
      // ALUMINUM 6061
     auto mAl6061 = new G4Material( "Aluminum6061", 2.6989*g/cm3, 9 );
@@ -280,7 +284,8 @@ namespace lmcp
     // auto mLMCP = G4Material::GetMaterial( "B33" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
-    auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
+    // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
+    auto mLMCP = G4Material::GetMaterial( "ECOMASS3" );
 
     // auto mAnode = G4Material::GetMaterial( "PEEK" );
 

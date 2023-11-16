@@ -3,7 +3,7 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'../raw_data/ecomass_varporewall/'
+data_directory = r'../raw_data/ecomass2/const_lamina_200um/'
 num_histories_per_run = 500000
 wall_array = np.linspace(5, 195, 39, dtype=int)
 #wall_array = np.array([50])
@@ -53,7 +53,8 @@ for file_name in os.listdir(data_directory):
         pore_branches = pore_tree.arrays(library='ak')
 
         # num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
-        num_electrons_reached_pore = len(pore_branches['EventNumber', pore_branches['PDGID'] == 11])
+        # num_electrons_reached_pore = len(pore_branches['EventNumber', pore_branches['PDGID'] == 11])
+        num_electrons_reached_pore = ak.sum(ak.any(pore_branches['PDGID'] == 11, axis=1))
 
         eff = num_electrons_reached_pore/num_histories_per_run
         if SAVE_FOR_PET:
