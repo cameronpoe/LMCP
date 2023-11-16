@@ -3,7 +3,7 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'../raw_data/ecomass2/const_lamina_200um/'
+data_directory = r'../raw_data/ecomass3/const_lamina_200um/'
 num_histories_per_run = 500000
 wall_array = np.linspace(5, 195, 39, dtype=int)
 #wall_array = np.array([50])
