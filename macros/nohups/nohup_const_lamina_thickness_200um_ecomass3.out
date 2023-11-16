@@ -1,0 +1,8 @@
+46:10.00 
+
+500k 511 keV gammas per event
+5 deg between theta angles
+single azimuth
+walls = np.linspace(5,195,39)
+
+this was with ecomass3: 80% by weight Cu, 20% PA12, density = 3.5 g/cm3
