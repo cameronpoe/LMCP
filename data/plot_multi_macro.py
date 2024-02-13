@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from scipy.integrate import trapezoid
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r'data/ecomass2_const_lamina_200um.npy'
+table_path = r'data/ecomass3_const_lamina_200um.npy'
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 phi_ind = 0
 theta_spacing = 5   # deg
