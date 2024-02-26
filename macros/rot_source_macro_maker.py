@@ -1,5 +1,4 @@
 # Helper script to generate a Geant4 macro file with a rotating source.
-# Tiny Change
 import numpy as np
 
 output_file_name = r"macros/Run_rot_source_proc_analysis.mac"
