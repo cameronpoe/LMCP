@@ -7,31 +7,29 @@ import shutil
 ###          PARAMETERS          ###
 ####################################
 
-root_output_dir = r'../raw_data/latest_run'
-max_threads = 63
-num_events = 500000
-lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
+root_output_dir = r"../raw_data/latest_run"
+max_threads = 4
+num_events = 10000
+lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 
 LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(25,100,4,dtype=int)
-wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um
+wall_thicknesses = np.linspace(5, 195, 39, dtype=int)  # um
 # wall_thicknesses = np.array([50])                             # um
-#pore_widths = np.linspace(5, 145, 15, dtype=int)             # um
-pore_widths = np.array([50])				   # um
+pore_widths = np.linspace(5, 145, 15, dtype=int)  # um
+# pore_widths = np.array([50])				   # um
 
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-gamma_energies = np.array([511])                              # keV
-source_distance_from_lmcp_center = 22       # mm
+gamma_energies = np.array([511])  # keV
+source_distance_from_lmcp_center = 22  # mm
 
 SINGLE_ZENITH = False
-theta_increment = 5    # degrees (factor of 90)
+theta_increment = 5  # degrees (factor of 90)
 SINGLE_AZIMUTH = True
-phi_increment = 3       # degrees (factor of 90)
-SINGLE_LAMINA_THICKNESS = True
-lamina_thickness = 200 # um
-
-
+phi_increment = 3  # degrees (factor of 90)
+SINGLE_LAMINA_THICKNESS = False
+lamina_thickness = 200  # um
 
 
 ####################################
@@ -39,7 +37,7 @@ lamina_thickness = 200 # um
 ####################################
 
 cur_directory = os.path.dirname(os.path.realpath(__file__))
-new_folder_name = 'multi_macros'
+new_folder_name = "multi_macros"
 new_folder_path = os.path.join(cur_directory, new_folder_name)
 try:
     os.mkdir(new_folder_path)
@@ -51,10 +49,11 @@ root_output_dir = os.path.realpath(root_output_dir)
 shutil.rmtree(root_output_dir)
 os.mkdir(root_output_dir)
 
-new_sh_name = 'run_multi_macros.sh'
+new_sh_name = "run_multi_macros.sh"
 new_sh_path = os.path.join(cur_directory, new_sh_name)
-with open(new_sh_path, 'w') as f:
-    f.write('''#!/bin/bash
+with open(new_sh_path, "w") as f:
+    f.write(
+        """#!/bin/bash
 
 a=({bash_folder_path}/*)
 N=${{#a[@]}}
@@ -83,7 +82,8 @@ do
 
     ((counter++))
 done
-'''.format(bash_folder_path=new_folder_path, thread_count=max_threads))
+""".format(bash_folder_path=new_folder_path, thread_count=max_threads)
+    )
 
 
 if SINGLE_LAMINA_THICKNESS:
@@ -93,19 +93,16 @@ if LINK_WALL_AND_PORE:
 if SINGLE_ZENITH:
     thetas = np.array([45])
 else:
-    thetas = np.linspace(0, 90, int(90/theta_increment)+1)
+    thetas = np.linspace(0, 90, int(90 / theta_increment) + 1)
 if SINGLE_AZIMUTH:
     phis = np.array([0])
 else:
-    phis = np.linspace(0, 90, int(90/phi_increment)+1)
+    phis = np.linspace(0, 90, int(90 / phi_increment) + 1)
 
 
 for energy_num, energy in enumerate(gamma_energies):
-
     for wall_num, wall_thickness in enumerate(wall_thicknesses):
-
         for pore_num, pore_width in enumerate(pore_widths):
-
             if LINK_WALL_AND_PORE:
                 pore_width = wall_thickness
                 pore_num = wall_num
@@ -114,22 +111,33 @@ for energy_num, energy in enumerate(gamma_energies):
                 pore_num = wall_num
 
             for i, theta in enumerate(thetas):
-                z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
+                z = source_distance_from_lmcp_center * np.cos(np.pi * theta / 180)
                 for j, phi in enumerate(phis):
-                    x = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.cos(np.pi*phi/180)
-                    y = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.sin(np.pi*phi/180)
+                    x = (
+                        source_distance_from_lmcp_center
+                        * np.sin(np.pi * theta / 180)
+                        * np.cos(np.pi * phi / 180)
+                    )
+                    y = (
+                        source_distance_from_lmcp_center
+                        * np.sin(np.pi * theta / 180)
+                        * np.sin(np.pi * phi / 180)
+                    )
 
-                    rhat = np.array([
-                        x/source_distance_from_lmcp_center,
-                        y/source_distance_from_lmcp_center,
-                        z/source_distance_from_lmcp_center
-                    ])
+                    rhat = np.array(
+                        [
+                            x / source_distance_from_lmcp_center,
+                            y / source_distance_from_lmcp_center,
+                            z / source_distance_from_lmcp_center,
+                        ]
+                    )
 
-                    output_file_name = f'Run_eng{energy_num}_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac'
+                    output_file_name = f"Run_eng{energy_num}_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac"
                     output_file_path = os.path.join(new_folder_path, output_file_name)
-                    
-                    with open(output_file_path, 'w') as f:
-                        f.write(f'''######################################################
+
+                    with open(output_file_path, "w") as f:
+                        f.write(
+                            f"""######################################################
 ## Wall thickness: {round(wall_thickness, 3)} um
 ## Pore dimensions: {round(pore_width, 3)} um x {round(pore_width, 3)} um
 ## Slab dimensions: {round(lmcp_dimensions[0], 3)} cm x {round(lmcp_dimensions[1], 3)} cm x {round(lmcp_dimensions[2], 3)} cm
@@ -207,5 +215,5 @@ for energy_num, energy in enumerate(gamma_energies):
 /run/printProgress 10000
 /run/beamOn {num_events}
 
-''')
-                
+"""
+                        )

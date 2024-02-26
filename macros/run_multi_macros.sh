@@ -1,9 +1,9 @@
 #!/bin/bash
 
-a=(/local/d3/geantsims/LMCP/macros/multi_macros/*)
+a=(/home/claud/Documents/LabStuff/LMCP/macros/multi_macros/*)
 N=${#a[@]}
 
-threads=63
+threads=4
 iter=$((N/threads))
 max_full=$((threads*iter))
 
