@@ -1,9 +1,9 @@
 #!/bin/bash
 
-a=(/home/claud/Documents/LabStuff/LMCP/macros/multi_macros/*)
+a=(/local/d1/claudiobf/LMCP/macros/multi_macros/*)
 N=${#a[@]}
 
-threads=4
+threads=63
 iter=$((N/threads))
 max_full=$((threads*iter))
 
