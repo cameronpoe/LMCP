@@ -165,9 +165,11 @@ namespace lmcp
     G4Element* eCu = nistManager -> FindOrBuildElement( "Cu", isotopes ); // 29
     G4Element* eZn = nistManager -> FindOrBuildElement( "Zn", isotopes ); // 30
     // G4Element* eGa = nistManager -> FindOrBuildElement( "Ga", isotopes ); // 31
+    G4Element* eY  = nistManager -> FindOrBuildElement( "Y" , isotopes ); // 39
     G4Element* eSn = nistManager -> FindOrBuildElement( "Sn", isotopes ); // 50
     // G4Element* eI  = nistManager -> FindOrBuildElement( "I" , isotopes ); // 53
     // G4Element* eCs = nistManager -> FindOrBuildElement( "Cs", isotopes ); // 55
+    G4Element* eLu = nistManager -> FindOrBuildElement( "Lu", isotopes ); // 72
     G4Element* eW  = nistManager -> FindOrBuildElement( "W" , isotopes ); // 74
     G4Element* ePb = nistManager -> FindOrBuildElement( "Pb", isotopes ); // 82
 
@@ -227,6 +229,12 @@ namespace lmcp
     auto mECOMASS3 = new G4Material("ECOMASS3", 3.50*g/cm3, 2 );
       mECOMASS3->AddMaterial( mPA12, 20.0*perCent);
       mECOMASS3->AddElement( eCu, 80.0*perCent);
+
+    auto mLYSO = new G4Material("LYSO", 7.4*g/cm3, 4 );
+      mLYSO->AddElement( eLu, 71.4468*perCent);
+      mLYSO->AddElement( eY ,  4.0338*perCent);
+      mLYSO->AddElement( eSi,  6.3714*perCent);
+      mLYSO->AddElement( eO , 18.1480*perCent);
      
      // ALUMINUM 6061
     auto mAl6061 = new G4Material( "Aluminum6061", 2.6989*g/cm3, 9 );
@@ -285,7 +293,7 @@ namespace lmcp
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
-    auto mLMCP = G4Material::GetMaterial( "ECOMASS3" );
+    auto mLMCP = G4Material::GetMaterial( "LYSO" );
 
     // auto mAnode = G4Material::GetMaterial( "PEEK" );
 
