@@ -3,11 +3,11 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'../raw_data/ecomass3/const_lamina_200um/'
-num_histories_per_run = 500000
-wall_array = np.linspace(5, 195, 39, dtype=int)
+data_directory = r'./raw_data/test_for_latex_writeup/'
+num_histories_per_run = 1000
+wall_array = np.linspace(5, 195, 39, dtype=int) 
 #wall_array = np.array([50])
-pore_array = np.linspace(5, 145, 15, dtype=int)
+pore_array = np.linspace(25, 100, 4, dtype=int) 
 #pore_array = np.array([50])
 theta_increment = 5
 phi_increment = 3
