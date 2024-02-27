@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../../raw_data/g4_glass_lead_procs/'
+data_directory = r'../../raw_data/lyso_procs/'
 num_histories_per_run = 500000
 #wall_array = np.linspace(5,200,40,dtype=int)
 wall_array = np.array([50])
@@ -13,7 +13,7 @@ gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 SINGLE_ZENITH = True
 theta_increment = 5
 SINGLE_AZIMUTH = True
-phi_increment = 3
+phi_increment = 5
 
 DEF_VAR = 'energy'
 
