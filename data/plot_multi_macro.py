@@ -13,7 +13,7 @@ pore_widths = np.linspace(5, 145, 15, dtype=int)
 # pore_widths = np.array([50])
 wall_thicknesses = np.linspace(5, 195, 39, dtype=int)
 # wall_thicknesses = np.array([75])
-dependent_var = "wall"  # can be 'pore' or 'wall'
+dependent_var = "pore"  # can be 'pore' or 'wall'
 
 
 ##############################################
