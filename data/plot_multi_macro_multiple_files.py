@@ -1,14 +1,16 @@
 import numpy as np
 import random
 import os
-import sys
 import colorsys
+import sys
 from matplotlib import pyplot as plt
-from datetime import date
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r"./analyze_processes/eIoni_wp_data.npy"
-print("Looking for " + os.path.abspath(table_path))
+processes = {
+    "compton": r"./analyze_processes/compt_wp_data.npy",
+    "overall": r"./analyze_processes/overall_wp_data.npy",
+    "photoelectric": r"./analyze_processes/phot_wp_data.npy",
+}
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 theta_spacing = 5  # deg
 # all the important variables that can be varied:
@@ -17,6 +19,7 @@ wall_thicknesses = np.linspace(5, 195, 39, dtype=int)
 zenith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
 lamina_thickness_as_variable = False
+hues = [0, 0.86, 0.23]  # what colors to use to make it look good
 compare_physics = False  # whether to separate compton scattering, photoelectric effect, and other physical effects
 ###KEY FOR THESE THINGS
 # 0=wall
@@ -33,7 +36,7 @@ other_param2 = 0
 # indexes for vary_var
 increment = 4
 start = 1
-end = 16
+end = 17
 ##############################################
 ###                  CODE                  ###
 ##############################################
@@ -49,7 +52,8 @@ def combine(a, b):
     return np.array(c)
 
 
-# defining all the variables
+### Defining all the variables
+
 lamina_thicknesses = combine(wall_thicknesses, pore_widths)
 xlabel = ""
 vlabel = ""
@@ -131,7 +135,7 @@ def generateData(vary_parameter, table):
     return [worked_data, spline_domain, data_bspline]
 
 
-def plotData(ax, vary_parameter, color):
+def plotData(ax, vary_parameter, process, color):
     all_data = generateData(vary_parameter, table)
     worked_data = all_data[0]
     spline_domain = all_data[1]
@@ -140,50 +144,60 @@ def plotData(ax, vary_parameter, color):
     data_label = vlabel + ": " + str(vary_array[vary_parameter])
     if vary_var == 0 or vary_var == 1:
         data_label += "um"
+    data_label = process + "-" + data_label
     ax.plot(
-        spline_domain, 100 * data_bspline(spline_domain), color=color, label=data_label
+        spline_domain,
+        100 * data_bspline(spline_domain),
+        color=color,
+        alpha=0.5,
+        label=data_label,
     )
     ax.set_ylim(bottom=0, top=max(ax.get_ylim()[1], 105 * worked_data[:, 1].max()))
 
 
-table = np.load(table_path)
-print(table.shape)
-if lamina_thickness_as_variable:
-    new_table = np.zeros(
-        [
-            len(wall_thicknesses),
-            len(lamina_thicknesses),
-            len(zenith_angles),
-            len(azumith_angles),
-        ]
-    )
-    for index in np.ndindex(table.shape):
-        new_table[
-            index[0],
-            np.where(
-                lamina_thicknesses == wall_thicknesses[index[0]] + pore_widths[index[1]]
-            ),
-            index[2],
-            index[3],
-        ] = table[index[0]][index[1]][index[2]][index[3]]
-    table = new_table
-
 fig, ax = plt.subplots()
-# ax.scatter(worked_data[:, 0], 100 * worked_data[:, 1], color="black", label="Raw data")
-# ax.plot(
-#    spline_domain, 100 * data_bspline(spline_domain), color="red", label="Spline fit"
-# )
-for i in range(start, end, increment):
-    color = colorsys.hsv_to_rgb(
-        float(range(start, end, increment).index(i))
-        / len(range(start, end, increment)),
-        1,
-        0.8,
-    )
-    try:
-        plotData(ax, i, color)
-    except Exception as error:
-        print("invalid vary var for index " + str(i) + ":", error)
+hue_index = 0
+for process in processes:
+    hue = hues[hue_index]
+    table_path = processes[process]
+    table = np.load(table_path)
+    print("Looking for " + os.path.abspath(table_path))
+    print(table.shape)
+    if lamina_thickness_as_variable:
+        new_table = np.zeros(
+            [
+                len(wall_thicknesses),
+                len(lamina_thicknesses),
+                len(zenith_angles),
+                len(azumith_angles),
+            ]
+        )
+        for index in np.ndindex(table.shape):
+            new_table[
+                index[0],
+                np.where(
+                    lamina_thicknesses
+                    == wall_thicknesses[index[0]] + pore_widths[index[1]]
+                ),
+                index[2],
+                index[3],
+            ] = table[index[0]][index[1]][index[2]][index[3]]
+        table = new_table
+
+    # ax.scatter(worked_data[:, 0], 100 * worked_data[:, 1], color="black", label="Raw data")
+    # ax.plot(
+    #    spline_domain, 100 * data_bspline(spline_domain), color="red", label="Spline fit"
+    # )
+    for i in range(start, end, increment):
+        value = (float(range(start, end, increment).index(i)) + 1 + 1) / (
+            len(range(start, end, increment)) + 1
+        )
+        color = colorsys.hsv_to_rgb(hue, 1, value)
+        try:
+            plotData(ax, i, process, color)
+        except Exception as error:
+            print("invalid vary var for index " + str(i) + ":", error)
+    hue_index += 1
 ax.set_xlim(left=0)
 ax.set_xlabel(xlabel, fontdict=dict(size=12))
 ax.set_ylabel("Average efficiency (%)", fontdict=dict(size=12))
@@ -191,20 +205,4 @@ ax.legend()
 ax.xaxis.set_ticks_position("both")
 ax.yaxis.set_ticks_position("both")
 plt.minorticks_on()
-### File Naming Parameters:
-lamina_depth = "1in"
-photon_energy = "511 KeV"
-
-###Code
-file_name = str(date.today())
-file_name += ", " + xlabel + " vs " + "Efficiency"
-file_name += ", " + "Varying " + vlabel
-plot_title = "Lamina Depth: " + lamina_depth + ", "
-plot_title += "Photon Energy: " + photon_energy + "\n"
-plot_title += ": " + photon_energy + "\n"
-label_array = ["Wall Thickness", "Pore Width", "Zenith Angle", "Azumith Angle"]
-if lamina_thickness_as_variable:
-    label_array[1] = "Lamina Thickness"
-plt.title(plot_title)
-fig.canvas.get_default_filename = lambda: file_name
 plt.show()
