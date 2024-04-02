@@ -252,11 +252,11 @@ namespace lmcp
      
     // WO3 glass
     auto mWO3  = new G4Material("WO3" , 7.16*g/cm3, 2);
-      mSrO ->AddElement( eW , 79.3*perCent );
-      mSrO ->AddElement( eO , 20.7*perCent );
+      mWO3 ->AddElement( eW , 79.3*perCent );
+      mWO3 ->AddElement( eO , 20.7*perCent );
     auto mZnO = new G4Material("ZnO", 5.60*g/cm3, 2);
-      mTeO2->AddElement( eZn, 80.3*perCent );
-      mTeO2->AddElement( eO , 19.7*perCent );
+      mZnO->AddElement( eZn, 80.3*perCent );
+      mZnO->AddElement( eO , 19.7*perCent );
     G4Material* mK2O  = nistManager -> FindOrBuildMaterial( "G4_POTASSIUM_OXIDE" , isotopes );
     auto mWO3Glass = new G4Material("WO3Glass", 4.11*g/cm3, 4);
       mWO3Glass->AddMaterial( mWO3 , 20.0*perCent );
