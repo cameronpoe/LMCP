@@ -76,4 +76,3 @@ with open(save_file_path + '.pkl', 'wb') as f:
     pickle.dump(proc_plot_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-

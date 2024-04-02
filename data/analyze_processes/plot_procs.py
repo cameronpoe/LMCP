@@ -2,10 +2,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 import pickle
 
-pickle_object_path = r'data/analyze_processes/varenergy_constporesize/peek_procs.pkl'
+pickle_object_path = r'data/analyze_processes/varenergy_constporesize/lyso_procs.pkl'
 gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 wall_thicknesses = np.linspace(5,200,40,dtype=int)
-substrate = 'PEEK'
+substrate = 'LYSO'
 XAXIS = 'energy'        # can be 'wall', 'energy'
 
 
@@ -17,7 +17,8 @@ label_conv_dict = {
     'overall': 'Overall',
     'eIoni': 'e- ionization',
     'compt': 'Compton',
-    'phot': 'Photoelectric'
+    'phot': 'Photoelectric',
+    'eBrem': 'Bremsstrahlung'
 }
 
 if XAXIS == 'wall':
