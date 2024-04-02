@@ -168,7 +168,7 @@ namespace lmcp
     G4Element* eSr = nistManager -> FindOrBuildElement( "Sr", isotopes ); // 38
     G4Element* eY  = nistManager -> FindOrBuildElement( "Y" , isotopes ); // 39
     G4Element* eSn = nistManager -> FindOrBuildElement( "Sn", isotopes ); // 50
-    G4Element* eTe = nistmanager -> FindOrBuildElement( "Te", isotopes ); // 52
+    G4Element* eTe = nistManager -> FindOrBuildElement( "Te", isotopes ); // 52
     // G4Element* eI  = nistManager -> FindOrBuildElement( "I" , isotopes ); // 53
     // G4Element* eCs = nistManager -> FindOrBuildElement( "Cs", isotopes ); // 55
     G4Element* eLu = nistManager -> FindOrBuildElement( "Lu", isotopes ); // 72
