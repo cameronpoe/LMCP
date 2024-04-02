@@ -8,8 +8,8 @@ import shutil
 ####################################
 
 root_output_dir = r'../raw_data/latest_run/'
-max_threads = 1
-num_events = 1
+max_threads = 63
+num_events = 100000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 LINK_WALL_AND_PORE = False
