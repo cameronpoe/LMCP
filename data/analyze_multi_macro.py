@@ -3,13 +3,13 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'./raw_data/test_for_latex_writeup/'
-num_histories_per_run = 1000
-wall_array = np.linspace(5, 195, 39, dtype=int) 
+data_directory = r'../raw_data/newpaperfigs/wo3glass/'
+num_histories_per_run = 100000
+wall_array = np.linspace(5, 95, 19, dtype=int) 
 #wall_array = np.array([50])
 pore_array = np.linspace(25, 100, 4, dtype=int) 
 #pore_array = np.array([50])
-theta_increment = 5
+theta_increment = 6
 phi_increment = 3
 SINGLE_AZIMUTH = True
 SAVE_FOR_PET = False
