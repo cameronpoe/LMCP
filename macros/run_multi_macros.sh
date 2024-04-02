@@ -1,6 +1,6 @@
 #!/bin/bash
 
-a=(/home/cameronpoe/Desktop/hybrid_gamma_multiplier/hgmt_sim_geant/LMCP_Full/macros/multi_macros/*)
+a=(/home/cameronpoe/Desktop/research/frisch/hgmt_simulation/hgmt_sim_geant/LMCP_Full/macros/multi_macros/*)
 N=${#a[@]}
 
 threads=1
