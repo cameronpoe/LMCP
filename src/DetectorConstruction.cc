@@ -261,7 +261,7 @@ namespace lmcp
     auto mWO3Glass = new G4Material("WO3Glass", 4.11*g/cm3, 4);
       mWO3Glass->AddMaterial( mWO3 , 20.0*perCent );
       mWO3Glass->AddMaterial( mZnO , 20.0*perCent );
-      mWO3Glass->Addmaterial( mB2O3, 50.0*perCent );
+      mWO3Glass->AddMaterial( mB2O3, 50.0*perCent );
       mWO3Glass->AddMaterial( mK2O , 10.0*perCent );
 
      // ALUMINUM 6061
