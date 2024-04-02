@@ -189,15 +189,15 @@ namespace lmcp
     nistManager -> FindOrBuildMaterial("G4_GLASS_LEAD");
 
     // Schott B33 glass
-    G4Material* eSiO2  = nistManager -> FindOrBuildMaterial( "G4_SILICON_DIOXIDE" , isotopes );
-    G4Material* eB2O3  = nistManager -> FindOrBuildMaterial( "G4_BORON_OXIDE" , isotopes );
-    G4Material* eNa2O  = nistManager -> FindOrBuildMaterial( "G4_SODIUM_MONOXIDE" , isotopes );
-    G4Material* eAl2O3 = nistManager -> FindOrBuildMaterial( "G4_ALUMINUM_OXIDE" , isotopes );
+    G4Material* mSiO2  = nistManager -> FindOrBuildMaterial( "G4_SILICON_DIOXIDE" , isotopes );
+    G4Material* mB2O3  = nistManager -> FindOrBuildMaterial( "G4_BORON_OXIDE" , isotopes );
+    G4Material* mNa2O  = nistManager -> FindOrBuildMaterial( "G4_SODIUM_MONOXIDE" , isotopes );
+    G4Material* mAl2O3 = nistManager -> FindOrBuildMaterial( "G4_ALUMINUM_OXIDE" , isotopes );
     auto mB33 = new G4Material( "B33", 2.23*g/cm3, 4 );
-      mB33->AddMaterial( eSiO2, 81*perCent);
-      mB33->AddMaterial( eB2O3, 13*perCent);
-      mB33->AddMaterial( eNa2O,  4*perCent);
-      mB33->AddMaterial( eAl2O3, 2*perCent);
+      mB33->AddMaterial( mSiO2, 81*perCent);
+      mB33->AddMaterial( mB2O3, 13*perCent);
+      mB33->AddMaterial( mNa2O,  4*perCent);
+      mB33->AddMaterial( mAl2O3, 2*perCent);
 
     // Peek chemical formula (C19H12O3)
     //  C 114/150 = 76
@@ -250,6 +250,20 @@ namespace lmcp
       mSrTeGlass->AddMaterial( mSrO ,  3.30*perCent );
       mSrTeGlass->AddMaterial( mTeO2, 96.70*perCent );
      
+    // WO3 glass
+    auto mWO3  = new G4Material("WO3" , 7.16*g/cm3, 2);
+      mSrO ->AddElement( eW , 79.3*perCent );
+      mSrO ->AddElement( eO , 20.7*perCent );
+    auto mZnO = new G4Material("ZnO", 5.60*g/cm3, 2);
+      mTeO2->AddElement( eZn, 80.3*perCent );
+      mTeO2->AddElement( eO , 19.7*perCent );
+    G4Material* mK2O  = nistManager -> FindOrBuildMaterial( "G4_POTASSIUM_OXIDE" , isotopes );
+    auto mWO3Glass = new G4Material("WO3Glass", 4.11*g/cm3, 4);
+      mWO3Glass->AddMaterial( mWO3 , 20.0*perCent );
+      mWO3Glass->AddMaterial( mZnO , 20.0*perCent );
+      mWO3Glass->Addmaterial( mB2O3, 50.0*perCent );
+      mWO3Glass->AddMaterial( mK2O , 10.0*perCent );
+
      // ALUMINUM 6061
     auto mAl6061 = new G4Material( "Aluminum6061", 2.6989*g/cm3, 9 );
       mAl6061 -> AddElement( eSi,  0.60*perCent );
@@ -304,7 +318,8 @@ namespace lmcp
 
     // auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
     // auto mLMCP = G4Material::GetMaterial( "B33" );
-    auto mLMCP = G4Material::GetMaterial( "SrTeGlass" );
+    // auto mLMCP = G4Material::GetMaterial( "SrTeGlass" );
+    auto mLMCP = G4Material::GetMaterial( "WO3Glass" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
