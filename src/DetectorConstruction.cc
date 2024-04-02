@@ -165,8 +165,10 @@ namespace lmcp
     G4Element* eCu = nistManager -> FindOrBuildElement( "Cu", isotopes ); // 29
     G4Element* eZn = nistManager -> FindOrBuildElement( "Zn", isotopes ); // 30
     // G4Element* eGa = nistManager -> FindOrBuildElement( "Ga", isotopes ); // 31
+    G4Element* eSr = nistManager -> FindOrBuildElement( "Sr", isotopes ); // 38
     G4Element* eY  = nistManager -> FindOrBuildElement( "Y" , isotopes ); // 39
     G4Element* eSn = nistManager -> FindOrBuildElement( "Sn", isotopes ); // 50
+    G4Element* eTe = nistmanager -> FindOrBuildElement( "Te", isotopes ); // 52
     // G4Element* eI  = nistManager -> FindOrBuildElement( "I" , isotopes ); // 53
     // G4Element* eCs = nistManager -> FindOrBuildElement( "Cs", isotopes ); // 55
     G4Element* eLu = nistManager -> FindOrBuildElement( "Lu", isotopes ); // 72
@@ -230,11 +232,23 @@ namespace lmcp
       mECOMASS3->AddMaterial( mPA12, 20.0*perCent);
       mECOMASS3->AddElement( eCu, 80.0*perCent);
 
+    // LYSO
     auto mLYSO = new G4Material("LYSO", 7.4*g/cm3, 4 );
       mLYSO->AddElement( eLu, 71.4468*perCent);
       mLYSO->AddElement( eY ,  4.0338*perCent);
       mLYSO->AddElement( eSi,  6.3714*perCent);
       mLYSO->AddElement( eO , 18.1480*perCent);
+
+    // SrO-TeO2 glass
+    G4Material* mSrO  = new G4Material("SrO" , 4.70*g/cm3, 2);
+      mSrO ->AddElement( eSr, 84.6*perCent );
+      mSrO ->AddElement( eO , 15.4*perCent );
+    G4Material* mTeO2 = new G4Material("TeO2", 5.855*g/cm3, 2);
+      mTeO2->AddElement( eTe, 80.0*perCent );
+      mTeO2->AddElement( eO , 20.0*perCent );
+    auto mSrTeGlass = new G4Material("SrTeGlass", 5.63*g/cm3, 3);
+      mSrTeGlass->AddMaterial( mSrO ,  3.30*perCent );
+      mSrTeGlass->AddMaterial( mTeO2, 96.70*perCent );
      
      // ALUMINUM 6061
     auto mAl6061 = new G4Material( "Aluminum6061", 2.6989*g/cm3, 9 );
@@ -288,8 +302,9 @@ namespace lmcp
     // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
     // auto mPCB = G4Material::GetMaterial( "PCB" );
 
-    auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
+    // auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
     // auto mLMCP = G4Material::GetMaterial( "B33" );
+    auto mLMCP = G4Material::GetMaterial( "SrTeGlass" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
