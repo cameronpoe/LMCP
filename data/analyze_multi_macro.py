@@ -12,11 +12,14 @@ pore_array = np.linspace(5, 145, 15, dtype=int)
 theta_increment = 5
 phi_increment = 3
 SINGLE_AZIMUTH = True
+# if this is true will use the number of interacted gamma instead of the number of gammas created
+EFFICIENCY_INTERACTED = True
 SAVE_FOR_PET = False
-SINGLE_LAMINA_THICKNESS = True
+SINGLE_LAMINA_THICKNESS = False
 
 
 theta_array = np.linspace(0, 90, int(90 / theta_increment + 1))
+theta_array = np.array([0])
 phi_array = np.linspace(0, 90, int(90 / phi_increment + 1))
 if SINGLE_AZIMUTH:
     phi_array = np.array([0])
@@ -60,7 +63,16 @@ for file_name in os.listdir(data_directory):
             ak.any(pore_branches["PDGID"] == 11, axis=1)
         )
 
-        eff = num_electrons_reached_pore / num_histories_per_run
+        if EFFICIENCY_INTERACTED:
+            lamina_tree = f["lamina"]
+            lamina_branches = lamina_tree.arrays(library="ak")
+            if len(lamina_branches["EventNumber"]) == 0:
+                eff = 0
+            eff = float(num_electrons_reached_pore) / len(
+                lamina_branches["EventNumber"]
+            )
+        else:
+            eff = float(num_electrons_reached_pore) / num_histories_per_run
         if SAVE_FOR_PET:
             eff_v_angle[theta_ind][phi_ind] = eff
         else:

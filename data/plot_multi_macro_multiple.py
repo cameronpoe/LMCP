@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 from datetime import date
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r"./analyze_processes/eIoni_wp_data.npy"
+table_path = r"wp_data.npy"
 print("Looking for " + os.path.abspath(table_path))
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 theta_spacing = 5  # deg
@@ -16,7 +16,7 @@ pore_widths = np.linspace(5, 145, 15, dtype=int)
 wall_thicknesses = np.linspace(5, 195, 39, dtype=int)
 zenith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
-lamina_thickness_as_variable = False
+lamina_thickness_as_variable = True
 compare_physics = False  # whether to separate compton scattering, photoelectric effect, and other physical effects
 ###KEY FOR THESE THINGS
 # 0=wall
@@ -53,9 +53,14 @@ def combine(a, b):
 lamina_thicknesses = combine(wall_thicknesses, pore_widths)
 xlabel = ""
 vlabel = ""
-
+other_param1_label = ""
+other_param2_label = ""
+# defining all the parameter arrays
 independant_array = []
 vary_array = []
+other_param1_array = []
+other_param2_array = []
+
 if lamina_thickness_as_variable:
     label_array = [
         "Wall Thickness",
@@ -64,19 +69,17 @@ if lamina_thickness_as_variable:
         "Azumith Angle",
     ]
     array_array = [wall_thicknesses, lamina_thicknesses, zenith_angles, azumith_angles]
-    xlabel = label_array[independant_var]
-    vlabel = label_array[vary_var]
-    independant_array = array_array[independant_var]
-    vary_array = array_array[vary_var]
 else:
     label_array = ["Wall Thickness", "Pore Width", "Zenith Angle", "Azumith Angle"]
     array_array = [wall_thicknesses, pore_widths, zenith_angles, azumith_angles]
-    xlabel = label_array[independant_var]
-    vlabel = label_array[vary_var]
-    independant_array = array_array[independant_var]
-    vary_array = array_array[vary_var]
+xlabel = label_array[independant_var]
+vlabel = label_array[vary_var]
+independant_array = array_array[independant_var]
+vary_array = array_array[vary_var]
 other_param1_index = [i for i in range(4) if i not in [vary_var, independant_var]][0]
 other_param2_index = [i for i in range(4) if i not in [vary_var, independant_var]][1]
+other_param1_array = array_array[other_param1_index]
+other_param2_array = array_array[other_param2_index]
 
 
 def getSmallTable(vary_parameter, independant_parameter):
@@ -192,19 +195,52 @@ ax.xaxis.set_ticks_position("both")
 ax.yaxis.set_ticks_position("both")
 plt.minorticks_on()
 ### File Naming Parameters:
-lamina_depth = "1in"
+lamina_depth = "1 in"
 photon_energy = "511 KeV"
 
 ###Code
 file_name = str(date.today())
 file_name += ", " + xlabel + " vs " + "Efficiency"
 file_name += ", " + "Varying " + vlabel
+file_name += ", " + "Multiple Processes"
 plot_title = "Lamina Depth: " + lamina_depth + ", "
 plot_title += "Photon Energy: " + photon_energy + "\n"
-plot_title += ": " + photon_energy + "\n"
-label_array = ["Wall Thickness", "Pore Width", "Zenith Angle", "Azumith Angle"]
-if lamina_thickness_as_variable:
-    label_array[1] = "Lamina Thickness"
+if other_param1 == -1:
+    plot_title += (
+        label_array[other_param1_index]
+        + ": "
+        + str(other_param1_array[0])
+        + "-"
+        + str(other_param1_array[-1])
+        + " step: "
+        + str(other_param1_array[1] - other_param1_array[0])
+        + ", "
+    )
+else:
+    plot_title += (
+        label_array[other_param1_index]
+        + ": "
+        + str(other_param1_array[other_param1_index])
+        + ", "
+    )
+if other_param2 == -1:
+    plot_title += (
+        label_array[other_param2_index]
+        + ": "
+        + str(other_param2_array[0])
+        + "-"
+        + str(other_param2_array[-1])
+        + " step "
+        + str(other_param2_array[1] - other_param2_array[0])
+        + ", "
+    )
+else:
+    plot_title += (
+        label_array[other_param2_index]
+        + ": "
+        + str(other_param2_array[other_param2_index])
+    )
 plt.title(plot_title)
+plt.text(0.01, 0.99, str(date.today()), ha="left", va="top", transform=ax.transAxes)
 fig.canvas.get_default_filename = lambda: file_name
 plt.show()

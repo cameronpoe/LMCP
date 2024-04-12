@@ -1,4 +1,5 @@
 import numpy as np
+from datetime import date
 import random
 import os
 import colorsys
@@ -18,7 +19,7 @@ pore_widths = np.linspace(5, 145, 15, dtype=int)
 wall_thicknesses = np.linspace(5, 195, 39, dtype=int)
 zenith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
-lamina_thickness_as_variable = False
+lamina_thickness_as_variable = True
 hues = [0, 0.86, 0.23]  # what colors to use to make it look good
 compare_physics = False  # whether to separate compton scattering, photoelectric effect, and other physical effects
 ###KEY FOR THESE THINGS
@@ -54,12 +55,18 @@ def combine(a, b):
 
 ### Defining all the variables
 
+
 lamina_thicknesses = combine(wall_thicknesses, pore_widths)
 xlabel = ""
 vlabel = ""
-
+other_param1_label = ""
+other_param2_label = ""
+# defining all the parameter arrays
 independant_array = []
 vary_array = []
+other_param1_array = []
+other_param2_array = []
+
 if lamina_thickness_as_variable:
     label_array = [
         "Wall Thickness",
@@ -68,19 +75,17 @@ if lamina_thickness_as_variable:
         "Azumith Angle",
     ]
     array_array = [wall_thicknesses, lamina_thicknesses, zenith_angles, azumith_angles]
-    xlabel = label_array[independant_var]
-    vlabel = label_array[vary_var]
-    independant_array = array_array[independant_var]
-    vary_array = array_array[vary_var]
 else:
     label_array = ["Wall Thickness", "Pore Width", "Zenith Angle", "Azumith Angle"]
     array_array = [wall_thicknesses, pore_widths, zenith_angles, azumith_angles]
-    xlabel = label_array[independant_var]
-    vlabel = label_array[vary_var]
-    independant_array = array_array[independant_var]
-    vary_array = array_array[vary_var]
+xlabel = label_array[independant_var]
+vlabel = label_array[vary_var]
+independant_array = array_array[independant_var]
+vary_array = array_array[vary_var]
 other_param1_index = [i for i in range(4) if i not in [vary_var, independant_var]][0]
 other_param2_index = [i for i in range(4) if i not in [vary_var, independant_var]][1]
+other_param1_array = array_array[other_param1_index]
+other_param2_array = array_array[other_param2_index]
 
 
 def getSmallTable(vary_parameter, independant_parameter):
@@ -183,11 +188,6 @@ for process in processes:
                 index[3],
             ] = table[index[0]][index[1]][index[2]][index[3]]
         table = new_table
-
-    # ax.scatter(worked_data[:, 0], 100 * worked_data[:, 1], color="black", label="Raw data")
-    # ax.plot(
-    #    spline_domain, 100 * data_bspline(spline_domain), color="red", label="Spline fit"
-    # )
     for i in range(start, end, increment):
         value = (float(range(start, end, increment).index(i)) + 1 + 1) / (
             len(range(start, end, increment)) + 1
@@ -205,4 +205,50 @@ ax.legend()
 ax.xaxis.set_ticks_position("both")
 ax.yaxis.set_ticks_position("both")
 plt.minorticks_on()
+lamina_depth = "1 in"
+photon_energy = "511 KeV"
+file_name = str(date.today())
+file_name += ", " + xlabel + " vs " + "Efficiency"
+file_name += ", " + "Varying " + vlabel
+file_name += ", " + "Multiple Processes"
+plot_title = "Lamina Depth: " + lamina_depth + ", "
+plot_title += "Photon Energy: " + photon_energy + "\n"
+if other_param1 == -1:
+    plot_title += (
+        label_array[other_param1_index]
+        + ": "
+        + str(other_param1_array[0])
+        + "-"
+        + str(other_param1_array[-1])
+        + " step: "
+        + str(other_param1_array[1] - other_param1_array[0])
+        + ", "
+    )
+else:
+    plot_title += (
+        label_array[other_param1_index]
+        + ": "
+        + str(other_param1_array[other_param1_index])
+        + ", "
+    )
+if other_param2 == -1:
+    plot_title += (
+        label_array[other_param2_index]
+        + ": "
+        + str(other_param2_array[0])
+        + "-"
+        + str(other_param2_array[-1])
+        + " step "
+        + str(other_param2_array[1] - other_param2_array[0])
+        + ", "
+    )
+else:
+    plot_title += (
+        label_array[other_param2_index]
+        + ": "
+        + str(other_param2_array[other_param2_index])
+    )
+plt.title(plot_title)
+plt.text(0.01, 0.99, str(date.today()), ha="left", va="top", transform=ax.transAxes)
+fig.canvas.get_default_filename = lambda: file_name
 plt.show()

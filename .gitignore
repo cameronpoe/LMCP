@@ -1,4 +1,5 @@
 *.root
 build/*
+data/npy_files/*
 raw_data/*
 macros/multi_macros/*
