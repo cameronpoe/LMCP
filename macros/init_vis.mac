@@ -12,7 +12,6 @@
 /run/verbose 0
 /event/verbose 0
 /tracking/verbose 0
-/run/printProgress 1000
 
 ######################################################
 ## Change the default number of threads (in multi-threaded mode)
@@ -30,8 +29,8 @@
 # Option1 - Electromagnetic & Hadronic
 # Option2 - Electromagnetic & Hadronic with high precision option
 ######################################################
-/user/phy/setPhysics Option0
-#/user/phy/setPhysics Option1
+#/user/phy/setPhysics Option0
+/user/phy/setPhysics Option1
 #/user/phy/setPhysics Option2
 
 ######################################################
@@ -55,4 +54,5 @@
 #/control/execute ../macros/test.mac
 #/control/execute ../macros/Run_single_azimuth_rot_source_VIS_TEST.mac
 #/control/execute ../macros/Run_diff_thicknesses_VIS_TEST.mac
+/control/execute ../macros/VIS_Run_0.mac
 

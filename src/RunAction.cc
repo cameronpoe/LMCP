@@ -74,8 +74,10 @@ namespace lmcp
     //
     analysisManager->CreateNtuple("lamina", "Lamina Data");
     analysisManager->CreateNtupleIColumn("EventNumber");
+    analysisManager->CreateNtupleIColumn("TrackID", fEventAction->GetLaminaTrackID());
     analysisManager->CreateNtupleIColumn("ID", fEventAction->GetLaminaID());
     analysisManager->CreateNtupleDColumn("Edep", fEventAction->GetLaminaEdep());
+    analysisManager->CreateNtupleDColumn("EKin", fEventAction->GetLaminaEKin());
     analysisManager->CreateNtupleDColumn("Time", fEventAction->GetLaminaTime());
     analysisManager->FinishNtuple();
 
@@ -84,7 +86,7 @@ namespace lmcp
     //
     analysisManager->CreateNtuple("pore", "Pore Data");
     analysisManager->CreateNtupleIColumn("EventNumber");
-    analysisManager->CreateNtupleIColumn("TrackID", fEventAction->GetTrackID());
+    analysisManager->CreateNtupleIColumn("TrackID", fEventAction->GetPoreTrackID());
     analysisManager->CreateNtupleIColumn("ID", fEventAction->GetPoreID());
     analysisManager->CreateNtupleIColumn("PDGID", fEventAction->GetPDGID());
     analysisManager->CreateNtupleSColumn("CreatorProc", fEventAction->GetPoreCreatorProc());

@@ -16,7 +16,7 @@
 ######################################################
 ## Change the default number of threads (in multi-threaded mode)
 ######################################################
-/run/numberOfThreads 8
+/run/numberOfThreads 7
 
 ######################################################
 ## Overlap Checking
@@ -36,7 +36,14 @@
 ######################################################
 ## Initialize kernel
 ######################################################
+/user/det/setSlabDimensions 2.54 2.54 2.54 cm
+/user/det/setPoreDimensions 0.005 0.005 2.54 cm
+/user/det/setWallThickness 50 um
 /run/initialize
+#/process/em/fluo false
+#/process/em/auger false
+/process/em/augerCascade false
+#/process/em/pixe false
 
 ######################################################
 # Source Particle
@@ -57,11 +64,11 @@
 ######################################################
 # RANDOM NUMBER
 ######################################################
-/random/setSeeds 165127 668832
+/random/setSeeds 165128 668833
 
 ######################################################
 # Start Run
 ######################################################
 /analysis/setFileName ../data/Run_0.root
 /run/printProgress 1000
-/run/beamOn 10000
+/run/beamOn 100000

@@ -317,9 +317,9 @@ namespace lmcp
     // auto mPCB = G4Material::GetMaterial( "PCB" );
 
     // auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
-    // auto mLMCP = G4Material::GetMaterial( "B33" );
+    auto mLMCP = G4Material::GetMaterial( "B33" );
     // auto mLMCP = G4Material::GetMaterial( "SrTeGlass" );
-    auto mLMCP = G4Material::GetMaterial( "WO3Glass" );
+    // auto mLMCP = G4Material::GetMaterial( "WO3Glass" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
     // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
@@ -623,26 +623,26 @@ namespace lmcp
     //----------------------------------------------------------
     //---------------------------------------------------------
 
-    // //This is the second local electric field(Box_2)
-    fEMfield_2 = new G4UniformElectricField(G4ThreeVector(0.0, 0.0, 1.0*kilovolt/mm));
-    // Create an equation of motion for this field
-    fEquation_2 = new G4EqMagElectricField(fEMfield_2);
+    //This is the second local electric field(Box_2)
+    // fEMfield_2 = new G4UniformElectricField(G4ThreeVector(0.0, 0.0, 1.0*kilovolt/mm));
+    // // Create an equation of motion for this field
+    // fEquation_2 = new G4EqMagElectricField(fEMfield_2);
 
-    G4int nvar2 = 8;
-    // fStepper_2 = new G4ClassicalRK4(fEquation_2,nvar2);
-    fStepper_2 = new G4DormandPrince745(fEquation_2,nvar2);
+    // G4int nvar2 = 8;
+    // // fStepper_2 = new G4ClassicalRK4(fEquation_2,nvar2);
+    // fStepper_2 = new G4DormandPrince745(fEquation_2,nvar2);
 
-    auto localFieldMgr_2 = new G4FieldManager(fEMfield_2);
-    LVS->GetVolume( "LMCP_LV" )->SetFieldManager(localFieldMgr_2,true);
-    LVS->GetVolume( "Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
-    LVS->GetVolume( "Div_Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
+    // auto localFieldMgr_2 = new G4FieldManager(fEMfield_2);
+    // LVS->GetVolume( "LMCP_LV" )->SetFieldManager(localFieldMgr_2,true);
+    // LVS->GetVolume( "Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
+    // LVS->GetVolume( "Div_Lamina_LV" )->SetFieldManager(localFieldMgr_2,true);
 
-    fMinStep_2 = 0.00001*mm ; // minimal step of 0.01 microns
+    // fMinStep_2 = 0.00001*mm ; // minimal step of 0.01 microns
 
-    auto fIntgrDriver_2 = new G4MagInt_Driver(fMinStep_2,fStepper_2,fStepper_2->GetNumberOfVariables());
+    // auto fIntgrDriver_2 = new G4MagInt_Driver(fMinStep_2,fStepper_2,fStepper_2->GetNumberOfVariables());
 
-    fChordFinder_2 = new G4ChordFinder(fIntgrDriver_2);
-    localFieldMgr_2->SetChordFinder(fChordFinder_2);
+    // fChordFinder_2 = new G4ChordFinder(fIntgrDriver_2);
+    // localFieldMgr_2->SetChordFinder(fChordFinder_2);
     
     //----------------------------------------------------------
     //----------------------------------------------------------
@@ -650,27 +650,27 @@ namespace lmcp
     //----------------------------------------------------------
 
     //This is the world's electric field.Currently, it is set to 0
-    fEMfield_WORLD = new G4UniformElectricField(G4ThreeVector(0.0, 0.0,0.0*kilovolt/m));
+    // fEMfield_WORLD = new G4UniformElectricField(G4ThreeVector(0.0, 0.0,0.0*kilovolt/m));
 
-    // Create an equation of motion for this field
-    fEquation_WORLD = new G4EqMagElectricField(fEMfield_WORLD);
+    // // Create an equation of motion for this field
+    // fEquation_WORLD = new G4EqMagElectricField(fEMfield_WORLD);
 
-    G4int nvar3 = 8;
-    // fStepper_WORLD = new G4ClassicalRK4(fEquation_WORLD,nvar3);
-    fStepper_WORLD = new G4DormandPrince745(fEquation_WORLD,nvar3);
+    // G4int nvar3 = 8;
+    // // fStepper_WORLD = new G4ClassicalRK4(fEquation_WORLD,nvar3);
+    // fStepper_WORLD = new G4DormandPrince745(fEquation_WORLD,nvar3);
 
-    // Get the global field manager
-    auto fFieldManager= G4TransportationManager::GetTransportationManager()->GetFieldManager();
+    // // Get the global field manager
+    // auto fFieldManager= G4TransportationManager::GetTransportationManager()->GetFieldManager();
 
-    // Set this field to the global field manager
-    fFieldManager->SetDetectorField(fEMfield_WORLD);
+    // // Set this field to the global field manager
+    // fFieldManager->SetDetectorField(fEMfield_WORLD);
 
-    fMinStep_WORLD = 0.010*mm ; // minimal step of 10 microns
+    // fMinStep_WORLD = 0.010*mm ; // minimal step of 10 microns
 
-    auto fIntgrDriver_WORLD = new G4MagInt_Driver(fMinStep_WORLD,fStepper_WORLD,fStepper_WORLD->GetNumberOfVariables());
+    // auto fIntgrDriver_WORLD = new G4MagInt_Driver(fMinStep_WORLD,fStepper_WORLD,fStepper_WORLD->GetNumberOfVariables());
 
-    fChordFinder_WORLD = new G4ChordFinder(fIntgrDriver_WORLD);
-    fFieldManager->SetChordFinder(fChordFinder_WORLD);
+    // fChordFinder_WORLD = new G4ChordFinder(fIntgrDriver_WORLD);
+    // fFieldManager->SetChordFinder(fChordFinder_WORLD);
 
     //----------------------------------------------------------
     //----------------------------------------------------------

@@ -77,12 +77,20 @@ namespace lmcp
     // check if gamma and has process defined step
     //// photon processes (phot,comp,conv) happen at the end of the step
     // if ( track->GetParticleDefinition() == G4Gamma::Definition() && postStepPoint->GetProcessDefinedStep() ) {
-    if ( track->GetParticleDefinition() == G4Gamma::Definition() ) {
+    if ( track->GetParticleDefinition() == G4Gamma::Definition() || (track->GetParticleDefinition() == G4Electron::Definition() && (track->GetCreatorProcess()->GetProcessName() == "compt" || track->GetCreatorProcess()->GetProcessName() == "phot"))) {
+      
       auto preTouch = preStepPoint->GetTouchable();
       auto postTouch = postStepPoint->GetTouchable();
  
       // if ( postStepPoint->GetProcessDefinedStep()->GetProcessType() == 2 ) { // electromagnetic process
       auto edep = -1 * ( postStepPoint->GetKineticEnergy() - preStepPoint->GetKineticEnergy() );
+
+      // if (track->GetParticleDefinition() == G4Gamma::Definition()) {
+      //   G4cout << preStepPoint->GetKineticEnergy()/keV << G4endl;
+      //   G4cout << postStepPoint->GetKineticEnergy()/keV << G4endl;
+      //   G4cout << G4endl;
+      // }
+
       if ( edep > 0. ) {
         auto hit = new LaminaHit();
 
@@ -112,6 +120,21 @@ namespace lmcp
         // get energy deposited
         // auto edep = step->GetTotalEnergyDeposit();
         hit->SetEdep(edep);
+
+        hit->SetEKin(preStepPoint->GetKineticEnergy() );
+
+        // G4cout << preStepPoint->GetKineticEnergy()/keV << G4endl;
+        // if (track->GetParticleDefinition() == G4Electron::Definition()){
+        //   G4cout << track->GetCreatorProcess()->GetProcessName() << G4endl;
+        // }
+        // G4cout << procName << G4endl;
+        // G4cout << track->GetParentID() << G4endl;
+        // G4cout << edep/keV << G4endl;
+        // G4cout << G4endl;
+
+
+
+
 
         // insert the hit
         fHitsCollection->insert(hit);

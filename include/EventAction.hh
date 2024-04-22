@@ -45,10 +45,12 @@ namespace lmcp
 
       // methods
       std::vector<G4int>& GetLaminaID() { return fLaminaID; }
+      std::vector<G4int>& GetLaminaTrackID() { return fLaminaTrackID; }
       std::vector<G4double>& GetLaminaEdep() { return fLaminaEdep; }
+      std::vector<G4double>& GetLaminaEKin() { return fLaminaEKin;}
       std::vector<G4double>& GetLaminaTime() { return fLaminaTime; }
       std::vector<G4int>& GetPoreID() { return fPoreID; }
-      std::vector<G4int>& GetTrackID() { return fTrackID; }
+      std::vector<G4int>& GetPoreTrackID() { return fPoreTrackID; }
       std::vector<G4int>& GetPDGID() { return fPDGID; }
       std::vector<std::string>& GetPoreCreatorProc() { return fPoreCreatorProc; }
       std::vector<G4double>& GetPoreEdep() { return fPoreEdep; }
@@ -64,10 +66,12 @@ namespace lmcp
       G4int fPoreHCID = -1;
 
       std::vector<G4int> fLaminaID;
+      std::vector<G4int> fLaminaTrackID;
       std::vector<G4double> fLaminaEdep;
+      std::vector<G4double> fLaminaEKin;
       std::vector<G4double> fLaminaTime;  
       std::vector<G4int> fPoreID;
-      std::vector<G4int> fTrackID;
+      std::vector<G4int> fPoreTrackID;
       std::vector<G4int> fPDGID;
       std::vector<std::string> fPoreCreatorProc;
       std::vector<G4double> fPoreEdep;
