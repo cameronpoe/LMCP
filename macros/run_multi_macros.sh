@@ -1,6 +1,6 @@
 #!/bin/bash
 
-a=(/Users/iangoldberg/Documents/Github/LMCP/macros/multi_macros/*)
+a=(/home/iangoldberg/LMCP/macros/multi_macros*)
 N=${#a[@]}
 
 threads=32
