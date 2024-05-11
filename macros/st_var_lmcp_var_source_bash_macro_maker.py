@@ -8,11 +8,11 @@ import shutil
 ####################################
 
 root_output_dir = r'./raw_data/latest_run/'
-max_threads = 7
-num_events = 50000
+max_threads = 32
+num_events = 10000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
-LINK_WALL_AND_PORE = False
+LINK_WALL_AND_PORE = True
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um
 wall_thicknesses = np.array([50])                             # um
@@ -23,7 +23,7 @@ pore_widths = np.array([50])				   # um
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
 gamma_energies = np.array([511])                              # keV
 # gamma_energies = np.array([200,300,400,500])
-source_distance_from_lmcp_center = 22       # mm
+source_distance_from_lmcp_center = 22      # mm
 
 SINGLE_ZENITH = True
 theta_increment = 30    # degrees (factor of 90)

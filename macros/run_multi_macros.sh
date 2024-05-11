@@ -1,9 +1,9 @@
 #!/bin/bash
 
-a=(/home/cameronpoe/Desktop/research/frisch/hgmt_simulation/hgmt_sim_geant/LMCP_Full/macros/multi_macros/*)
+a=(/Users/iangoldberg/Documents/Github/LMCP/macros/multi_macros/*)
 N=${#a[@]}
 
-threads=7
+threads=32
 iter=$((N/threads))
 max_full=$((threads*iter))
 

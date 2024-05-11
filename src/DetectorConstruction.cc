@@ -193,6 +193,7 @@ namespace lmcp
     G4Material* mB2O3  = nistManager -> FindOrBuildMaterial( "G4_BORON_OXIDE" , isotopes );
     G4Material* mNa2O  = nistManager -> FindOrBuildMaterial( "G4_SODIUM_MONOXIDE" , isotopes );
     G4Material* mAl2O3 = nistManager -> FindOrBuildMaterial( "G4_ALUMINUM_OXIDE" , isotopes );
+
     auto mB33 = new G4Material( "B33", 2.23*g/cm3, 4 );
       mB33->AddMaterial( mSiO2, 81*perCent);
       mB33->AddMaterial( mB2O3, 13*perCent);
@@ -203,6 +204,8 @@ namespace lmcp
     //  C 114/150 = 76
     //  H 12/150  = 8
     //  O 24/150  = 16
+
+    
     auto mPeek = new G4Material( "PEEK", 1.31*g/cm3, 3 );
       mPeek->AddElement( eC, 76*perCent);
       mPeek->AddElement( eH,  8*perCent);
