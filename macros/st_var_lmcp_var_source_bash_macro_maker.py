@@ -7,7 +7,7 @@ import shutil
 ###          PARAMETERS          ###
 ####################################
 
-root_output_dir = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run'
+root_output_dir = r'../raw_data/latest_run/'
 max_threads = 60
 num_events = 1000000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
