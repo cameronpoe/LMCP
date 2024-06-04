@@ -3,17 +3,18 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'../raw_data/newpaperfigs/wo3glass/'
+data_directory = r'../raw_data/latest_run/'
 num_histories_per_run = 100000
-wall_array = np.linspace(5, 95, 19, dtype=int) 
-#wall_array = np.array([50])
-pore_array = np.linspace(25, 100, 4, dtype=int) 
-#pore_array = np.array([50])
+
+#wall_array = np.linspace(5, 95, 19, dtype=int) 
+wall_array = np.array([40])
+#pore_array = np.linspace(25, 100, 4, dtype=int) 
+pore_array = np.array([40])
 theta_increment = 6
 phi_increment = 3
 SINGLE_AZIMUTH = True
 SAVE_FOR_PET = False
-SINGLE_LAMINA_THICKNESS = True
+SINGLE_LAMINA_THICKNESS = False
 
 
 
