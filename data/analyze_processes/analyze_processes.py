@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../raw_data/latest_run/'
+data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run'
 num_histories_per_run = 100000
 
 #wall_array = np.linspace(5,95,19,dtype=int)
