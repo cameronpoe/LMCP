@@ -9,15 +9,15 @@ import shutil
 
 root_output_dir = r'../raw_data/latest_run/'
 max_threads = 60
-num_events = 10000000
+num_events = 1000000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 LINK_WALL_AND_PORE = True
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
-# wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um
-wall_thicknesses = np.array([50])                             # um
-# pore_widths = np.linspace(25, 100, 4, dtype=int)             # um
-pore_widths = np.array([50])				   # um
+# wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
+wall_thicknesses = np.array([40])                             # um
+# pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
+pore_widths = np.array([40])				   # um
 
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
@@ -30,10 +30,11 @@ theta_increment = 30    # degrees (factor of 90)
 SINGLE_AZIMUTH = True
 phi_increment = 30      # degrees (factor of 90)
 SINGLE_LAMINA_THICKNESS = False
-lamina_thickness = 100 # um
+lamina_thickness = (2*(wall_thicknesses)) # um.             (Lamina thickness is tau)
+
+
 
 DEEXCITATION = False
-
 
 
 
