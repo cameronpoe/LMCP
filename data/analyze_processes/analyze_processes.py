@@ -4,11 +4,12 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'../../raw_data/newpaperfigs/wo3glass/'
+data_directory = r'../raw_data/latest_run/'
 num_histories_per_run = 100000
-wall_array = np.linspace(5,95,19,dtype=int)
-#wall_array = np.array([50])
-pore_array = np.array([50])
+
+#wall_array = np.linspace(5,95,19,dtype=int)
+wall_array = np.array([40])
+pore_array = np.array([40])
 #gamma_ray_energies = np.linspace(10, 600, 60, dtype=int)
 gamma_ray_energies = np.array([50])
 SINGLE_ZENITH = False
