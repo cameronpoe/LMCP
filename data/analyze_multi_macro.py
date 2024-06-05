@@ -3,7 +3,7 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run'
+data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 num_histories_per_run = 100000
 
 #wall_array = np.linspace(5, 95, 19, dtype=int) 
@@ -13,7 +13,7 @@ pore_array = np.array([40])
 theta_increment = 6
 phi_increment = 3
 SINGLE_AZIMUTH = True
-SAVE_FOR_PET = False
+SAVE_FOR_PET = True
 SINGLE_LAMINA_THICKNESS = False
 
 

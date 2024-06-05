@@ -30,7 +30,7 @@ theta_increment = 30    # degrees (factor of 90)
 SINGLE_AZIMUTH = True
 phi_increment = 30      # degrees (factor of 90)
 SINGLE_LAMINA_THICKNESS = False
-oyt
+
 
 
 DEEXCITATION = False
