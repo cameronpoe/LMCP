@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 import pickle
 
-data_directory = r'/home/iangoldberg/LMCP/raw_data/latest_run'
+data_directory = r'/home/iangoldberg/LMCP/raw_data/latest_run/'
 
 num_histories_per_run = 100000
 
