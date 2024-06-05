@@ -6,7 +6,7 @@ import bisect
 import os
 from scipy.interpolate import BSpline, CubicSpline, splrep
 
-data_directory = r'raw_data/compton_chain_effs/b33_1mevents_w50um_p50um_511keV'
+data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 # data_directory = r'raw_data/latest_run'
 energy_array = np.array([511])
 # energy_array = np.array([200,300,400,500])
