@@ -15,10 +15,10 @@ lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 LINK_WALL_AND_PORE = True
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
-wall_thicknesses = np.array([60])                             # um
+wall_thicknesses = np.array([80])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
-pore_widths = np.array([60])				   # um
-lamina_thickness = 120  # um (Tau - should be 2 alpha for standard geometry)
+pore_widths = np.array([80])				   # um
+lamina_thickness = 160  # um (Tau - should be 2 alpha for standard geometry)
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
 gamma_energies = np.array([511])                              # keV
