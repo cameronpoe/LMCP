@@ -132,7 +132,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data', zorder=5)
         ax.legend(fontsize=9,loc='lower right')
 
-        ax.grid(True)
+        # ax.grid(True)
 
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
@@ -142,8 +142,16 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=20))
 
-        ax.xaxis.set_ticks_position('both')
-        ax.yaxis.set_ticks_position('both')
+        # ax.xaxis.set_ticks_position('both')
+        # ax.yaxis.set_ticks_position('both')
+        ax.set_xticks(np.linspace(0, 525, 10))
+        ax.set_yticks(np.linspace(0, 100, 10))
+        ax.tick_params(top=True, right=True)
+
+
+
+
+
         plt.show()
 
         energy_points = np.linspace(0, 510, 103)
