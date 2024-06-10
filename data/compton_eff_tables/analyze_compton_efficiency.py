@@ -29,6 +29,11 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
+graph_title = ("Pore entry efficiency for "  + str(material) + " LMCP with " + str(alpha) 
+      + "um Standard geometry " + "(" + str(alpha)+ "um = \u03B1 = \u03B2 = \u03B3 = \u03C4/2) "  )
+
+
+
 
 
 data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
@@ -119,18 +124,21 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         tck = splrep(x,y, k=3)
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
-        ax.scatter(x, y, marker='.', s=80, color='black', label='Raw data')
+        ax.scatter(x, y, marker='.', s=120, color='black', label='Raw data')
         domain = np.linspace(0,x[-2], 500)
         ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
-        ax.legend(fontsize=9)
-        
-        ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
 
+        ax.legend(fontsize=9,loc='lower right')
 
-        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=25))
-        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=25))
+        ax.grid(True)
+
+        ax.text(300, 20, graph_title, fontsize=10, verticalalignment='top',
+        bbox=dict(facecolor='lightgray', alpha=0.5, edgecolor='black'))
+
+        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
+        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=20))
 
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
