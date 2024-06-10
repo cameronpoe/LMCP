@@ -10,9 +10,9 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 ##################################################
 # Make sure to change the title to the material and dimensions you wish to plot below
 ##################################################
-"""
+
 material = "Schott B33"
-alpha = 20  # um
+alpha = 80  # um
 standard_geometry = True
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
@@ -29,7 +29,7 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-"""
+
 
 data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 # data_directory = r'raw_data/latest_run'
@@ -119,14 +119,18 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         tck = splrep(x,y, k=3)
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
-        ax.scatter(x, y, marker='.', color='black', label='Raw data')
+        ax.scatter(x, y, marker='.', s=80, color='black', label='Raw data')
         domain = np.linspace(0,x[-2], 500)
-        ax.plot(domain, bspline(domain), color='red', label='Cubic spline fit')
+        ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
-        ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), color='green', label='Linear interpolation')
-        ax.legend(fontsize=11.5)
-        ax.set_xlabel('Primary e- initial E (keV)', fontdict=dict(size=15))
-        ax.set_ylabel('Efficiency (%)', fontdict=dict(size=15))
+        ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
+        ax.legend(fontsize=9)
+        
+        ax.grid(True, which='both', color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
+
+
+        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=25))
+        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=25))
 
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
