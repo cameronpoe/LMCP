@@ -136,7 +136,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(0, 900, wrapped_text, fontsize=10, verticalalignment='top',
+        ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='gray', alpha=1, edgecolor='black'))
 
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
