@@ -125,8 +125,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), color='green', label='Linear interpolation')
         ax.legend(fontsize=11.5)
-        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=15))
-        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=15))
+        ax.set_xlabel('Primary e- initial E (keV)', fontdict=dict(size=15))
+        ax.set_ylabel('Efficiency (%)', fontdict=dict(size=15))
 
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
