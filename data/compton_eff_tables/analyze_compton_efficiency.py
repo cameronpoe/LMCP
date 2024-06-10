@@ -129,7 +129,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
-        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data')
+        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data', zorder=5)
         ax.legend(fontsize=9,loc='lower right')
 
         ax.grid(True)
@@ -137,7 +137,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
         ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
-        bbox=dict(facecolor='gray', alpha=1, edgecolor='black'))
+        bbox=dict(facecolor='lightgray', alpha=1, edgecolor='black'))
 
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=20))
@@ -162,7 +162,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.set_ylabel('Efficiency (%)', fontdict=dict(size=15))
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
-        plt.show()
+       # plt.show()
 
         round_effs = np.round(effs, decimals=4) + 0.     # add zero to get rid of -0.0
         eff_string = ''
