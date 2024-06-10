@@ -125,19 +125,18 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         tck = splrep(x,y, k=3)
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
-        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data')
         domain = np.linspace(0,x[-2], 500)
         ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
-
+        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data')
         ax.legend(fontsize=9,loc='lower right')
 
         ax.grid(True)
 
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(-5, 900, wrapped_text, fontsize=10, verticalalignment='top',
+        ax.text(0, 900, wrapped_text, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='gray', alpha=1, edgecolor='black'))
 
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
