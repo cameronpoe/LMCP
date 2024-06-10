@@ -125,7 +125,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         tck = splrep(x,y, k=3)
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
-        ax.scatter(x, y, marker='.', s=120, color='black', label='Raw data')
+        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data')
         domain = np.linspace(0,x[-2], 500)
         ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
@@ -135,10 +135,10 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         ax.grid(True)
 
-        wrapped_text = "\n".join(textwrap.wrap(graph_title, width=40))
+        wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(0, 100, wrapped_text, fontsize=10, verticalalignment='top',
-        bbox=dict(facecolor='lightgray', alpha=0.5, edgecolor='black'))
+        ax.text(-5, 900, wrapped_text, fontsize=10, verticalalignment='top',
+        bbox=dict(facecolor='gray', alpha=1, edgecolor='black'))
 
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=20))
