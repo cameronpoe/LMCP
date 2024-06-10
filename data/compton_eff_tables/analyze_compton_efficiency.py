@@ -143,10 +143,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         # ax.grid(True)
 
 
-        # ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
-        # bbox=dict(facecolor='white', alpha=.5, edgecolor='white'))
 
-        ax.text(-5, 90, graph_title, fontsize=10, verticalalignment='top',
+        ax.text(0, 90, graph_title, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
 
