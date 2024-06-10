@@ -6,6 +6,31 @@ import bisect
 import os
 from scipy.interpolate import BSpline, CubicSpline, splrep
 
+
+##################################################
+# Make sure to change the title to the material and dimensions you wish to plot below
+##################################################
+
+material = "Schott B33"
+alpha = 20  # um
+standard_geometry = True
+
+# If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
+# Otherwise individual parameters may be specified below
+
+beta = 20
+gamma = 20
+tau = 40
+
+
+if standard_geometry == True:
+    beta = alpha
+    gamma = alpha
+    tau = int(2*alpha)
+
+
+
+
 data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 # data_directory = r'raw_data/latest_run'
 energy_array = np.array([511])
@@ -100,8 +125,9 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), color='green', label='Linear interpolation')
         ax.legend(fontsize=11.5)
-        ax.set_xlabel('Primary e- initial E (keV)', fontdict=dict(size=15))
-        ax.set_ylabel('Efficiency (%)', fontdict=dict(size=15))
+        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=15))
+        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=15))
+
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
         plt.show()
