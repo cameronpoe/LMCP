@@ -31,7 +31,9 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-graph_title = (str(material) + " LMCP: " +  str(alpha) + "$\mu$m = " + " \u03B1 = \u03B2 = \u03B3 = \u03C4/2, T = 1\" "  )
+graph_title = ( str(material) + "\n" + 
+               "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = str(alpha) $ \mu$m " "\n" + 
+                 "T = 1\"")
 
 
 
@@ -126,10 +128,10 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
         domain = np.linspace(0,x[-2], 500)
-        ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Simulation')
+        ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
-        ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data', zorder=5)
+        ax.scatter(x, y, marker='.', s=180, color='black', label='Simulation', zorder=5)
         ax.legend(fontsize=11,loc='lower right')
 
         # ax.grid(True)
@@ -148,6 +150,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
+        ax.tick_params(axis='both', direction='in', length=6)
+
 
 
 
