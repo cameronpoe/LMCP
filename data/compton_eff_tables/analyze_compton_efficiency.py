@@ -31,7 +31,7 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-graph_title = (str(material) + " LMCP : " +  str(alpha) + "um = " + " \u03B1 = \u03B2 = \u03B3 = \u03C4/2 "  )
+graph_title = (str(material) + " LMCP: " +  str(alpha) + "$\mu$m = " + " \u03B1 = \u03B2 = \u03B3 = \u03C4/2, T = 1\" "  )
 
 
 
@@ -136,8 +136,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(-5, 95, wrapped_text, fontsize=10, verticalalignment='top',
-        bbox=dict(facecolor='lightgray', alpha=1, edgecolor='black'))
+        ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
+        bbox=dict(facecolor='lightgray', alpha=.5, edgecolor='black'))
 
         ax.set_xlabel('Primary $e^{-}$ Initial Energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore Entry Efficiency (%)', fontdict=dict(size=20))
