@@ -30,8 +30,7 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-graph_title = ("Pore entry efficiency for "  + str(material) + " LMCP with " + str(alpha) 
-      + "um Standard geometry " + "(" + str(alpha)+ "um = \u03B1 = \u03B2 = \u03B3 = \u03C4/2) "  )
+graph_title = (str(material) + " LMCP : " +  str(alpha) + "um = " + " \u03B1 = \u03B2 = \u03B3 = \u03C4/2 "  )
 
 
 
@@ -126,27 +125,28 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         bspline = BSpline(*tck, extrapolate=False)
         fig, ax = plt.subplots()
         domain = np.linspace(0,x[-2], 500)
-        ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
+        ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Simulation')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
         ax.scatter(x, y, marker='.', s=180, color='black', label='Raw data', zorder=5)
-        ax.legend(fontsize=9,loc='lower right')
+        ax.legend(fontsize=11,loc='lower right')
 
         # ax.grid(True)
 
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
+        ax.text(-5, 95, wrapped_text, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='lightgray', alpha=1, edgecolor='black'))
 
-        ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
-        ax.set_ylabel('Pore entry efficiency (%)', fontdict=dict(size=20))
+        ax.set_xlabel('Primary $e^{-}$ Initial Energy (keV)', fontdict=dict(size=20))
+        ax.set_ylabel('Pore Entry Efficiency (%)', fontdict=dict(size=20))
 
-        # ax.xaxis.set_ticks_position('both')
-        # ax.yaxis.set_ticks_position('both')
-        ax.set_xticks(np.linspace(0, 525, 10))
-        ax.set_yticks(np.linspace(0, 100, 10))
-        ax.tick_params(top=True, right=True)
+        ax.minorticks_on()
+        ax.xaxis.set_minor_locator(MultipleLocator(50))
+        ax.yaxis.set_minor_locator(MultipleLocator(10))
+
+        ax.xaxis.set_ticks_position('both')
+        ax.yaxis.set_ticks_position('both')
 
 
 
