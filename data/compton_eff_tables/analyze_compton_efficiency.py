@@ -1,6 +1,7 @@
 import uproot
 import awkward as ak
 import numpy as np
+import textwrap
 from matplotlib import pyplot as plt 
 import bisect
 import os
@@ -134,7 +135,9 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         ax.grid(True)
 
-        ax.text(300, 20, graph_title, fontsize=10, verticalalignment='top',
+        wrapped_text = "\n".join(textwrap.wrap(graph_title, width=40))
+
+        ax.text(0, 100, wrapped_text, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='lightgray', alpha=0.5, edgecolor='black'))
 
         ax.set_xlabel('Primary e- initial energy (keV)', fontdict=dict(size=20))
