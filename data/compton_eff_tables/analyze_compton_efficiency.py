@@ -131,6 +131,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.plot(domain, bspline(domain), color='red', linewidth=3, label='Cubic spline fit')
         domain = np.linspace(x[-2], 511, 100)
         ax.plot(domain, np.interp(domain, x[-2:], y[-2:]), linewidth=3, color='green', label='Linear interpolation')
+
         ax.scatter(x, y, marker='.', s=180, color='black', label='Simulation', zorder=5)
         ax.legend(fontsize=11,loc='lower right')
 
@@ -139,7 +140,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
         ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
-        bbox=dict(facecolor='lightgray', alpha=.5, edgecolor='black'))
+        bbox=dict(facecolor='white', alpha=.5, edgecolor='white'))
 
         ax.set_xlabel('Primary $e^{-}$ Initial Energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore Entry Efficiency (%)', fontdict=dict(size=20))
