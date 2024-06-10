@@ -31,9 +31,7 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-graph_title = ( str(material) + "\n" + 
-               "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = str(alpha) $ \mu$m " "\n" + 
-                 "T = 1\"")
+graph_title = ("Pb Glass\n\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) "$ \mu$m\nT = 1\"")
 
 
 
@@ -152,6 +150,8 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         ax.xaxis.set_ticks_position('both')
         ax.yaxis.set_ticks_position('both')
         ax.tick_params(axis='both', direction='in', length=6)
+        ax.tick_params(which='minor', direction='in')
+
 
 
 
