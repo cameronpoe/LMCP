@@ -31,7 +31,15 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-graph_title = ("Pb Glass\n\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m\nT = 1\"")
+text_lines = [
+    "Pb Glass",
+    "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m",
+    "T = 1\""
+]
+
+graph_title = "\n".join(text_lines)
+
+# graph_title = ("Pb Glass\n\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m\nT = 1\"")
 
 
 
