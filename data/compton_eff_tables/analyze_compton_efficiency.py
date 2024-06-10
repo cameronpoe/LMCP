@@ -2,7 +2,8 @@ import uproot
 import awkward as ak
 import numpy as np
 import textwrap
-from matplotlib import pyplot as plt 
+from matplotlib import pyplot as plt
+from matplotlib.ticker import MultipleLocator
 import bisect
 import os
 from scipy.interpolate import BSpline, CubicSpline, splrep
