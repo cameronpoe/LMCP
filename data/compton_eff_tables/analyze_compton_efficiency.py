@@ -36,7 +36,6 @@ text_lines = [
     "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m",
     "T = 1\""
 ]
-
 graph_title = "\n".join(text_lines)
 
 # graph_title = ("Pb Glass\n\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m\nT = 1\"")
@@ -143,10 +142,13 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
         # ax.grid(True)
 
-        wrapped_text = "\n".join(textwrap.wrap(graph_title, width=30))
 
-        ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
-        bbox=dict(facecolor='white', alpha=.5, edgecolor='white'))
+        # ax.text(-5, 90, wrapped_text, fontsize=10, verticalalignment='top',
+        # bbox=dict(facecolor='white', alpha=.5, edgecolor='white'))
+
+        ax.text(-5, 90, graph_title, fontsize=10, verticalalignment='top',
+        bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
+
 
         ax.set_xlabel('Primary $e^{-}$ Initial Energy (keV)', fontdict=dict(size=20))
         ax.set_ylabel('Pore Entry Efficiency (%)', fontdict=dict(size=20))
