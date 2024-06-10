@@ -10,7 +10,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 ##################################################
 # Make sure to change the title to the material and dimensions you wish to plot below
 ##################################################
-
+"""
 material = "Schott B33"
 alpha = 20  # um
 standard_geometry = True
@@ -29,7 +29,7 @@ if standard_geometry == True:
     tau = int(2*alpha)
 
 
-
+"""
 
 data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 # data_directory = r'raw_data/latest_run'

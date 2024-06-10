@@ -18,6 +18,8 @@ LINK_WALL_AND_PORE = True
 wall_thicknesses = np.array([60])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
 pore_widths = np.array([60])				   # um
+
+
 lamina_thickness = 120  # um (Tau - should be 2 alpha for standard geometry)
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
