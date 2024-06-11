@@ -31,7 +31,7 @@ if standard_geometry == True:
 
 
 text_lines = [
-    "Pb Glass",
+    "Schott B33",
     "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m",
     "T = 1\""
 ]
