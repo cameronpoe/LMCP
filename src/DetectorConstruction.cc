@@ -319,8 +319,8 @@ namespace lmcp
     // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
     // auto mPCB = G4Material::GetMaterial( "PCB" );
 
-   auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );
-    // auto mLMCP = G4Material::GetMaterial( "B33" );
+   auto mLMCP = G4Material::GetMaterial( "G4_GLASS_LEAD" );   // Activate this one for Lead Glass
+    // auto mLMCP = G4Material::GetMaterial( "B33" );        # ACTIVATE THIS ONE FOR B33
     // auto mLMCP = G4Material::GetMaterial( "SrTeGlass" );
     // auto mLMCP = G4Material::GetMaterial( "WO3Glass" );
     // auto mLMCP = G4Material::GetMaterial( "PEEK" );
