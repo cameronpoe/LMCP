@@ -13,7 +13,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 # Make sure to change the title to the material and dimensions you wish to plot below
 ##################################################
 
-alpha = 60  # um
+alpha = 80  # um
 standard_geometry = True
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
@@ -38,8 +38,6 @@ text_lines = [
 graph_title = "\n".join(text_lines)
 
 # graph_title = ("Pb Glass\n\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m\nT = 1\"")
-
-
 
 
 
@@ -243,3 +241,5 @@ plt.show()
         # initial_energies_cut = np.copy(double_events)
 
         # initial_energies = lam_branches['EKin'][lam_branches['TrackID'] == 2][ak.any(lam_branches['TrackID'] == 2, axis=1)][:,0]
+
+
