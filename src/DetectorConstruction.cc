@@ -16,6 +16,7 @@
 #include "DetectorMessenger.hh"
 #include "LaminaSD.hh"
 #include "PoreSD.hh"
+#include <G4TwoVector.hh>
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -262,8 +263,8 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes() {
   // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
   // auto mPCB = G4Material::GetMaterial( "PCB" );
 
-  auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
-  // auto mLMCP = G4Material::GetMaterial( "B33" );
+  // auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
+  auto mLMCP = G4Material::GetMaterial("B33");
   // auto mLMCP = G4Material::GetMaterial( "PEEK" );
   // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
   // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );
@@ -277,17 +278,16 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes() {
   //------------------------------------------------------
   // Calculating dimensions
   //------------------------------------------------------
-  auto numPores_X = static_cast<int>(fSlabDimensions[0] /
-                                     (fPoreDimensions[0] + fWallThickness));
-  auto numPores_Y = static_cast<int>(fSlabDimensions[1] /
-                                     (fPoreDimensions[1] + fWallThickness));
-
   auto pore_X = fPoreDimensions[0];
   auto pore_Y = fPoreDimensions[1];
   auto pore_Z = fSlabDimensions[2];
+  auto wall_X = fWallDimensions[0];
+  auto wall_Y = fWallDimensions[1];
+  auto numPores_X = static_cast<int>(fSlabDimensions[0] / (pore_X + wall_X));
+  auto numPores_Y = static_cast<int>(fSlabDimensions[1] / (pore_Y + wall_Y));
 
-  auto div_lamina_X = fPoreDimensions[0] + fWallThickness;
-  auto div_lamina_Y = fPoreDimensions[1] + fWallThickness;
+  auto div_lamina_X = fPoreDimensions[0] + wall_X;
+  auto div_lamina_Y = fPoreDimensions[1] + wall_Y;
   auto div_lamina_Z = pore_Z;
 
   auto lamina_X = div_lamina_X * numPores_X;
@@ -489,8 +489,9 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes() {
   // Print some information
   //======================================================
   G4cout << G4endl;
-  G4cout << "------ Wall Thickness: " << G4endl;
-  G4cout << "           T: " << fWallThickness / um << " um" << G4endl;
+  G4cout << "------ Wall Dimensions: " << G4endl;
+  G4cout << "           X: " << wall_X / um << " um" << G4endl;
+  G4cout << "           Y: " << wall_Y / um << " um" << G4endl;
 
   G4cout << G4endl;
   G4cout << "------ Pore Dimensions: " << G4endl;
@@ -660,12 +661,23 @@ void DetectorConstruction::SetPoreDimensions(G4ThreeVector dimensions) {
   UpdateGeometry();
 }
 
-void DetectorConstruction::SetWallThickness(G4double thickness) {
-  if (fWallThickness != thickness) {
-    fWallThickness = thickness;
+void DetectorConstruction::SetWallX(G4double X) {
+  if (fWallDimensions[0] != X) {
+    fWallDimensions[0] = X;
   }
   UpdateGeometry();
 }
-
+void DetectorConstruction::SetWallY(G4double Y) {
+  if (fWallDimensions[1] != Y) {
+    fWallDimensions[1] = Y;
+  }
+  UpdateGeometry();
+}
+void DetectorConstruction::SetWallDimensions(G4TwoVector dimensions) {
+  if (fWallDimensions != dimensions) {
+    fWallDimensions = dimensions;
+  }
+  UpdateGeometry();
+}
 } // namespace lmcp
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -7,17 +7,17 @@ from matplotlib import pyplot as plt
 from datetime import date
 from scipy.interpolate import splrep, BSpline, CubicSpline
 
-table_path = r"wp_data.npy"
+table_path = r"latest_run.npy"
 print("Looking for " + os.path.abspath(table_path))
 # table_path = r'data/wall_thickness_optimization/eff_v_angle_per_wall_g4glasslead.npy'
 theta_spacing = 5  # deg
 # all the important variables that can be varied:
 pore_widths = np.linspace(5, 145, 15, dtype=int)
-wall_thicknesses = np.linspace(5, 195, 39, dtype=int)
+pore_widths = np.array([0])
+wall_thicknesses = np.linspace(1, 39, 39, dtype=int)
 zenith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / theta_spacing + 1), dtype=int)
-lamina_thickness_as_variable = True
-compare_physics = False  # whether to separate compton scattering, photoelectric effect, and other physical effects
+lamina_thickness_as_variable = False
 ###KEY FOR THESE THINGS
 # 0=wall
 # 1=pore or lamina thickness
@@ -28,12 +28,12 @@ compare_physics = False  # whether to separate compton scattering, photoelectric
 independant_var = 0  # can be 0,1,2,3
 vary_var = 1  # can be 0,1,2,3 but can't be the same as dependant_var
 # indexes to use for other parameters, -1 means to average across them
-other_param1 = 0
+other_param1 = -1
 other_param2 = 0
 # indexes for vary_var
-increment = 4
-start = 1
-end = 16
+increment = 1
+start = 0
+end = 0
 ##############################################
 ###                  CODE                  ###
 ##############################################

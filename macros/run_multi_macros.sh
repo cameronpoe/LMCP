@@ -1,6 +1,6 @@
 #!/bin/bash
 
-a=(/local/d1/claudiobf/LMCP/macros/multi_macros/*)
+a=(/home/claud/Documents/LabStuff/LMCP/macros/multi_macros/*)
 N=${#a[@]}
 
 threads=63

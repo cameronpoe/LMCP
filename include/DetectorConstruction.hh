@@ -2,7 +2,7 @@
 //
 //
 //  Laminated Microchannel Plate (LMCP)
-//  
+//
 //  Created: August 25, 2023 by Camden Ertley
 //
 //
@@ -12,15 +12,16 @@
 /// \file DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
 
+#include <G4TwoVector.hh>
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
 
-#include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
+#include "globals.hh"
 
 #include "G4EqMagElectricField.hh"
-#include "G4UniformElectricField.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4UniformElectricField.hh"
 
 class G4FieldManager;
 class G4ChordFinder;
@@ -37,79 +38,80 @@ class G4PVReplica;
 class G4LogicalVolume;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-namespace lmcp
-{
+namespace lmcp {
 
-  class DetectorMessenger;
-  class LaminaSD;
-  class PoreSD;
+class DetectorMessenger;
+class LaminaSD;
+class PoreSD;
 
-  //****************************************************************************
-  /// Detector construction class to define materials and geometry.
-  ///
-  //****************************************************************************
-  class DetectorConstruction : public G4VUserDetectorConstruction
-  {
-    public:
-      DetectorConstruction();
-      ~DetectorConstruction() override;
+//****************************************************************************
+/// Detector construction class to define materials and geometry.
+///
+//****************************************************************************
+class DetectorConstruction : public G4VUserDetectorConstruction {
+public:
+  DetectorConstruction();
+  ~DetectorConstruction() override;
 
-      // methods from base class
-      G4VPhysicalVolume* Construct() override;
-      // G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
-      void ConstructSDandField() override;
+  // methods from base class
+  G4VPhysicalVolume *Construct() override;
+  // G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
+  void ConstructSDandField() override;
 
-      void UpdateGeometry();
-      
-      // set methods
-      void SetOverlapFlag( G4bool flag ) {fCheckOverlaps = flag;};  
-      void SetSlabDimensions( G4ThreeVector dimensions );
-      void SetPoreDimensions( G4ThreeVector dimensions );
-      void SetWallThickness( G4double thickness );       
+  void UpdateGeometry();
 
-      //Setup the required objects of the FIRST local field
-      G4ElectricField*        fEMfield_1;
-      G4EqMagElectricField*   fEquation_1;
-      G4MagIntegratorStepper* fStepper_1;
-      G4FieldManager*         fFieldMgr_1;
-      G4double                fMinStep_1;
-      G4ChordFinder*          fChordFinder_1;
+  // set methods
+  void SetOverlapFlag(G4bool flag) { fCheckOverlaps = flag; };
+  void SetSlabDimensions(G4ThreeVector dimensions);
+  void SetPoreDimensions(G4ThreeVector dimensions);
+  void SetWallDimensions(G4TwoVector dimensions);
+  void SetWallX(G4double X);
+  void SetWallY(G4double Y);
 
-      //Setup the required objects of the SECOND local field
-      G4ElectricField*        fEMfield_2;
-      G4EqMagElectricField*   fEquation_2;
-      G4MagIntegratorStepper* fStepper_2;
-      G4FieldManager*         fFieldMgr_2;
-      G4double                fMinStep_2;
-      G4ChordFinder*          fChordFinder_2;
+  // Setup the required objects of the FIRST local field
+  G4ElectricField *fEMfield_1;
+  G4EqMagElectricField *fEquation_1;
+  G4MagIntegratorStepper *fStepper_1;
+  G4FieldManager *fFieldMgr_1;
+  G4double fMinStep_1;
+  G4ChordFinder *fChordFinder_1;
 
-      //world electric field
-      G4ElectricField*        fEMfield_WORLD;
-      G4EqMagElectricField*   fEquation_WORLD;
-      G4MagIntegratorStepper* fStepper_WORLD;
-      G4FieldManager*         fFieldMgr_WORLD;
-      G4double                fMinStep_WORLD;
-      G4ChordFinder*          fChordFinder_WORLD;
+  // Setup the required objects of the SECOND local field
+  G4ElectricField *fEMfield_2;
+  G4EqMagElectricField *fEquation_2;
+  G4MagIntegratorStepper *fStepper_2;
+  G4FieldManager *fFieldMgr_2;
+  G4double fMinStep_2;
+  G4ChordFinder *fChordFinder_2;
 
-    private:
-      // methods
-      void DefineMaterials();
-      G4VPhysicalVolume* DefineVolumes();
+  // world electric field
+  G4ElectricField *fEMfield_WORLD;
+  G4EqMagElectricField *fEquation_WORLD;
+  G4MagIntegratorStepper *fStepper_WORLD;
+  G4FieldManager *fFieldMgr_WORLD;
+  G4double fMinStep_WORLD;
+  G4ChordFinder *fChordFinder_WORLD;
 
-      DetectorMessenger* fDetMessenger = nullptr;   // messenger
+private:
+  // methods
+  void DefineMaterials();
+  G4VPhysicalVolume *DefineVolumes();
 
-      static G4ThreadLocal LaminaSD* fLMCP_SD;
-      static G4ThreadLocal PoreSD* fPORE_SD;
+  DetectorMessenger *fDetMessenger = nullptr; // messenger
 
-      G4bool        fCheckOverlaps    = false; 
-      G4ThreeVector fSlabDimensions   = G4ThreeVector(2.54*cm, 2.54*cm, 2.54*cm);
-      G4ThreeVector fPoreDimensions   = G4ThreeVector(0.00508*cm, 0.00508*cm, 2.54*cm);
-      G4double      fWallThickness  = 0.1524*mm;
+  static G4ThreadLocal LaminaSD *fLMCP_SD;
+  static G4ThreadLocal PoreSD *fPORE_SD;
 
-      // G4LogicalVolume* fScoringVolume = nullptr;
-  };
-}
+  G4bool fCheckOverlaps = false;
+  G4ThreeVector fSlabDimensions =
+      G4ThreeVector(2.54 * cm, 2.54 * cm, 2.54 * cm);
+  G4ThreeVector fPoreDimensions =
+      G4ThreeVector(0.00508 * cm, 0.00508 * cm, 2.54 * cm);
+  G4TwoVector fWallDimensions = G4TwoVector(0.1524 * mm, 0.154 * mm);
+
+  // G4LogicalVolume* fScoringVolume = nullptr;
+};
+} // namespace lmcp
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 #endif
-

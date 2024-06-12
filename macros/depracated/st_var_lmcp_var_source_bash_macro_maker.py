@@ -13,10 +13,10 @@ max_threads = 63
 num_events = 10000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 
-LINK_WALL_AND_PORE = True
+LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(25,100,4,dtype=int)
-wall_X_thicknesses = np.linspace(1, 39, 39, dtype=int)  # um
-tau = 40
+wall_X_thicknesses = np.linspace(5, 495, 99, dtype=int)  # um
+wall_Y = 40
 # wall_thicknesses = np.array([50])                             # um
 # pore_widths = np.linspace(5, 145, 15, dtype=int)  # um
 pore_widths = np.array([40])
@@ -105,7 +105,6 @@ else:
 
 for energy_num, energy in enumerate(gamma_energies):
     for wall_num, wall_X in enumerate(wall_X_thicknesses):
-        wall_Y = tau - wall_X
         if LINK_WALLX_WALLY:
             wall_Y = wall_X
         for pore_num, pore_width in enumerate(pore_widths):

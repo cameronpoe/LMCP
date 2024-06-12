@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import awkward as ak
 import uproot
+import sys
 
 root_file = r"../raw_data/wp_data/Run_e511_w100_p105_theta0_phi0.root"
 # root_file = r'data/Run_neutron_test.root'
@@ -13,7 +14,11 @@ with uproot.open(root_file) as f:
 
     # Format as awkward array and fix weird string-vector issue
     pore_branches = pore_tree.arrays(library="ak")
-    print(len(pore_branches["EventNumber"]))
+    print(pore_branches["Edep"])
+    sys.exit()
+    # for i in pore_branches["Edep"]:
+    #   print(i)
+    sys.exit()
     pore_branches["CreatorProc"] = ak.str.split_pattern(
         pore_branches["CreatorProc"], "\n"
     )
