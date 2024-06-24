@@ -101,7 +101,7 @@ namespace lmcp
       static G4ThreadLocal LaminaSD* fLMCP_SD;
       static G4ThreadLocal PoreSD* fPORE_SD;
 
-      G4bool        fCheckOverlaps    = false; 
+      G4bool        fCheckOverlaps    = true; 
       G4ThreeVector fSlabDimensions   = G4ThreeVector(2.54*cm, 2.54*cm, 2.54*cm);
       G4ThreeVector fPoreDimensions   = G4ThreeVector(0.00508*cm, 0.00508*cm, 2.54*cm);
       G4double      fWallThickness  = 0.1524*mm;
