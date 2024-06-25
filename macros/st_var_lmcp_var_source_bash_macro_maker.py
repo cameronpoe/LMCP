@@ -185,7 +185,7 @@ for energy_num, energy in enumerate(gamma_energies):
 ######################################################
 /user/det/setOverlapChecking true
 /user/det/setSlabDimensions {lmcp_dimensions[0]} {lmcp_dimensions[1]} {lmcp_dimensions[2]} cm
-/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_depths*1e-4, 7)} {lmcp_dimensions[2]} cm
+/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_depth*1e-4, 7)} {lmcp_dimensions[2]} cm
 /user/det/setWallThickness {round(wall_thickness, 3)} um
 
 ######################################################
