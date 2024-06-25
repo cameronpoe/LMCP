@@ -23,8 +23,8 @@ pore_widths = np.array([1000])				   # um
 lamina_thickness = np.array([120])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
 
 
-gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-# gamma_energies = np.array([511])                              # keV
+# gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
+gamma_energies = np.array([511])                              # keV
 # gamma_energies = np.array([200,300,400,500])
 source_distance_from_lmcp_center = 22      # mm
 
