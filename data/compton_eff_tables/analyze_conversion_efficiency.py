@@ -32,7 +32,8 @@ if standard_geometry == True:
 
 text_lines = [
     "Pb Glass",
-    "\u03B1 = " + str(alpha)+ "$ \mu$m," + " \u03B2 = " + str(beta)+ "$ \mu$m," + " \u03B2 = " + str(gamma) +  "$ \mu$m,"
+    "\u03B1 = " + str(alpha)+ "$ \mu$m," + " \u03B2 = " + str(beta)+ "$ \mu$m",
+    " \u03B2 = " + str(gamma) +  "$ \mu$m,",
     " \u03C4 = " + str(tau) + "$ \mu$m,",
     "T = 1\""
 ]
@@ -142,7 +143,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
 
 
-        ax.text(360, 26, graph_title, fontsize=10, verticalalignment='top',
+        ax.text(360, 36, graph_title, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
 
