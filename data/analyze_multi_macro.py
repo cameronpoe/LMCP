@@ -3,13 +3,19 @@ import os
 import uproot
 import awkward as ak
 
-data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
+data_directory = r'../raw_data/latest_run/'
+
+
 num_histories_per_run = 100000
 
 #wall_array = np.linspace(5, 95, 19, dtype=int) 
-wall_array = np.array([10])
+beta_array = np.array([10])             # BETA
 #pore_array = np.linspace(25, 100, 4, dtype=int) 
-pore_array = np.array([1000])
+alpha_array = np.array([10])
+
+pore_array = np.array([1000])      #Pore width - (GAMMA)
+
+
 theta_increment = 6
 phi_increment = 3
 SINGLE_AZIMUTH = True
@@ -31,7 +37,7 @@ if SINGLE_LAMINA_THICKNESS:
 if SAVE_FOR_PET:
      eff_v_angle = np.empty((len(theta_array), len(phi_array)))
 else:
-     eff_v_angle = np.empty((len(wall_array), len(pore_array), len(theta_array), len(phi_array)))
+     eff_v_angle = np.empty((len(beta_array), len(pore_array), len(theta_array), len(phi_array)))
 print(f'eff_v_angle shape: {eff_v_angle.shape}')
 
 
@@ -43,10 +49,10 @@ for file_name in os.listdir(data_directory):
 
         fname_components = file_name.split('_')
         if SINGLE_LAMINA_THICKNESS:
-            wall_ind = int((int(fname_components[2][1:])-wall_array[0])/np.diff(wall_array)[0])
+            wall_ind = int((int(fname_components[2][1:])-beta_array[0])/np.diff(beta_array)[0])
             pore_ind = 0
         elif not SAVE_FOR_PET:
-            wall_ind = int((int(fname_components[2][1:])-wall_array[0])/np.diff(wall_array)[0])
+            wall_ind = int((int(fname_components[2][1:])-beta_array[0])/np.diff(beta_array)[0])
             pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])
         theta_ind = int(fname_components[4][5:])
         phi_ind = int(fname_components[5][3:-5])
