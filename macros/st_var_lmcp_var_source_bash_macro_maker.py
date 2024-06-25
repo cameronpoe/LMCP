@@ -15,9 +15,9 @@ lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
-wall_thicknesses = np.array([10])                             # um
+wall_thicknesses = np.array([1400])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
-pore_widths = np.array([1000])				   # um
+pore_widths = np.array([40])				   # um
 
 # Lamina thickness (Tau)
 lamina_thickness = np.array([120])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
