@@ -53,9 +53,9 @@ for file_name in os.listdir(data_directory):
             pore_ind = 0
         """elif not SAVE_FOR_PET:
             wall_ind = int((int(fname_components[2][1:])-beta_array[0])/np.diff(beta_array)[0])
-            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])
+            pore_ind = int((int(fname_components[3][1:])-pore_array[0])/np.diff(pore_array)[0])"""
         theta_ind = int(fname_components[4][5:])
-        phi_ind = int(fname_components[5][3:-5])"""
+        phi_ind = int(fname_components[5][3:-5])
 
         pore_tree = f['pore']
         pore_branches = pore_tree.arrays(library='ak')
