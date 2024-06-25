@@ -68,6 +68,8 @@ for file_name in os.listdir(data_directory):
         if SAVE_FOR_PET:
              eff_v_angle[theta_ind][phi_ind] = eff
         else:
+            wall_ind = 0
+            pore_ind = 0
             eff_v_angle[wall_ind][pore_ind][theta_ind][phi_ind] = eff
 
 np.save(data_directory.split('/')[-2], eff_v_angle)
