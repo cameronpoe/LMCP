@@ -13,29 +13,24 @@ max_threads = 63
 num_events = 10000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 
-LINK_WALL_AND_PORE = True
-# wall_thicknesses = np.linspace(25,100,4,dtype=int)
-wall_X_thicknesses = np.linspace(1, 39, 39, dtype=int)  # um
-tau = 40
-# wall_thicknesses = np.array([50])                             # um
-# pore_widths = np.linspace(5, 145, 15, dtype=int)  # um
-pore_widths = np.array([40])
-# pore_widths = np.array([50])				   # um
-
-
-# gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-gamma_energies = np.array([511])  # keV
 source_distance_from_lmcp_center = 22  # mm
 
-SINGLE_ZENITH = False
-theta_increment = 5  # degrees (factor of 90)
-SINGLE_AZIMUTH = True
-phi_increment = 3  # degrees (factor of 90)
-SINGLE_LAMINA_THICKNESS = False
-LINK_WALLX_WALLY = False
-lamina_thickness = 200  # um
+zenith_angle_increment = 2  # degrees (factor of 90)
+azumith_angle_increment = 3  # degrees (factor of 90)
 
 
+def geometry(x_axis_value):
+    energy = 511
+    tau = 160
+    alpha = x_axis_value
+    beta = 40
+    gamma = 1000
+    return (energy, tau, alpha, beta, gamma)
+
+
+zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
+azumith_angles = np.array([0])
+x_axis_values = np.linspace(2, 10, 9, dtype=int)
 ####################################
 ###             CODE             ###
 ####################################
@@ -90,62 +85,36 @@ done
     )
 
 
-if SINGLE_LAMINA_THICKNESS:
-    pass
-if LINK_WALL_AND_PORE:
-    pore_widths = np.array([0])
-if SINGLE_ZENITH:
-    thetas = np.array([45])
-else:
-    thetas = np.linspace(0, 90, int(90 / theta_increment) + 1)
-if SINGLE_AZIMUTH:
-    phis = np.array([0])
-else:
-    phis = np.linspace(0, 90, int(90 / phi_increment) + 1)
+for x_axis_value in x_axis_values:
+    energy, tau, alpha, beta, gamma = geometry(x_axis_value)
+    for zenith_angle in zenith_angles:
+        for azumith_angle in azumith_angles:
+            z = source_distance_from_lmcp_center * np.cos(np.pi * zenith_angle / 180)
+            x = (
+                source_distance_from_lmcp_center
+                * np.sin(np.pi * zenith_angle / 180)
+                * np.cos(np.pi * azumith_angle / 180)
+            )
+            y = (
+                source_distance_from_lmcp_center
+                * np.sin(np.pi * zenith_angle / 180)
+                * np.sin(np.pi * azumith_angle / 180)
+            )
 
-for energy_num, energy in enumerate(gamma_energies):
-    for wall_num, wall_X in enumerate(wall_X_thicknesses):
-        wall_Y = tau - wall_X
-        if LINK_WALLX_WALLY:
-            wall_Y = wall_X
-        for pore_num, pore_width in enumerate(pore_widths):
-            if LINK_WALL_AND_PORE:
-                pore_width = wall_X
-                pore_num = wall_num
-            if SINGLE_LAMINA_THICKNESS:
-                pore_width = lamina_thickness - wall_X
-                pore_num = wall_num
+            rhat = np.array(
+                [
+                    x / source_distance_from_lmcp_center,
+                    y / source_distance_from_lmcp_center,
+                    z / source_distance_from_lmcp_center,
+                ]
+            )
 
-            for i, theta in enumerate(thetas):
-                z = source_distance_from_lmcp_center * np.cos(np.pi * theta / 180)
-                for j, phi in enumerate(phis):
-                    x = (
-                        source_distance_from_lmcp_center
-                        * np.sin(np.pi * theta / 180)
-                        * np.cos(np.pi * phi / 180)
-                    )
-                    y = (
-                        source_distance_from_lmcp_center
-                        * np.sin(np.pi * theta / 180)
-                        * np.sin(np.pi * phi / 180)
-                    )
+            output_file_name = f"xaxis{x_axis_value}_eng{energy}_alpha{alpha}_beta{beta}_gamma{gamma}_tau{tau}_zenithangle{zenith_angle}_azumithangle{azumith_angle}"
+            output_file_path = os.path.join(new_folder_path, output_file_name + ".mac")
 
-                    rhat = np.array(
-                        [
-                            x / source_distance_from_lmcp_center,
-                            y / source_distance_from_lmcp_center,
-                            z / source_distance_from_lmcp_center,
-                        ]
-                    )
-
-                    output_file_name = f"Run_eng{energy_num}_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac"
-                    output_file_path = os.path.join(new_folder_path, output_file_name)
-
-                    with open(output_file_path, "w") as f:
-                        f.write(
-                            f"""######################################################
-## Wall thickness: {round(wall_X, 3)} um
-## Pore dimensions: {round(pore_width, 3)} um x {round(pore_width, 3)} um
+            with open(output_file_path, "w") as f:
+                f.write(
+                    f"""######################################################
 ## Slab dimensions: {round(lmcp_dimensions[0], 3)} cm x {round(lmcp_dimensions[1], 3)} cm x {round(lmcp_dimensions[2], 3)} cm
 ######################################################
 
@@ -174,9 +143,9 @@ for energy_num, energy in enumerate(gamma_energies):
 ######################################################
 /user/det/setOverlapChecking false
 /user/det/setSlabDimensions {lmcp_dimensions[0]} {lmcp_dimensions[1]} {lmcp_dimensions[2]} cm
-/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_width*1e-4, 7)} {lmcp_dimensions[2]} cm
-/user/det/setWallX {round(wall_X, 3)} um
-/user/det/setWallY {round(wall_Y, 3)} um
+/user/det/setPoreDimensions {round(gamma*1e-4, 7)} {round(alpha*1e-4, 7)} {lmcp_dimensions[2]} cm
+/user/det/setWallX {round(beta, 3)} um
+/user/det/setWallY {round(tau-alpha, 3)} um
 
 ######################################################
 ## Physics
@@ -215,12 +184,12 @@ for energy_num, energy in enumerate(gamma_energies):
 ######################################################
 # START ANGULAR LOOPS
 ######################################################             
-# Azimuth: {phi} deg, Zenith: {theta} deg
+# Azimuth: {azumith_angle} deg, Zenith: {zenith_angle} deg
 /gps/pos/centre {round(x, 5)} {round(y, 5)} {round(z, 5)} mm
 /gps/direction {round(-rhat[0], 5)} {round(-rhat[1], 5)} {round(-rhat[2], 5)}
-/analysis/setFileName {root_output_dir}/Run_e{energy}_w{wall_X}_p{pore_width}_theta{i}_phi{j}.root
+/analysis/setFileName {root_output_dir}/{output_file_name}.root
 /run/printProgress 10000
 /run/beamOn {num_events}
 
 """
-                        )
+                )
