@@ -33,7 +33,7 @@ if standard_geometry == True:
 text_lines = [
     "Pb Glass",
     "\u03B1 = " + str(alpha)+ "$ \mu$m," + " \u03B2 = " + str(beta)+ "$ \mu$m",
-    "\u03B2 = " + str(gamma) +  "$ \mu$m," + " \u03C4 = " + str(tau) + "$ \mu$m"
+    "\u03B2 = " + str(gamma) +  "$ \mu$m," + " \u03C4 = " + str(tau) + "$ \mu$m",
     "T = 1\""
 ]
 graph_title = "\n".join(text_lines)
