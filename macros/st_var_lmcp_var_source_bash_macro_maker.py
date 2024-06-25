@@ -12,6 +12,8 @@ max_threads = 60
 num_events = 1000000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
+# This is a test
+
 LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
