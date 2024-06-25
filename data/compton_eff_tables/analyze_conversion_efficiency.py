@@ -13,15 +13,15 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 # Make sure to change the title to the material and dimensions you wish to plot below
 ##################################################
 
-alpha = 80  # um
-standard_geometry = True
+alpha = 10  # um
+standard_geometry = False
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
 # Otherwise individual parameters may be specified below
 
-beta = 20
-gamma = 20
-tau = 40
+beta = 40
+gamma = 1000
+tau = 120
 
 
 if standard_geometry == True:
@@ -31,7 +31,7 @@ if standard_geometry == True:
 
 
 text_lines = [
-    "Schott B33",
+    "Pb Glass",
     "\u03B1 = \u03B2 = \u03B3 = \u03C4/2 = " + str(alpha) + "$ \mu$m",
     "T = 1\""
 ]

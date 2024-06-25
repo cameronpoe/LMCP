@@ -22,7 +22,6 @@ pore_widths = np.array([1000])				   # um
 #  (Pore Depths is ALPHA)
 pore_depths = np.array([10])   # um
 
-# By default, this simulation does square pores (Alpha = gamma). I
 
 
 
