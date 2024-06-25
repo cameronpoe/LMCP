@@ -17,10 +17,18 @@ LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
 wall_thicknesses = np.array([40])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
-pore_widths = np.array([40])				   # um
+pore_widths = np.array([1000])				   # um
+
+#  (Pore Depths is ALPHA)
+pore_depths = np.array([10])   # um
+
+# By default, this simulation does square pores (Alpha = gamma). I
+
+
+
 
 # Lamina thickness (Tau)
-lamina_thickness = np.array([80])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
+lamina_thickness = np.array([120])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
 
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
@@ -118,35 +126,37 @@ for energy_num, energy in enumerate(gamma_energies):
 
     for wall_num, wall_thickness in enumerate(wall_thicknesses):
 
-        for pore_num, pore_width in enumerate(pore_widths):
+        for pore_width_num, pore_width in enumerate(pore_widths):
 
-            if LINK_WALL_AND_PORE:
-                pore_width = wall_thickness
-                pore_num = wall_num
-            if SINGLE_LAMINA_THICKNESS:
-                pore_width = lamina_thickness - wall_thickness          # From what I can tell, 
-                pore_num = wall_num
+            for pore_depth_num, pore_depth in enumerate(pore_widths):
 
-            for i, theta in enumerate(thetas):
-                z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
-                for j, phi in enumerate(phis):
-                    x = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.cos(np.pi*phi/180)
-                    y = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.sin(np.pi*phi/180)
+                if LINK_WALL_AND_PORE:
+                    pore_width = wall_thickness
+                    pore_width_num = wall_num
+                if SINGLE_LAMINA_THICKNESS:
+                    pore_width = lamina_thickness - wall_thickness          # From what I can tell, 
+                    pore_width_num = wall_num
 
-                    rhat = np.array([
-                        x/source_distance_from_lmcp_center,
-                        y/source_distance_from_lmcp_center,
-                        z/source_distance_from_lmcp_center
-                    ])
+                for i, theta in enumerate(thetas):
+                    z = source_distance_from_lmcp_center*np.cos(np.pi*theta/180)
+                    for j, phi in enumerate(phis):
+                        x = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.cos(np.pi*phi/180)
+                        y = source_distance_from_lmcp_center*np.sin(np.pi*theta/180)*np.sin(np.pi*phi/180)
 
-                    output_file_name = f'Run_eng{energy_num}_wall{wall_num}_pore{pore_num}_theta{i}_phi{j}.mac'
-                    output_file_path = os.path.join(new_folder_path, output_file_name)
-                    
-                    with open(output_file_path, 'w') as f:
-                        f.write(f'''######################################################
+                        rhat = np.array([
+                            x/source_distance_from_lmcp_center,
+                            y/source_distance_from_lmcp_center,
+                            z/source_distance_from_lmcp_center
+                        ])
+
+                        output_file_name = f'Run_eng{energy_num}_wall{wall_num}_pore{pore_width_num}_theta{i}_phi{j}.mac'
+                        output_file_path = os.path.join(new_folder_path, output_file_name)
+                        
+                        with open(output_file_path, 'w') as f:
+                            f.write(f'''######################################################
                                 
 ## Wall thickness: {round(wall_thickness, 3)} um
-## Pore dimensions: {round(pore_width, 3)} um x {round(pore_width, 3)} um
+## Pore dimensions: {round(pore_width, 3)} um x {round(pore_depth, 3)} um   #(This should be Gamma x Alpha)
 ## Slab dimensions: {round(lmcp_dimensions[0], 3)} cm x {round(lmcp_dimensions[1], 3)} cm x {round(lmcp_dimensions[2], 3)} cm
 ######################################################
 
@@ -173,9 +183,9 @@ for energy_num, energy in enumerate(gamma_energies):
 ######################################################
 ## Detector parameters
 ######################################################
-/user/det/setOverlapChecking false
+/user/det/setOverlapChecking true
 /user/det/setSlabDimensions {lmcp_dimensions[0]} {lmcp_dimensions[1]} {lmcp_dimensions[2]} cm
-/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_width*1e-4, 7)} {lmcp_dimensions[2]} cm
+/user/det/setPoreDimensions {round(pore_width*1e-4, 7)} {round(pore_depths*1e-4, 7)} {lmcp_dimensions[2]} cm
 /user/det/setWallThickness {round(wall_thickness, 3)} um
 
 ######################################################
