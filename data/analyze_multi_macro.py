@@ -25,8 +25,6 @@ SINGLE_LAMINA_THICKNESS = False
 
 
 
-
-
 theta_array = np.linspace(0, 90, int(90/theta_increment + 1))
 phi_array = np.linspace(0, 90, int(90/phi_increment + 1))
 
