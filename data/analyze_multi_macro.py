@@ -7,13 +7,13 @@ data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
 num_histories_per_run = 100000
 
 #wall_array = np.linspace(5, 95, 19, dtype=int) 
-wall_array = np.array([40])
+wall_array = np.array([10])
 #pore_array = np.linspace(25, 100, 4, dtype=int) 
-pore_array = np.array([40])
+pore_array = np.array([1000])
 theta_increment = 6
 phi_increment = 3
 SINGLE_AZIMUTH = True
-SAVE_FOR_PET = True
+SAVE_FOR_PET = False
 SINGLE_LAMINA_THICKNESS = False
 
 
@@ -23,6 +23,7 @@ SINGLE_LAMINA_THICKNESS = False
 
 theta_array = np.linspace(0, 90, int(90/theta_increment + 1))
 phi_array = np.linspace(0, 90, int(90/phi_increment + 1))
+
 if SINGLE_AZIMUTH:
       phi_array = np.array([0])
 if SINGLE_LAMINA_THICKNESS:

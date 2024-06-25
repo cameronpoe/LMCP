@@ -195,6 +195,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         exit()
 
 
+"""
 fig, ax = plt.subplots()
 # Loops through like this so the legend is in ascending order
 for energy in energy_array:
@@ -216,8 +217,7 @@ ax.xaxis.set_ticks_position('both')
 ax.yaxis.set_ticks_position('both')
 plt.minorticks_on()
 plt.show()
-
-
+"""
     
     
 

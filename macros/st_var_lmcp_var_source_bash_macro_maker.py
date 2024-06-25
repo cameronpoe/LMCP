@@ -9,18 +9,22 @@ import shutil
 
 root_output_dir = r'../raw_data/latest_run/'
 max_threads = 60
-num_events = 1000000
+num_events = 1000000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
-LINK_WALL_AND_PORE = True
+LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
-wall_thicknesses = np.array([80])                             # um
+wall_thicknesses = np.array([10])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
-pore_widths = np.array([80])				   # um
+pore_widths = np.array([1000])				   # um
 
-# gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
-gamma_energies = np.array([511])                              # keV
+# Lamina thickness (Tau)
+lamina_thickness = np.array([120])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
+
+
+gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
+# gamma_energies = np.array([511])                              # keV
 # gamma_energies = np.array([200,300,400,500])
 source_distance_from_lmcp_center = 22      # mm
 
@@ -94,7 +98,7 @@ if SINGLE_LAMINA_THICKNESS:
 if LINK_WALL_AND_PORE:
     pore_widths = np.array([0])
 if SINGLE_ZENITH:
-    thetas = np.array([45])
+    thetas = np.array([45])     # Single angle at 45 degrees
 else:
     thetas = np.linspace(0, 90, int(90/theta_increment)+1)
 if SINGLE_AZIMUTH:
@@ -120,7 +124,7 @@ for energy_num, energy in enumerate(gamma_energies):
                 pore_width = wall_thickness
                 pore_num = wall_num
             if SINGLE_LAMINA_THICKNESS:
-                pore_width = lamina_thickness - wall_thickness
+                pore_width = lamina_thickness - wall_thickness          # From what I can tell, 
                 pore_num = wall_num
 
             for i, theta in enumerate(thetas):
@@ -140,6 +144,7 @@ for energy_num, energy in enumerate(gamma_energies):
                     
                     with open(output_file_path, 'w') as f:
                         f.write(f'''######################################################
+                                
 ## Wall thickness: {round(wall_thickness, 3)} um
 ## Pore dimensions: {round(pore_width, 3)} um x {round(pore_width, 3)} um
 ## Slab dimensions: {round(lmcp_dimensions[0], 3)} cm x {round(lmcp_dimensions[1], 3)} cm x {round(lmcp_dimensions[2], 3)} cm
