@@ -12,6 +12,7 @@
 /// \file DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
 
+#include <G4String.hh>
 #include <G4TwoVector.hh>
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
@@ -108,6 +109,7 @@ private:
   G4ThreeVector fPoreDimensions =
       G4ThreeVector(0.00508 * cm, 0.00508 * cm, 2.54 * cm);
   G4TwoVector fWallDimensions = G4TwoVector(0.1524 * mm, 0.154 * mm);
+  // G4String Material = "G4_GLASS_LEAD";
 
   // G4LogicalVolume* fScoringVolume = nullptr;
 };

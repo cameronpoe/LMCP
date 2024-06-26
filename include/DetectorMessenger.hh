@@ -12,6 +12,7 @@
 /// \file DetectorMessenger.cc
 /// \brief Definition of the DetectorMessenger class
 
+#include <G4UIcmdWithAString.hh>
 #ifndef DetectorMessenger_h
 #define DetectorMessenger_h 1
 
@@ -53,6 +54,7 @@ private:
   G4UIcmdWith3VectorAndUnit *fPoreDimensionsCmd = nullptr;
   G4UIcmdWithADoubleAndUnit *fWallXCmd = nullptr;
   G4UIcmdWithADoubleAndUnit *fWallYCmd = nullptr;
+  // G4UIcmdWithAString *fMaterialCmd = nullptr;
   G4UIcmdWithoutParameter *fUpdateCmd = nullptr;
 };
 

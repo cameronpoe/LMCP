@@ -16,6 +16,7 @@
 #include "DetectorMessenger.hh"
 #include "LaminaSD.hh"
 #include "PoreSD.hh"
+#include <G4Region.hh>
 #include <G4TwoVector.hh>
 
 #ifdef G4MULTITHREADED
@@ -178,7 +179,23 @@ void DetectorConstruction::DefineMaterials() {
   mB33->AddMaterial(eB2O3, 13 * perCent);
   mB33->AddMaterial(eNa2O, 4 * perCent);
   mB33->AddMaterial(eAl2O3, 2 * perCent);
-
+  /*
+    auto mD263M = new G4Material("D263M", 2.51 * g / cm3, 7);
+    mD263M->AddMaterial(eSiO2, (64.1 + 0.1) *
+                                   perCent); // the antimony trioxide doesn't
+    work mD263M->AddMaterial(eB2O3, 8.4 * perCent);
+    mD263M->AddMaterial(eNa2O, 6.4 * perCent);
+    mD263M->AddMaterial(eAl2O3, 4.2 * perCent);
+    mD263M->AddMaterial(eK2O, 6.9 * perCent);
+    mD263M->AddMaterial(eZnO, 5.9 * perCent);
+    mD263M->AddMaterial(eTiO2, 4 * perCent);
+    G4Material *eK2O =
+        nistManager->FindOrBuildMaterial("G4_POTASSIUM_OXIDE", isotopes);
+    G4Material *eZnO =
+        nistManager->FindOrBuildMaterial("G4_ZINC_OXIDE", isotopes);
+    G4Material *eTiO2 =
+        nistManager->FindOrBuildMaterial("G4_TITANIUM_OXIDE", isotopes);
+    */
   // Peek chemical formula (C19H12O3)
   //  C 114/150 = 76
   //  H 12/150  = 8
@@ -263,6 +280,7 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes() {
   // auto mAl6061 = G4Material::GetMaterial( "Aluminum6061" );
   // auto mPCB = G4Material::GetMaterial( "PCB" );
 
+  // auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
   // auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
   auto mLMCP = G4Material::GetMaterial("B33");
   // auto mLMCP = G4Material::GetMaterial( "PEEK" );

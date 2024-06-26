@@ -16,7 +16,7 @@ lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 source_distance_from_lmcp_center = 22  # mm
 
 zenith_angle_increment = 2  # degrees (factor of 90)
-azumith_angle_increment = 3  # degrees (factor of 90)
+azumith_angle_increment = 30  # degrees (factor of 90)
 
 
 def geometry(x_axis_value):
@@ -29,8 +29,8 @@ def geometry(x_axis_value):
 
 
 zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
-azumith_angles = np.array([0])
-x_axis_values = np.linspace(2, 10, 9, dtype=int)
+azumith_angles = np.linspace(0, 90, int(90 / azumith_angle_increment) + 1)
+x_axis_values = np.linspace(4, 60, 15, dtype=int)
 ####################################
 ###             CODE             ###
 ####################################
