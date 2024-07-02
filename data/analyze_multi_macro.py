@@ -52,7 +52,7 @@ for file_name in os.listdir(data_directory):
         xaxis = int("".join(c for c in fname_components[0] if c.isdigit()))
         pore_tree = f["pore"]
         pore_branches = pore_tree.arrays(library="ak")
-        log_file(xaxis, get_interacted_efficiency(pore_branches))
+        log_file(xaxis, get_conversion_efficiency(pore_branches))
         # num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
         # num_electrons_reached_pore = len(pore_branches['EventNumber', pore_branches['PDGID'] == 11])
 xaxis_values = list(eff_v_xaxis)

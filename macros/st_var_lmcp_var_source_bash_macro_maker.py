@@ -24,7 +24,7 @@ def geometry(x_axis_value):
     tau = 160
     alpha = x_axis_value
     beta = 40
-    gamma = 1000
+    gamma = x_axis_value
     return (energy, tau, alpha, beta, gamma)
 
 
