@@ -131,13 +131,17 @@ namespace lmcp
 
         // Data for each hit element
         fLaminaID = std::vector<G4int>(nLaminaHits, NAN);
+        fLaminaTrackID = std::vector<G4int>(nLaminaHits, NAN);
         fLaminaEdep = std::vector<G4double>(nLaminaHits, NAN);
+        fLaminaEKin = std::vector<G4double>(nLaminaHits, NAN);
         fLaminaTime = std::vector<G4double>(nLaminaHits, NAN);
         for (unsigned long i=0; i<nLaminaHits; i++ ) {
             auto hit = static_cast<LaminaHit*>(laminaHC->GetHit(i));
 
             fLaminaID[i] = hit->GetCopyNo();
+            fLaminaTrackID[i] = hit->GetTrackID();
             fLaminaEdep[i] = hit->GetEdep()/keV;
+            fLaminaEKin[i] = hit->GetEKin()/keV;
             fLaminaTime[i] = hit->GetTime()/ns;
 
             // G4cout << "    Track ID: " << hit->GetTrackID() << G4endl;
@@ -168,7 +172,7 @@ namespace lmcp
 
         // Data for each hit element
         fPoreID = std::vector<G4int>(nPoreHits, NAN);
-        fTrackID = std::vector<G4int>(nPoreHits, NAN);
+        fPoreTrackID = std::vector<G4int>(nPoreHits, NAN);
         fPDGID = std::vector<G4int>(nPoreHits, NAN);
         fPoreCreatorProc = std::vector<std::string>(nPoreHits, "");
         fPoreEdep = std::vector<G4double>(nPoreHits, NAN);
@@ -181,7 +185,7 @@ namespace lmcp
             auto hit = static_cast<PoreHit*>(poreHC->GetHit(i));
 
             fPoreID[i] = hit->GetCopyNo();
-            fTrackID[i] = hit->GetTrackID();
+            fPoreTrackID[i] = hit->GetTrackID();
             fPDGID[i] = hit->GetPDGID();
             fPoreCreatorProc[i] = hit->GetCreatorProc();
             fPoreEdep[i] = hit->GetEdep()/keV;

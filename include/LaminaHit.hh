@@ -64,6 +64,9 @@ namespace lmcp
       void AddEdep ( G4double de ) { fEdep += de; }
       G4double GetEdep()     const { return fEdep; }
 
+      void SetEKin ( G4double ekin ) { fEKin = ekin; }
+      G4double GetEKin()     const { return fEKin; }
+
       void SetPos ( G4ThreeVector xyz ) { fPos = xyz; }
       G4ThreeVector GetPos() const { return fPos; }
 
@@ -83,6 +86,8 @@ namespace lmcp
       G4ThreeVector fPos;
 
       G4double fEdep = 0.;
+
+      G4double fEKin = 0.;
 
       const G4LogicalVolume* fPLogV = nullptr;
 

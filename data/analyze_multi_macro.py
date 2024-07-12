@@ -18,7 +18,6 @@ def log_file(xaxis, efficiency):
 
 def get_conversion_efficiency(pore_branches):
     num_electrons_reached_pore = ak.sum(ak.any(pore_branches["PDGID"] == 11, axis=1))
-
     eff = float(num_electrons_reached_pore) / num_histories_per_run
     return eff
 
