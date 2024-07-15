@@ -35,19 +35,9 @@ data_directory = r"../../raw_data/latest_run/"
 SAVE_ARRAY = True
 output_name = "b33_effs"
 
-
-def index(a, x):
-    "Locate the leftmost value exactly equal to x"
-    i = bisect.bisect_left(a, x)
-    if i != len(a) and a[i] == x:
-        return i
-    raise ValueError
-
-
 hist_dict = {}
 
 
-initial_energies_cut = []
 bins = np.linspace(0, 520, 27)
 bin_centers = bins[:-1] + 0.5 * np.diff(bins)[0]
 
@@ -83,17 +73,28 @@ def getScatterEnergy(lam_branch):
 c = 0
 for file_num, file_name in enumerate(os.listdir(data_directory)):
     with uproot.open(data_directory + "/" + file_name) as f:
-        print(file_name)
         c += 1
         pore_tree = f["pore"]
         pore_branches = pore_tree.arrays(library="ak")
         lam_tree = f["lamina"]
         lam_branches = lam_tree.arrays(library="ak")
+        print(lam_tree.keys())
         # just fixing some formatting
         for i in range(len(pore_branches)):
             pore_branches[i]["CreatorProc"] = pore_branches[i]["CreatorProc"].split(
                 "\n"
             )
+        for i in range(len(lam_branches[0]["EKin"])):
+            print(
+                str(lam_branches[0]["PosX"][i])
+                + " "
+                + str(lam_branches[0]["PosY"][i])
+                + " "
+                + str(lam_branches[0]["PosZ"][i])
+                + " "
+                + str(lam_branches[0]["TrackID"][i])
+            )
+        print("\n\n")
         event_energy_dict = {}
         first_scatter_energies = []
         first_scatter_energies_pore = []
@@ -117,6 +118,17 @@ fig, ax = plt.subplots()
 yaxis = []
 for i in range(len(lam_bins)):
     yaxis.append(float(pore_bins[i]) / lam_bins[i])
-print(lam_bins)
-ax.plot(bin_centers, yaxis)
+yaxis = np.array(yaxis)
+total = np.sum(lam_bins)
+prohibited_cut = lam_bins >= 0.0005 * total
+ax.plot(bin_centers[prohibited_cut], yaxis[prohibited_cut])
+
+# aesthetic stuff
+ax.xaxis.set_ticks_position("both")
+ax.xaxis.set_ticks_position("both")
+plt.minorticks_on()
+ax.set_xlabel("Electron Energy (KeV)")
+ax.set_xlabel("Frequency")
+plt.title(graph_title)
+
 plt.show()
