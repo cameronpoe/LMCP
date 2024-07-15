@@ -87,7 +87,6 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         for i in pore_energies:
             addDataToHistogram(pore_bins, i)
         print(str(c) + " / " + str(len(os.listdir(data_directory))))
-        break
 # Builds cut on initial_energies based on events that reached pore
 fig, ax = plt.subplots()
 yaxis = []
@@ -103,7 +102,7 @@ ax.xaxis.set_ticks_position("both")
 ax.xaxis.set_ticks_position("both")
 plt.minorticks_on()
 ax.set_xlabel("Electron Energy (KeV)")
-ax.set_xlabel("Frequency")
+ax.set_ylabel("Frequency")
 plt.title(graph_title)
 
 plt.show()

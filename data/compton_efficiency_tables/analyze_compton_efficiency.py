@@ -19,6 +19,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 
 
 text_lines = [
+    "Electron Energy vs Pore Entry Efficiency",
     "Schott B33",
     'T = 1"',
 ]
@@ -128,7 +129,7 @@ ax.xaxis.set_ticks_position("both")
 ax.xaxis.set_ticks_position("both")
 plt.minorticks_on()
 ax.set_xlabel("Electron Energy (KeV)")
-ax.set_xlabel("Frequency")
+ax.set_xlabel("Probability of Reaching Pore")
 plt.title(graph_title)
 
 plt.show()
