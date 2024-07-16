@@ -13,15 +13,15 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 # Make sure to change the title to the material and dimensions you wish to plot below
 ##################################################
 
-alpha = 10  # um
-standard_geometry = False
+alpha = 150  # um
+standard_geometry = True
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
 # Otherwise individual parameters may be specified below
 
-beta = 40
-gamma = 1000
-tau = 120
+beta = 250
+gamma = 250
+tau = 500
 
 
 if standard_geometry == True:

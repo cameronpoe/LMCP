@@ -9,7 +9,7 @@ import shutil
 
 root_output_dir = r'../raw_data/latest_run/'
 max_threads = 60
-num_events = 1000000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
+num_events = 100000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 # This is a test
@@ -17,19 +17,19 @@ lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 LINK_WALL_AND_PORE = False
 # wall_thicknesses = np.linspace(5,95,19,dtype=int)
 # wall_thicknesses = np.linspace(5, 195, 39, dtype=int)      # um (Wall thickness is BETA)
-wall_thicknesses = np.array([40])                             # um
+wall_thicknesses = np.array([250])                             # um
 # pore_widths = np.linspace(25, 100, 4, dtype=int)             # um (Pore widths is GAMMA)
-pore_widths = np.array([1000])				   # um
+pore_widths = np.array([250])				   # um
 
 #  (Pore Depths is ALPHA)
-pore_depths = np.array([10])   # um
+pore_depths = np.array([250])   # um
 
 
 
 
 
 # Lamina thickness (Tau)
-lamina_thickness = np.array([120])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
+lamina_thickness = np.array([500])   # to set a constant lamina thickness tau (Don't put more than one element in the array). 
 
 
 # gamma_energies = np.linspace(10, 600, 60, dtype=int)          # keV
