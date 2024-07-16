@@ -9,7 +9,7 @@ import shutil
 
 root_output_dir = r'../raw_data/latest_run/'
 max_threads = 60
-num_events = 100000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
+num_events = 1000000           # Is this number of events per gamma ray energy (Per the entries in the numpy array below?)
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])              # cm
 
 # This is a test
