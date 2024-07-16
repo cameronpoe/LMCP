@@ -14,7 +14,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 ##################################################
 
 alpha = 150  # um
-standard_geometry = True
+standard_geometry = Truepwd
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
 # Otherwise individual parameters may be specified below
@@ -42,7 +42,7 @@ graph_title = "\n".join(text_lines)
 
 
 
-data_directory = r'/local/d1/iangoldberg/LMCP/raw_data/latest_run/'
+data_directory = r'/home/d1/iangoldberg/ian_LMCP/raw_data/latest_run/'
 # data_directory = r'raw_data/latest_run'
 energy_array = np.array([511])
 # energy_array = np.array([200,300,400,500])
