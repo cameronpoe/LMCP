@@ -20,7 +20,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 
 text_lines = [
     "Electron Energy vs Pore Entry Efficiency",
-    "Schott B33",
+    "NIST Lead Glass",
     'T = 1"',
 ]
 graph_title = "\n".join(text_lines)
@@ -129,7 +129,7 @@ ax.xaxis.set_ticks_position("both")
 ax.xaxis.set_ticks_position("both")
 plt.minorticks_on()
 ax.set_xlabel("Electron Energy (KeV)")
-ax.set_xlabel("Probability of Reaching Pore")
+ax.set_ylabel("Probability of Reaching Pore")
 plt.title(graph_title)
 
 plt.show()
