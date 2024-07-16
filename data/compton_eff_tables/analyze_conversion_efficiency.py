@@ -42,7 +42,7 @@ graph_title = "\n".join(text_lines)
 
 
 
-data_directory = r'/home/d1/iangoldberg/ian_LMCP/raw_data/latest_run/'
+data_directory = r'/home/iangoldberg/ian_LMCP/raw_data/latest_run'
 # data_directory = r'raw_data/latest_run'
 energy_array = np.array([511])
 # energy_array = np.array([200,300,400,500])
