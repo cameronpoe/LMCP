@@ -142,7 +142,7 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
 
 
 
-        ax.text(360, 36, graph_title, fontsize=10, verticalalignment='top',
+        ax.text(360, 15, graph_title, fontsize=10, verticalalignment='top',
         bbox=dict(facecolor='white', alpha=0.5, edgecolor='white'))
 
 
