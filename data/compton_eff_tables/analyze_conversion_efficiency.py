@@ -14,7 +14,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 ##################################################
 
 alpha = 150  # um
-standard_geometry = Truepwd
+standard_geometry = True
 
 # If "standard_geometry" is set to true, then the alpha = beta = gamma = tau/2
 # Otherwise individual parameters may be specified below
