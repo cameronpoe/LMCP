@@ -6,7 +6,7 @@ N=${#a[@]}
 threads=63
 iter=$((N/threads))
 max_full=$((threads*iter))
-
+cd m    
 num_files=0
 counter=0
 while [ $counter -le $iter ]
