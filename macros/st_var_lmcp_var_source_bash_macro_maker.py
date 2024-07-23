@@ -33,8 +33,8 @@ def geometry(x_axis_value):
 
 zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / azumith_angle_increment) + 1)
-x_axis_values = np.linspace(4, 60, 15, dtype=int)
-x_axis_values = [250]
+x_axis_values = np.linspace(4, 250, 30, dtype=int)
+# x_axis_values = [250]
 ####################################
 ###             CODE             ###
 ####################################
