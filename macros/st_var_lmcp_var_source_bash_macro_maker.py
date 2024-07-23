@@ -13,7 +13,7 @@ max_threads = 63
 num_events = 100000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 source_distance_from_lmcp_center = 22  # um
-zenith_angle_increment = 2  # degrees (factor of 90)
+zenith_angle_increment = 5  # degrees (factor of 90)
 azumith_angle_increment = 30  # degrees (factor of 90)
 # deexcitationstring = ''
 deexcitationstring = """\n#/process/em/fluo false
@@ -33,7 +33,7 @@ def geometry(x_axis_value):
 
 zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / azumith_angle_increment) + 1)
-x_axis_values = np.linspace(4, 250, 30, dtype=int)
+x_axis_values = np.linspace(4, 250, 15, dtype=int)
 # x_axis_values = [250]
 ####################################
 ###             CODE             ###
