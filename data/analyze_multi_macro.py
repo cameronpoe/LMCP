@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 
 data_directory = r"../raw_data/latest_run/"
-num_histories_per_run = 10000
+num_histories_per_run = 50000
 
 eff_v_xaxis = {}
 
