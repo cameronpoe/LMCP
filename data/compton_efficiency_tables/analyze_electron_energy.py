@@ -20,7 +20,7 @@ from scipy.interpolate import BSpline, CubicSpline, splrep
 
 text_lines = [
     "Electron Energy in Pore",
-    "Schott B33",
+    "NIST Lead Glass",
     'T = 1"',
 ]
 graph_title = "\n".join(text_lines)
@@ -60,7 +60,7 @@ def keep_pore(pore_event):
 
 def getScatterEnergy(pore_branch):
     for i in range(len(pore_branch["TrackID"])):
-        if pore_branch["TrackID"][i] == 2:
+        if pore_branch["PDGID"][i] == 11:
             return pore_branch["EKin"][i]
     return 0
 
