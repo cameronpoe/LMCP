@@ -38,7 +38,7 @@ if compute_max:
     )
 ax.set_ylim(bottom=0, top=105 * table[:, 1].max())
 ax.set_xlim(left=0)
-ax.set_xlabel("Alpha", fontdict=dict(size=12))
+ax.set_xlabel("Alpha = Beta = Gamma", fontdict=dict(size=12))
 ax.set_ylabel("Pore Entry Efficiency (%)", fontdict=dict(size=12))
 ax.legend()
 ax.xaxis.set_ticks_position("both")
@@ -52,10 +52,10 @@ xlabel = "Wall Thickness"
 lamina_thickness = 100
 ###Code
 file_name = str(date.today())
-file_name += "160 tau Lead Glass Semistandard Geometry"
+file_name += "500 tau Lead Glass Semistandard Geometry"
 plot_title = "T: " + lamina_depth + ", "
 plot_title += "Photon Energy: " + photon_energy + "\n"
-plot_title += "τ=160" + " μm, "
+plot_title += "τ=500" + " μm, "
 plot_title += "Lead Glass\n"
 plot_title += "Angle of Incidence From Normal: 0-20 Degrees"
 
