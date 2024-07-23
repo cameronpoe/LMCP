@@ -10,7 +10,7 @@ import shutil
 
 root_output_dir = r"../raw_data/latest_run"
 max_threads = 63
-num_events = 10000
+num_events = 50000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 source_distance_from_lmcp_center = 22  # um
 zenith_angle_increment = 5  # degrees (factor of 90)
