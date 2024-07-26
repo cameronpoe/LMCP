@@ -197,6 +197,12 @@ void DetectorConstruction::DefineMaterials() {
   mD263M->AddMaterial(eK2O, 6.9 * perCent);
   mD263M->AddMaterial(eZnO, 5.9 * perCent);
   mD263M->AddMaterial(eTiO2, 4 * perCent);
+
+
+
+
+
+  
   // Peek chemical formula (C19H12O3)
   //  C 114/150 = 76
   //  H 12/150  = 8
