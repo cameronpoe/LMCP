@@ -24,7 +24,7 @@ deexcitationstring = """\n#/process/em/fluo false
 
 def geometry(x_axis_value):
     energy = 511
-    tau = 500
+    tau = 300
     alpha = x_axis_value
     beta = x_axis_value
     gamma = x_axis_value
@@ -33,7 +33,7 @@ def geometry(x_axis_value):
 
 zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / azumith_angle_increment) + 1)
-x_axis_values = np.linspace(4, 250, 15, dtype=int)
+x_axis_values = np.linspace(4, 150, 15, dtype=int)
 # x_axis_values = [250]
 ####################################
 ###             CODE             ###

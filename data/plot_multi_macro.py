@@ -49,13 +49,16 @@ plt.minorticks_on()
 lamina_depth = "1 in"
 photon_energy = "511 KeV"
 xlabel = "Wall Thickness"
-lamina_thickness = 100
+lamina_thickness = 300
+
 ###Code
+
+## Titles and labels:
 file_name = str(date.today())
-file_name += "500 tau Lead Glass Semistandard Geometry"
+file_name += "300-tau Lead Glass Semistandard Geometry"
 plot_title = "T: " + lamina_depth + ", "
 plot_title += "Photon Energy: " + photon_energy + "\n"
-plot_title += "τ=500" + " μm, "
+plot_title += "τ=300" + " μm, "
 plot_title += "Lead Glass\n"
 plot_title += "Angle of Incidence From Normal: 0-20 Degrees"
 
