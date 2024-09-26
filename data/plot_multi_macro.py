@@ -38,8 +38,8 @@ if compute_max:
     )
 ax.set_ylim(bottom=0, top=105 * table[:, 1].max())
 ax.set_xlim(left=0)
-ax.set_xlabel("Alpha = Beta = Gamma", fontdict=dict(size=12))
-ax.set_ylabel("Pore Entry Efficiency (%)", fontdict=dict(size=12))
+ax.set_xlabel("τ", fontdict=dict(size=12))
+ax.set_ylabel("Pore Entry Efficiency Given Interacted (%)", fontdict=dict(size=12))
 ax.legend()
 ax.xaxis.set_ticks_position("both")
 ax.yaxis.set_ticks_position("both")
@@ -55,15 +55,17 @@ lamina_thickness = 300
 
 ## Titles and labels:
 file_name = str(date.today())
-file_name += "300-tau Lead Glass Semistandard Geometry"
-plot_title = "T: " + lamina_depth + ", "
-plot_title += "Photon Energy: " + photon_energy + "\n"
-plot_title += "τ=300" + " μm, "
-plot_title += "Lead Glass\n"
-plot_title += "Angle of Incidence From Normal: 0-20 Degrees"
+file_name += "tau varying electron penetrating wall"
+plot_title = "Prob of electron penetrating ≥1 wall"
+plot_info = "511 KeV Gamma\n"
+plot_info += "B33\n"
+plot_info += "α=5μm β=50μm γ=1000μm\n"
+plot_info += "Angle of Incidence From Normal: 0-20 Degrees\n"
+plot_info += "T: " + lamina_depth
 
 plt.title(plot_title)
-plt.text(0.02, 0.02, str(date.today()), ha="left", va="top", transform=ax.transAxes)
+plt.text(0.02, 0.02, str(date.today()), ha="left", va="bottom", transform=ax.transAxes)
+plt.text(0.98, 0.98, plot_info, ha="right", va="top", transform=ax.transAxes)
 fig.canvas.get_default_filename = lambda: file_name
 
 

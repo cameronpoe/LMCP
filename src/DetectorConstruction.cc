@@ -198,11 +198,6 @@ void DetectorConstruction::DefineMaterials() {
   mD263M->AddMaterial(eZnO, 5.9 * perCent);
   mD263M->AddMaterial(eTiO2, 4 * perCent);
 
-
-
-
-
-  
   // Peek chemical formula (C19H12O3)
   //  C 114/150 = 76
   //  H 12/150  = 8
@@ -289,7 +284,7 @@ G4VPhysicalVolume *DetectorConstruction::DefineVolumes() {
 
   // auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
   // auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
-  auto mLMCP = G4Material::GetMaterial("G4_GLASS_LEAD");
+  auto mLMCP = G4Material::GetMaterial("B33");
   // auto mLMCP = G4Material::GetMaterial( "PEEK" );
   // auto mLMCP = G4Material::GetMaterial( "ECOMASS" );
   // auto mLMCP = G4Material::GetMaterial( "ECOMASS2" );

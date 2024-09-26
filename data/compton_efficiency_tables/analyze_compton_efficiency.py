@@ -33,14 +33,7 @@ num_bins = 50
 
 data_directory = r"../../raw_data/latest_run/"
 
-SAVE_ARRAY = True
-output_name = "b33_effs"
-
-hist_dict = {}
-
-
-bins = np.linspace(0, 520, 27)
-bin_centers = bins[:-1] + 0.5 * np.diff(bins)[0]
+output_name = "b33_effs.csv"
 
 lam_bins = np.array([0] * num_bins)
 pore_bins = np.array([0] * num_bins)
@@ -48,27 +41,12 @@ bin_edges = np.linspace(min_energy, max_energy, num_bins + 1)
 bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
 
 
-def addDataToHistogram(bins, val):
-    if val >= min_energy and val < max_energy:
-        index = int(num_bins * (val - min_energy) / (max_energy - min_energy))
-        bins[index] += 1
-
-
-# determines whether to cut a lamina event
-def keep_lam(lam_event):
-    return 2 in lam_event["TrackID"] and len(lam_event["EKin"]) > 1
-
-
-# determines whether to cut a pore event
-def keep_pore(pore_event):
-    return True
-
-
-def getScatterEnergy(lam_branch):
-    for i in range(len(lam_branch["TrackID"])):
-        if lam_branch["TrackID"][i] == 2:
-            return lam_branch["EKin"][i]
-    return 0
+def index(a, x):
+    "Locate the leftmost value exactly equal to x"
+    i = bisect.bisect_left(a, x)
+    if i != len(a) and a[i] == x:
+        return i
+    raise ValueError
 
 
 c = 0
@@ -79,50 +57,49 @@ for file_num, file_name in enumerate(os.listdir(data_directory)):
         pore_branches = pore_tree.arrays(library="ak")
         lam_tree = f["lamina"]
         lam_branches = lam_tree.arrays(library="ak")
-        print(lam_tree.keys())
-        # just fixing some formatting
-        for i in range(len(pore_branches)):
-            pore_branches[i]["CreatorProc"] = pore_branches[i]["CreatorProc"].split(
-                "\n"
-            )
-        for i in range(len(lam_branches[0]["EKin"])):
-            print(
-                str(lam_branches[0]["PosX"][i])
-                + " "
-                + str(lam_branches[0]["PosY"][i])
-                + " "
-                + str(lam_branches[0]["PosZ"][i])
-                + " "
-                + str(lam_branches[0]["TrackID"][i])
-            )
-        print("\n\n")
-        event_energy_dict = {}
-        first_scatter_energies = []
-        first_scatter_energies_pore = []
-        for i in lam_branches:
-            energy = getScatterEnergy(i)
-            if energy != 0:
-                event_energy_dict[i["EventNumber"]] = energy
-                first_scatter_energies.append(energy)
-        for i in pore_branches:
+
+        first_scatter_cut = lam_branches["TrackID"] == 2
+        first_scatter_energies = np.array(
+            lam_branches["EKin"][first_scatter_cut][ak.any(first_scatter_cut, axis=1)][
+                :, 0
+            ]
+        )
+
+        lam_eventnums = lam_branches["EventNumber"][ak.any(first_scatter_cut, axis=1)]
+        pore_eventnums = pore_branches["EventNumber"][
+            ak.any(pore_branches["TrackID"] == 2, axis=1)
+        ]
+
+        # Builds cut on initial_energies based on events that reached pore
+        initial_energies_cut = []
+        for i, eventnum in enumerate(pore_eventnums):
             try:
-                first_scatter_energies_pore.append(event_energy_dict[i["EventNumber"]])
+                initial_energies_cut.append(index(lam_eventnums, eventnum))
             except:
                 continue
-        for i in first_scatter_energies:
-            addDataToHistogram(lam_bins, i)
-        for i in first_scatter_energies_pore:
-            addDataToHistogram(pore_bins, i)
-        print(str(c) + " / " + str(len(os.listdir(data_directory))))
-        # Builds cut on initial_energies based on events that reached pore
-fig, ax = plt.subplots()
+        print(str(c) + "/" + str(len(os.listdir(data_directory))))
+        initial_energies_cut = np.array(initial_energies_cut)
+
+        first_scatter_energies_pore = first_scatter_energies[initial_energies_cut]
+        nlam, _ = np.histogram(first_scatter_energies, bins=bin_edges)
+        npore, _ = np.histogram(first_scatter_energies_pore, bins=bin_edges)
+        lam_bins += nlam
+        pore_bins += npore
+
+total = np.sum(lam_bins)
+sufficient_data_cut = np.where(lam_bins > 0.01 * total / num_bins)[0]
+lam_bins = lam_bins[sufficient_data_cut]
+pore_bins = pore_bins[sufficient_data_cut]
+bin_filter = bin_centers[sufficient_data_cut]
 yaxis = []
 for i in range(len(lam_bins)):
     yaxis.append(float(pore_bins[i]) / lam_bins[i])
 yaxis = np.array(yaxis)
-total = np.sum(lam_bins)
-prohibited_cut = lam_bins >= 0.0005 * total
-ax.plot(bin_centers[prohibited_cut], yaxis[prohibited_cut])
+fig, ax = plt.subplots()
+full = np.interp(bin_centers, bin_filter, yaxis)
+np.savetxt(output_name, full, delimiter=",")
+ax.plot(bin_centers, full)
+
 
 # aesthetic stuff
 ax.xaxis.set_ticks_position("both")
