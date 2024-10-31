@@ -10,7 +10,7 @@ import shutil
 
 root_output_dir = r"../raw_data/latest_run"
 max_threads = 63
-num_events = 50000
+num_events = 15000
 lmcp_dimensions = np.array([2.54, 2.54, 2.54])  # cm
 source_distance_from_lmcp_center = 22  # um
 zenith_angle_increment = 5  # degrees (factor of 90)
@@ -33,8 +33,8 @@ def geometry(x_axis_value):
 
 zenith_angles = np.linspace(0, 20, int(20 / zenith_angle_increment) + 1, dtype=int)
 azumith_angles = np.linspace(0, 90, int(90 / azumith_angle_increment) + 1)
-# x_axis_values = np.linspace(4, 300, 15, dtype=int)
-x_axis_values = [120]
+azumith_angles = [0]
+x_axis_values = np.linspace(50, 300, 15, dtype=int)
 ####################################
 ###             CODE             ###
 ####################################

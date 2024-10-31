@@ -4,7 +4,7 @@ import uproot
 import awkward as ak
 
 data_directory = r"../raw_data/latest_run/"
-num_histories_per_run = 50000
+num_histories_per_run = 15000
 
 eff_v_xaxis = {}
 
@@ -51,7 +51,7 @@ for file_name in os.listdir(data_directory):
         xaxis = int("".join(c for c in fname_components[0] if c.isdigit()))
         pore_tree = f["pore"]
         pore_branches = pore_tree.arrays(library="ak")
-        log_file(xaxis, get_efficiency_given_interacted(pore_branches))
+        log_file(xaxis, get_conversion_efficiency(pore_branches))
         # num_events_reached_pore = len(f['pore']['EventNumber'].array(library='np'))
         # num_electrons_reached_pore = len(pore_branches['EventNumber', pore_branches['PDGID'] == 11])
 xaxis_values = list(eff_v_xaxis)
